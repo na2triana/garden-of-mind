@@ -1,0 +1,1937 @@
+<html><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><title>Index.html</title></head><body><p dir="ltr">&lt;!DOCTYPE html&gt;<br>
+&lt;html lang="en"&gt;<br>
+&lt;head&gt;<br>
+&nbsp; &lt;meta charset="UTF-8" /&gt;<br>
+&nbsp; &lt;meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover" /&gt;<br>
+&nbsp; &lt;title&gt;The Garden of Mind &#8226; Taman Pikiran&lt;/title&gt;<br>
+&nbsp; <br>
+&nbsp; &lt;meta name="description" content="A 7-day reflective RIASEC personality test where your choices grow an aesthetic botanical flower." /&gt;<br>
+&nbsp; &lt;meta name="theme-color" content="#fbf9f4" /&gt;<br>
+&nbsp; <br>
+&nbsp; &lt;!-- Aesthetic Typography --&gt;<br>
+&nbsp; &lt;link rel="preconnect" href="https://fonts.googleapis.com"&gt;<br>
+&nbsp; &lt;link rel="preconnect" href="https://fonts.gstatic.com" crossorigin&gt;<br>
+&nbsp; &lt;link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,500;0,600;0,700;1,400;1,600&amp;family=Plus+Jakarta+Sans:wght@300;400;500;600;700&amp;display=swap" rel="stylesheet"&gt;</p>
+<p dir="ltr">&nbsp; &lt;style&gt;<br>
+&nbsp;&nbsp;&nbsp; :root {<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; --bg-top: #fbf9f4;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; --bg-bottom: #e9eee4;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; --card-bg: rgba(255, 255, 255, 0.88);<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; --card-border: rgba(255, 255, 255, 0.95);<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; --text-main: #253328;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; --text-muted: #647568;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; --accent-sage: #8fa58c;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; --accent-deep: #3b5242;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; --accent-warm: #d99a80;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; --accent-gold: #c9933b;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; --accent-gold-bg: #fdf6e9;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; --radius-pill: 999px;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; --radius-card: 22px;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; --shadow-subtle: 0 12px 35px -8px rgba(45, 65, 49, 0.12);<br>
+&nbsp;&nbsp;&nbsp; }</p>
+<p dir="ltr">&nbsp;&nbsp;&nbsp; * {<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; box-sizing: border-box;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; margin: 0;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; padding: 0;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; -webkit-tap-highlight-color: transparent;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; user-select: none;<br>
+&nbsp;&nbsp;&nbsp; }</p>
+<p dir="ltr">&nbsp;&nbsp;&nbsp; body {<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; font-family: 'Plus Jakarta Sans', system-ui, -apple-system, sans-serif;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; background: linear-gradient(175deg, var(--bg-top) 0%, var(--bg-bottom) 100%);<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; color: var(--text-main);<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; min-height: 100vh;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; min-height: 100dvh;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; display: flex;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; justify-content: center;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; align-items: center;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; overflow: hidden;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; position: relative;<br>
+&nbsp;&nbsp;&nbsp; }</p>
+<p dir="ltr">&nbsp;&nbsp;&nbsp; /* Ambient background glows */<br>
+&nbsp;&nbsp;&nbsp; .ambient-glow {<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; position: absolute;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; border-radius: 50%;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; filter: blur(80px);<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; z-index: 0;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; pointer-events: none;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; opacity: 0.5;<br>
+&nbsp;&nbsp;&nbsp; }<br>
+&nbsp;&nbsp;&nbsp; .glow-1 { width: 340px; height: 340px; background: #ebd5cd; top: -50px; left: -60px; }<br>
+&nbsp;&nbsp;&nbsp; .glow-2 { width: 380px; height: 380px; background: #cce0c9; bottom: -60px; right: -60px; }</p>
+<p dir="ltr">&nbsp;&nbsp;&nbsp; /* Main Shell */<br>
+&nbsp;&nbsp;&nbsp; .app-frame {<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; width: 100%;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; max-width: 440px;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; height: 100vh;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; height: 100dvh;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; display: flex;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; flex-direction: column;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; justify-content: space-between;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; padding: calc(env(safe-area-inset-top, 12px) + 8px) 16px calc(env(safe-area-inset-bottom, 12px) + 12px);<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; position: relative;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; z-index: 1;<br>
+&nbsp;&nbsp;&nbsp; }</p>
+<p dir="ltr">&nbsp;&nbsp;&nbsp; /* Top Navigation Bar */<br>
+&nbsp;&nbsp;&nbsp; .top-bar {<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; display: flex;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; justify-content: space-between;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; align-items: center;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; width: 100%;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; z-index: 10;<br>
+&nbsp;&nbsp;&nbsp; }</p>
+<p dir="ltr">&nbsp;&nbsp;&nbsp; .brand-wrap {<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; display: flex;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; align-items: center;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; gap: 6px;<br>
+&nbsp;&nbsp;&nbsp; }</p>
+<p dir="ltr">&nbsp;&nbsp;&nbsp; .badge-day {<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; background: rgba(59, 82, 66, 0.1);<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; color: var(--accent-deep);<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; font-size: 0.72rem;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; font-weight: 700;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; padding: 4px 10px;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; border-radius: var(--radius-pill);<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; letter-spacing: 0.05em;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; text-transform: uppercase;<br>
+&nbsp;&nbsp;&nbsp; }</p>
+<p dir="ltr">&nbsp;&nbsp;&nbsp; .controls-cluster {<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; display: flex;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; align-items: center;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; gap: 6px;<br>
+&nbsp;&nbsp;&nbsp; }</p>
+<p dir="ltr">&nbsp;&nbsp;&nbsp; .btn-icon-subtle {<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; border: 1px solid var(--card-border);<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; background: rgba(255, 255, 255, 0.75);<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; backdrop-filter: blur(8px);<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; -webkit-backdrop-filter: blur(8px);<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; color: var(--text-muted);<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; font-size: 0.85rem;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; cursor: pointer;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; width: 32px;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; height: 32px;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; border-radius: 50%;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; display: flex;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; align-items: center;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; justify-content: center;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; transition: all 0.2s ease;<br>
+&nbsp;&nbsp;&nbsp; }<br>
+&nbsp;&nbsp;&nbsp; .btn-icon-subtle.active {<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; background: var(--accent-deep);<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; color: #fff;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; border-color: var(--accent-deep);<br>
+&nbsp;&nbsp;&nbsp; }</p>
+<p dir="ltr">&nbsp;&nbsp;&nbsp; .lang-switcher {<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; display: flex;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; background: rgba(255, 255, 255, 0.75);<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; backdrop-filter: blur(8px);<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; -webkit-backdrop-filter: blur(8px);<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; border: 1px solid var(--card-border);<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; padding: 2px;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; border-radius: var(--radius-pill);<br>
+&nbsp;&nbsp;&nbsp; }</p>
+<p dir="ltr">&nbsp;&nbsp;&nbsp; .lang-btn {<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; border: none;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; background: transparent;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; padding: 4px 10px;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; font-size: 0.72rem;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; font-weight: 600;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; color: var(--text-muted);<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; border-radius: var(--radius-pill);<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; cursor: pointer;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; transition: all 0.2s ease;<br>
+&nbsp;&nbsp;&nbsp; }</p>
+<p dir="ltr">&nbsp;&nbsp;&nbsp; .lang-btn.active {<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; background: var(--accent-deep);<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; color: #fff;<br>
+&nbsp;&nbsp;&nbsp; }</p>
+<p dir="ltr">&nbsp;&nbsp;&nbsp; /* Canvas Stage Container */<br>
+&nbsp;&nbsp;&nbsp; .canvas-container {<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; position: relative;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; width: 100%;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; height: 220px;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; flex-shrink: 0;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; display: flex;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; justify-content: center;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; align-items: center;<br>
+&nbsp;&nbsp;&nbsp; }</p>
+<p dir="ltr">&nbsp;&nbsp;&nbsp; canvas#gardenCanvas {<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; width: 100%;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; height: 100%;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; display: block;<br>
+&nbsp;&nbsp;&nbsp; }</p>
+<p dir="ltr">&nbsp;&nbsp;&nbsp; /* Floating Pot Switcher Pill */<br>
+&nbsp;&nbsp;&nbsp; .pot-switch-badge {<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; position: absolute;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; top: 6px;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; right: 8px;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; background: rgba(255, 255, 255, 0.85);<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; backdrop-filter: blur(8px);<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; -webkit-backdrop-filter: blur(8px);<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; border: 1px solid var(--card-border);<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; border-radius: var(--radius-pill);<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; padding: 4px 10px;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; font-size: 0.68rem;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; font-weight: 600;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; color: var(--accent-deep);<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; cursor: pointer;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; box-shadow: 0 4px 12px rgba(0,0,0,0.05);<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; display: flex;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; align-items: center;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; gap: 4px;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; transition: transform 0.15s ease;<br>
+&nbsp;&nbsp;&nbsp; }<br>
+&nbsp;&nbsp;&nbsp; .pot-switch-badge:active { transform: scale(0.96); }</p>
+<p dir="ltr">&nbsp;&nbsp;&nbsp; .growth-meter {<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; position: absolute;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; bottom: 0px;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; left: 12px;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; right: 12px;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; display: flex;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; align-items: center;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; gap: 8px;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; background: rgba(255, 255, 255, 0.7);<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; backdrop-filter: blur(6px);<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; -webkit-backdrop-filter: blur(6px);<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; padding: 4px 10px;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; border-radius: var(--radius-pill);<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; border: 1px solid var(--card-border);<br>
+&nbsp;&nbsp;&nbsp; }</p>
+<p dir="ltr">&nbsp;&nbsp;&nbsp; .growth-track {<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; flex: 1;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; height: 5px;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; background: #dbe4d8;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; border-radius: 3px;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; overflow: hidden;<br>
+&nbsp;&nbsp;&nbsp; }</p>
+<p dir="ltr">&nbsp;&nbsp;&nbsp; .growth-fill {<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; height: 100%;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; width: 0%;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; background: linear-gradient(90deg, var(--accent-sage), var(--accent-deep));<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; transition: width 0.6s cubic-bezier(0.16, 1, 0.3, 1);<br>
+&nbsp;&nbsp;&nbsp; }</p>
+<p dir="ltr">&nbsp;&nbsp;&nbsp; .growth-val {<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; font-size: 0.7rem;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; font-weight: 600;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; color: var(--accent-deep);<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; min-width: 32px;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; text-align: right;<br>
+&nbsp;&nbsp;&nbsp; }</p>
+<p dir="ltr">&nbsp;&nbsp;&nbsp; /* View Deck */<br>
+&nbsp;&nbsp;&nbsp; .view-deck {<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; flex: 1;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; display: flex;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; flex-direction: column;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; justify-content: center;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; position: relative;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; margin-top: 6px;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; min-height: 0;<br>
+&nbsp;&nbsp;&nbsp; }</p>
+<p dir="ltr">&nbsp;&nbsp;&nbsp; .card-panel {<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; background: var(--card-bg);<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; backdrop-filter: blur(20px);<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; -webkit-backdrop-filter: blur(20px);<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; border: 1px solid var(--card-border);<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; border-radius: var(--radius-card);<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; padding: 16px 18px;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; box-shadow: var(--shadow-subtle);<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; display: flex;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; flex-direction: column;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; justify-content: space-between;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; max-height: 100%;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; overflow-y: auto;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; scrollbar-width: none;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; animation: cardFadeIn 0.3s ease-out;<br>
+&nbsp;&nbsp;&nbsp; }<br>
+&nbsp;&nbsp;&nbsp; .card-panel::-webkit-scrollbar { display: none; }</p>
+<p dir="ltr">&nbsp;&nbsp;&nbsp; @keyframes cardFadeIn {<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; from { opacity: 0; transform: translateY(8px); }<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; to { opacity: 1; transform: translateY(0); }<br>
+&nbsp;&nbsp;&nbsp; }</p>
+<p dir="ltr">&nbsp;&nbsp;&nbsp; .card-title {<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; font-family: 'Cormorant Garamond', Georgia, serif;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; font-size: 1.65rem;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; color: var(--accent-deep);<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; line-height: 1.15;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; text-align: center;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; margin-bottom: 4px;<br>
+&nbsp;&nbsp;&nbsp; }</p>
+<p dir="ltr">&nbsp;&nbsp;&nbsp; .card-desc {<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; font-size: 0.82rem;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; color: var(--text-muted);<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; line-height: 1.45;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; text-align: center;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; margin-bottom: 12px;<br>
+&nbsp;&nbsp;&nbsp; }</p>
+<p dir="ltr">&nbsp;&nbsp;&nbsp; /* Action Buttons */<br>
+&nbsp;&nbsp;&nbsp; .btn-main {<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; width: 100%;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; padding: 13px 20px;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; background: var(--accent-deep);<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; color: #fff;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; border: none;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; border-radius: var(--radius-pill);<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; font-size: 0.88rem;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; font-weight: 600;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; font-family: inherit;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; cursor: pointer;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; display: flex;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; justify-content: center;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; align-items: center;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; gap: 8px;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; box-shadow: 0 6px 18px -2px rgba(59, 82, 66, 0.25);<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; transition: transform 0.15s ease, background 0.2s;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; text-decoration: none;<br>
+&nbsp;&nbsp;&nbsp; }<br>
+&nbsp;&nbsp;&nbsp; .btn-main:active { transform: scale(0.98); }</p>
+<p dir="ltr">&nbsp;&nbsp;&nbsp; .btn-secondary {<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; background: transparent;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; border: 1px solid rgba(59, 82, 66, 0.25);<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; color: var(--accent-deep);<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; box-shadow: none;<br>
+&nbsp;&nbsp;&nbsp; }</p>
+<p dir="ltr">&nbsp;&nbsp;&nbsp; .btn-share {<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; background: linear-gradient(135deg, #4d6d56, #2d3f32);<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; margin-bottom: 8px;<br>
+&nbsp;&nbsp;&nbsp; }</p>
+<p dir="ltr">&nbsp;&nbsp;&nbsp; /* Premium Upgrade Box */<br>
+&nbsp;&nbsp;&nbsp; .premium-card {<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; background: var(--accent-gold-bg);<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; border: 1px solid rgba(201, 147, 59, 0.35);<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; border-radius: 16px;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; padding: 12px 14px;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; margin: 10px 0 12px;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; text-align: center;<br>
+&nbsp;&nbsp;&nbsp; }</p>
+<p dir="ltr">&nbsp;&nbsp;&nbsp; .premium-badge {<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; display: inline-block;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; font-size: 0.65rem;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; font-weight: 700;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; letter-spacing: 0.1em;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; text-transform: uppercase;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; color: #8c5d15;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; background: rgba(201, 147, 59, 0.18);<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; padding: 2px 8px;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; border-radius: var(--radius-pill);<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; margin-bottom: 4px;<br>
+&nbsp;&nbsp;&nbsp; }</p>
+<p dir="ltr">&nbsp;&nbsp;&nbsp; .premium-title {<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; font-family: 'Cormorant Garamond', Georgia, serif;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; font-size: 1.15rem;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; font-weight: 700;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; color: #5c3c0a;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; line-height: 1.2;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; margin-bottom: 3px;<br>
+&nbsp;&nbsp;&nbsp; }</p>
+<p dir="ltr">&nbsp;&nbsp;&nbsp; .premium-desc {<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; font-size: 0.72rem;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; color: #7d5921;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; line-height: 1.35;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; margin-bottom: 8px;<br>
+&nbsp;&nbsp;&nbsp; }</p>
+<p dir="ltr">&nbsp;&nbsp;&nbsp; .btn-premium {<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; background: linear-gradient(135deg, #d49f43, #b88228);<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; color: #fff;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; padding: 10px 16px;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; font-size: 0.8rem;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; font-weight: 700;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; box-shadow: 0 4px 12px rgba(184, 130, 40, 0.25);<br>
+&nbsp;&nbsp;&nbsp; }</p>
+<p dir="ltr">&nbsp;&nbsp;&nbsp; /* Quiz Screen */<br>
+&nbsp;&nbsp;&nbsp; .quiz-progress-dots {<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; display: flex;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; justify-content: center;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; gap: 6px;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; margin-bottom: 10px;<br>
+&nbsp;&nbsp;&nbsp; }</p>
+<p dir="ltr">&nbsp;&nbsp;&nbsp; .dot {<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; width: 7px;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; height: 7px;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; border-radius: 50%;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; background: #c8d4c5;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; transition: all 0.25s ease;<br>
+&nbsp;&nbsp;&nbsp; }<br>
+&nbsp;&nbsp;&nbsp; .dot.active {<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; width: 20px;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; border-radius: 4px;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; background: var(--accent-deep);<br>
+&nbsp;&nbsp;&nbsp; }<br>
+&nbsp;&nbsp;&nbsp; .dot.done { background: var(--accent-sage); }</p>
+<p dir="ltr">&nbsp;&nbsp;&nbsp; .question-prompt {<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; font-family: 'Cormorant Garamond', Georgia, serif;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; font-size: 1.22rem;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; font-weight: 600;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; color: var(--accent-deep);<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; text-align: center;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; line-height: 1.35;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; min-height: 54px;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; display: flex;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; align-items: center;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; justify-content: center;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; margin-bottom: 12px;<br>
+&nbsp;&nbsp;&nbsp; }</p>
+<p dir="ltr">&nbsp;&nbsp;&nbsp; .likert-scale {<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; display: flex;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; justify-content: space-between;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; gap: 6px;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; margin-bottom: 6px;<br>
+&nbsp;&nbsp;&nbsp; }</p>
+<p dir="ltr">&nbsp;&nbsp;&nbsp; .likert-btn {<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; flex: 1;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; border: 1px solid rgba(143, 165, 140, 0.35);<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; background: rgba(255, 255, 255, 0.7);<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; padding: 9px 0;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; border-radius: 12px;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; font-size: 0.85rem;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; font-weight: 600;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; color: var(--accent-deep);<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; cursor: pointer;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; display: flex;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; flex-direction: column;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; align-items: center;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; gap: 2px;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; transition: all 0.15s ease;<br>
+&nbsp;&nbsp;&nbsp; }<br>
+&nbsp;&nbsp;&nbsp; .likert-btn:active {<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; background: var(--accent-deep);<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; color: #fff;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; transform: scale(0.95);<br>
+&nbsp;&nbsp;&nbsp; }<br>
+&nbsp;&nbsp;&nbsp; .likert-sub {<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; font-size: 0.65rem;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; font-weight: 400;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; opacity: 0.75;<br>
+&nbsp;&nbsp;&nbsp; }</p>
+<p dir="ltr">&nbsp;&nbsp;&nbsp; /* Word Search Grid */<br>
+&nbsp;&nbsp;&nbsp; .word-target-banner {<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; background: rgba(233, 238, 228, 0.7);<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; border-radius: 12px;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; padding: 6px 12px;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; text-align: center;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; margin-bottom: 8px;<br>
+&nbsp;&nbsp;&nbsp; }<br>
+&nbsp;&nbsp;&nbsp; .target-word-hint {<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; font-size: 0.68rem;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; text-transform: uppercase;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; letter-spacing: 0.08em;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; color: var(--text-muted);<br>
+&nbsp;&nbsp;&nbsp; }<br>
+&nbsp;&nbsp;&nbsp; .target-word-display {<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; font-family: 'Plus Jakarta Sans', monospace;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; font-size: 1.1rem;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; font-weight: 700;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; letter-spacing: 0.22em;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; color: var(--accent-deep);<br>
+&nbsp;&nbsp;&nbsp; }</p>
+<p dir="ltr">&nbsp;&nbsp;&nbsp; .grid-board {<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; display: grid;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; grid-template-columns: repeat(6, 1fr);<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; gap: 5px;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; width: 100%;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; max-width: 280px;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; margin: 0 auto 10px;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; touch-action: none;<br>
+&nbsp;&nbsp;&nbsp; }</p>
+<p dir="ltr">&nbsp;&nbsp;&nbsp; .grid-cell {<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; aspect-ratio: 1;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; display: flex;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; align-items: center;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; justify-content: center;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; font-size: 0.92rem;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; font-weight: 700;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; background: rgba(255, 255, 255, 0.9);<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; border: 1px solid rgba(143, 165, 140, 0.3);<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; border-radius: 8px;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; color: var(--text-main);<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; cursor: pointer;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; transition: background 0.15s, transform 0.1s, color 0.15s;<br>
+&nbsp;&nbsp;&nbsp; }<br>
+&nbsp;&nbsp;&nbsp; .grid-cell.selected {<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; background: var(--accent-warm);<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; color: #fff;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; border-color: var(--accent-warm);<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; transform: scale(0.94);<br>
+&nbsp;&nbsp;&nbsp; }<br>
+&nbsp;&nbsp;&nbsp; .grid-cell.solved {<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; background: var(--accent-sage);<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; color: #fff;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; border-color: var(--accent-sage);<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; animation: pulseCell 0.5s ease-out;<br>
+&nbsp;&nbsp;&nbsp; }</p>
+<p dir="ltr">&nbsp;&nbsp;&nbsp; @keyframes pulseCell {<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 0% { transform: scale(1); }<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 50% { transform: scale(1.15); }<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 100% { transform: scale(1); }<br>
+&nbsp;&nbsp;&nbsp; }</p>
+<p dir="ltr">&nbsp;&nbsp;&nbsp; .puzzle-instructions {<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; font-size: 0.72rem;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; color: var(--text-muted);<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; text-align: center;<br>
+&nbsp;&nbsp;&nbsp; }</p>
+<p dir="ltr">&nbsp;&nbsp;&nbsp; /* Watering Hero */<br>
+&nbsp;&nbsp;&nbsp; .watering-hero {<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; text-align: center;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; padding: 6px 0;<br>
+&nbsp;&nbsp;&nbsp; }<br>
+&nbsp;&nbsp;&nbsp; .can-symbol {<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; font-size: 2.5rem;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; display: inline-block;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; animation: bobble 2s ease-in-out infinite alternate;<br>
+&nbsp;&nbsp;&nbsp; }<br>
+&nbsp;&nbsp;&nbsp; @keyframes bobble {<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 0% { transform: rotate(-5deg) translateY(0); }<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 100% { transform: rotate(10deg) translateY(-6px); }<br>
+&nbsp;&nbsp;&nbsp; }</p>
+<p dir="ltr">&nbsp;&nbsp;&nbsp; /* Results Chart */<br>
+&nbsp;&nbsp;&nbsp; .results-chart {<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; display: flex;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; flex-direction: column;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; gap: 5px;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; margin: 8px 0 10px;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; text-align: left;<br>
+&nbsp;&nbsp;&nbsp; }<br>
+&nbsp;&nbsp;&nbsp; .trait-bar-row {<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; display: flex;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; align-items: center;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; gap: 6px;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; font-size: 0.7rem;<br>
+&nbsp;&nbsp;&nbsp; }<br>
+&nbsp;&nbsp;&nbsp; .trait-label {<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; width: 82px;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; color: var(--text-muted);<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; font-weight: 600;<br>
+&nbsp;&nbsp;&nbsp; }<br>
+&nbsp;&nbsp;&nbsp; .trait-bar-track {<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; flex: 1;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; height: 6px;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; background: #e2e8df;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; border-radius: 3px;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; overflow: hidden;<br>
+&nbsp;&nbsp;&nbsp; }<br>
+&nbsp;&nbsp;&nbsp; .trait-bar-fill {<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; height: 100%;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; background: var(--accent-deep);<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; border-radius: 3px;<br>
+&nbsp;&nbsp;&nbsp; }<br>
+&nbsp;&nbsp;&nbsp; .trait-score {<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; width: 22px;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; text-align: right;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; font-weight: 700;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; color: var(--accent-deep);<br>
+&nbsp;&nbsp;&nbsp; }</p>
+<p dir="ltr">&nbsp;&nbsp;&nbsp; /* Rewarded Ad Modal Overlay */<br>
+&nbsp;&nbsp;&nbsp; .modal-overlay {<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; position: fixed;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; inset: 0;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; background: rgba(25, 35, 28, 0.65);<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; backdrop-filter: blur(12px);<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; -webkit-backdrop-filter: blur(12px);<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; display: none;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; justify-content: center;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; align-items: center;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; z-index: 1000;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; padding: 20px;<br>
+&nbsp;&nbsp;&nbsp; }<br>
+&nbsp;&nbsp;&nbsp; .modal-overlay.active { display: flex; }</p>
+<p dir="ltr">&nbsp;&nbsp;&nbsp; .modal-box {<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; width: 100%;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; max-width: 340px;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; background: #ffffff;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; border-radius: var(--radius-card);<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; padding: 24px 20px;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; text-align: center;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; box-shadow: 0 20px 40px rgba(0,0,0,0.2);<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; animation: cardFadeIn 0.25s ease-out;<br>
+&nbsp;&nbsp;&nbsp; }</p>
+<p dir="ltr">&nbsp;&nbsp;&nbsp; .ad-countdown-bar {<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; width: 100%;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; height: 6px;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; background: #e5ede3;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; border-radius: 3px;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; overflow: hidden;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; margin: 16px 0;<br>
+&nbsp;&nbsp;&nbsp; }</p>
+<p dir="ltr">&nbsp;&nbsp;&nbsp; .ad-countdown-fill {<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; width: 0%;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; height: 100%;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; background: var(--accent-gold);<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; transition: width 3s linear;<br>
+&nbsp;&nbsp;&nbsp; }</p>
+<p dir="ltr">&nbsp;&nbsp;&nbsp; /* Hidden Canvas for Certificate */<br>
+&nbsp;&nbsp;&nbsp; canvas#certCanvas { display: none; }<br>
+&nbsp; &lt;/style&gt;<br>
+&lt;/head&gt;<br>
+&lt;body&gt;</p>
+<p dir="ltr">&nbsp; &lt;div class="ambient-glow glow-1"&gt;&lt;/div&gt;<br>
+&nbsp; &lt;div class="ambient-glow glow-2"&gt;&lt;/div&gt;</p>
+<p dir="ltr">&nbsp; &lt;main class="app-frame"&gt;<br>
+&nbsp;&nbsp;&nbsp; <br>
+&nbsp;&nbsp;&nbsp; &lt;!-- Top Navigation Header --&gt;<br>
+&nbsp;&nbsp;&nbsp; &lt;header class="top-bar"&gt;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &lt;div class="brand-wrap"&gt;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &lt;span class="badge-day" id="ui-day-indicator"&gt;Day 1 / 7&lt;/span&gt;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &lt;button class="btn-icon-subtle" onclick="confirmReset()" title="Reset Journey"&gt;&#8634;&lt;/button&gt;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &lt;/div&gt;</p>
+<p dir="ltr">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &lt;div class="controls-cluster"&gt;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &lt;!-- Ambient Sound Toggle --&gt;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &lt;button class="btn-icon-subtle" id="btn-sound-toggle" onclick="toggleAmbientSound()" title="Ambient Audio"&gt;&#128263;&lt;/button&gt;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &lt;!-- Language Switcher --&gt;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &lt;div class="lang-switcher"&gt;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &lt;button class="lang-btn active" id="btn-en" onclick="setLanguage('en')"&gt;EN&lt;/button&gt;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &lt;button class="lang-btn" id="btn-id" onclick="setLanguage('id')"&gt;ID&lt;/button&gt;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &lt;/div&gt;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &lt;/div&gt;<br>
+&nbsp;&nbsp;&nbsp; &lt;/header&gt;</p>
+<p dir="ltr">&nbsp;&nbsp;&nbsp; &lt;!-- Canvas Stage --&gt;<br>
+&nbsp;&nbsp;&nbsp; &lt;section class="canvas-container"&gt;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &lt;canvas id="gardenCanvas"&gt;&lt;/canvas&gt;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &lt;!-- Interactive Pot Upgrade Badge --&gt;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &lt;div class="pot-switch-badge" id="potUpgradeBadge" onclick="handlePotBadgeClick()"&gt;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &lt;span id="pot-badge-icon"&gt;&#129716;&lt;/span&gt;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &lt;span id="pot-badge-text"&gt;Terracotta&lt;/span&gt;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &lt;/div&gt;</p>
+<p dir="ltr">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &lt;div class="growth-meter"&gt;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &lt;span style="font-size: 0.75rem;"&gt;&#127793;&lt;/span&gt;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &lt;div class="growth-track"&gt;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &lt;div class="growth-fill" id="growth-progress-fill"&gt;&lt;/div&gt;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &lt;/div&gt;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &lt;span class="growth-val" id="growth-val-text"&gt;0%&lt;/span&gt;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &lt;/div&gt;<br>
+&nbsp;&nbsp;&nbsp; &lt;/section&gt;</p>
+<p dir="ltr">&nbsp;&nbsp;&nbsp; &lt;!-- Dynamic Phase View Deck --&gt;<br>
+&nbsp;&nbsp;&nbsp; &lt;section class="view-deck" id="viewDeck"&gt;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &lt;!-- Injected via state machine --&gt;<br>
+&nbsp;&nbsp;&nbsp; &lt;/section&gt;</p>
+<p dir="ltr">&nbsp; &lt;/main&gt;</p>
+<p dir="ltr">&nbsp; &lt;!-- Rewarded Ad Modal --&gt;<br>
+&nbsp; &lt;div class="modal-overlay" id="rewardedAdModal"&gt;<br>
+&nbsp;&nbsp;&nbsp; &lt;div class="modal-box"&gt;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &lt;div style="font-size: 2.2rem; margin-bottom: 6px;"&gt;&#127756;&lt;/div&gt;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &lt;h3 style="font-family: 'Cormorant Garamond', Georgia, serif; font-size: 1.4rem; color: var(--accent-deep);" id="ad-title"&gt;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Unlocking Celestial Pot<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &lt;/h3&gt;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &lt;p style="font-size: 0.75rem; color: var(--text-muted); margin-top: 4px;" id="ad-subtitle"&gt;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Connecting to therapeutic cosmic garden sponsor...<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &lt;/p&gt;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &lt;div class="ad-countdown-bar"&gt;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &lt;div class="ad-countdown-fill" id="adProgressFill"&gt;&lt;/div&gt;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &lt;/div&gt;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &lt;span style="font-size: 0.72rem; color: var(--accent-gold); font-weight: 700;" id="ad-status-text"&gt;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Watching Meditation Ad (3s)...<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &lt;/span&gt;<br>
+&nbsp;&nbsp;&nbsp; &lt;/div&gt;<br>
+&nbsp; &lt;/div&gt;</p>
+<p dir="ltr">&nbsp; &lt;!-- Offscreen canvas for generating shareable certificate (1080x1080) --&gt;<br>
+&nbsp; &lt;canvas id="certCanvas" width="1080" height="1080"&gt;&lt;/canvas&gt;</p>
+<p dir="ltr">&nbsp; &lt;script&gt;<br>
+&nbsp;&nbsp;&nbsp; /* =====================================================================<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 1. SYNTHESIZED WEB AUDIO API SOUND MANAGER (ZERO MP3 ASSETS)<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; ===================================================================== */<br>
+&nbsp;&nbsp;&nbsp; const SoundManager = {<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; ctx: null,<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; isAmbientPlaying: false,<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; ambientGain: null,<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; noiseNode: null,<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; droneOsc1: null,<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; droneOsc2: null,</p>
+<p dir="ltr">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; initContext() {<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; if (!this.ctx) {<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; const AudioContext = window.AudioContext || window.webkitAudioContext;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; this.ctx = new AudioContext();<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; }<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; if (this.ctx.state === 'suspended') {<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; this.ctx.resume();<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; }<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; },</p>
+<p dir="ltr">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; // Subtle, tactile wooden block click/pop<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; playPop() {<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; try {<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; this.initContext();<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; const osc = this.ctx.createOscillator();<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; const gain = this.ctx.createGain();</p>
+<p dir="ltr">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; osc.type = 'triangle';<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; // Pitch drops fast to simulate resonant wood tap<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; osc.frequency.setValueAtTime(540, this.ctx.currentTime);<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; osc.frequency.exponentialRampToValueAtTime(140, this.ctx.currentTime + 0.05);</p>
+<p dir="ltr">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; gain.gain.setValueAtTime(0.2, this.ctx.currentTime);<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; gain.gain.exponentialRampToValueAtTime(0.001, this.ctx.currentTime + 0.055);</p>
+<p dir="ltr">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; osc.connect(gain);<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; gain.connect(this.ctx.destination);</p>
+<p dir="ltr">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; osc.start();<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; osc.stop(this.ctx.currentTime + 0.06);<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; } catch (e) {<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; console.warn('Audio not allowed yet', e);<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; }<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; },</p>
+<p dir="ltr">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; // Gentle water splash/fizz on watering<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; playWaterSplash() {<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; try {<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; this.initContext();<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; const now = this.ctx.currentTime;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; // Noise burst through sweeping bandpass filter<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; const bufferSize = this.ctx.sampleRate * 0.4;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; const noiseBuffer = this.ctx.createBuffer(1, bufferSize, this.ctx.sampleRate);<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; const data = noiseBuffer.getChannelData(0);<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; for (let i = 0; i &lt; bufferSize; i++) {<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; data[i] = Math.random() * 2 - 1;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; }</p>
+<p dir="ltr">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; const noise = this.ctx.createBufferSource();<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; noise.buffer = noiseBuffer;</p>
+<p dir="ltr">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; const filter = this.ctx.createBiquadFilter();<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; filter.type = 'bandpass';<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; filter.frequency.setValueAtTime(600, now);<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; filter.frequency.exponentialRampToValueAtTime(1800, now + 0.2);<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; filter.frequency.exponentialRampToValueAtTime(300, now + 0.38);<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; filter.Q.value = 3.0;</p>
+<p dir="ltr">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; const gain = this.ctx.createGain();<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; gain.gain.setValueAtTime(0.25, now);<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; gain.gain.exponentialRampToValueAtTime(0.001, now + 0.38);</p>
+<p dir="ltr">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; noise.connect(filter);<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; filter.connect(gain);<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; gain.connect(this.ctx.destination);</p>
+<p dir="ltr">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; // Harmonic bubbling tones<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; [520, 680, 840].forEach((freq, i) =&gt; {<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; const osc = this.ctx.createOscillator();<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; const bGain = this.ctx.createGain();<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; osc.type = 'sine';<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; osc.frequency.setValueAtTime(freq, now + i * 0.07);<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; osc.frequency.exponentialRampToValueAtTime(freq * 1.4, now + i * 0.07 + 0.08);</p>
+<p dir="ltr">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; bGain.gain.setValueAtTime(0.08, now + i * 0.07);<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; bGain.gain.exponentialRampToValueAtTime(0.001, now + i * 0.07 + 0.08);</p>
+<p dir="ltr">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; osc.connect(bGain);<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; bGain.connect(this.ctx.destination);<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; osc.start(now + i * 0.07);<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; osc.stop(now + i * 0.07 + 0.09);<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; });</p>
+<p dir="ltr">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; noise.start(now);<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; noise.stop(now + 0.4);<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; } catch (e) {<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; console.warn('Splash audio error', e);<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; }<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; },</p>
+<p dir="ltr">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; // Calming pentatonic wind chime harmony on Day Completion<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; playChime() {<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; try {<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; this.initContext();<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; const now = this.ctx.currentTime;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; // Meditative Pentatonic Frequencies (Eb Major pentatonic: Eb, F, G, Bb, C)<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; const notes = [311.13, 392.00, 466.16, 523.25, 622.25];<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; notes.forEach((freq, idx) =&gt; {<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; const startT = now + idx * 0.08;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; const osc = this.ctx.createOscillator();<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; const gain = this.ctx.createGain();</p>
+<p dir="ltr">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; osc.type = 'sine';<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; osc.frequency.setValueAtTime(freq, startT);</p>
+<p dir="ltr">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; gain.gain.setValueAtTime(0.0001, startT);<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; gain.gain.linearRampToValueAtTime(0.12, startT + 0.03);<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; gain.gain.exponentialRampToValueAtTime(0.0001, startT + 1.8);</p>
+<p dir="ltr">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; osc.connect(gain);<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; gain.connect(this.ctx.destination);</p>
+<p dir="ltr">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; osc.start(startT);<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; osc.stop(startT + 1.9);<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; });<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; } catch (e) {<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; console.warn('Chime audio error', e);<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; }<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; },</p>
+<p dir="ltr">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; // Continuous therapeutic rain / warm ambient noise loop<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; toggleAmbient() {<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; this.initContext();<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; if (this.isAmbientPlaying) {<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; this.stopAmbient();<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; } else {<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; this.startAmbient();<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; }<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; return this.isAmbientPlaying;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; },</p>
+<p dir="ltr">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; startAmbient() {<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; try {<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; const now = this.ctx.currentTime;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; this.ambientGain = this.ctx.createGain();<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; this.ambientGain.gain.setValueAtTime(0.0001, now);<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; this.ambientGain.linearRampToValueAtTime(0.12, now + 1.2);<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; this.ambientGain.connect(this.ctx.destination);</p>
+<p dir="ltr">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; // 1. Soft Lowpass Pink/Brown Rain Sound<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; const bufferSize = this.ctx.sampleRate * 3;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; const noiseBuffer = this.ctx.createBuffer(1, bufferSize, this.ctx.sampleRate);<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; const data = noiseBuffer.getChannelData(0);<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; let lastOut = 0.0;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; for (let i = 0; i &lt; bufferSize; i++) {<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; const white = Math.random() * 2 - 1;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; data[i] = (lastOut + (0.02 * white)) / 1.02;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; lastOut = data[i];<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; data[i] *= 3.5;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; }</p>
+<p dir="ltr">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; this.noiseNode = this.ctx.createBufferSource();<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; this.noiseNode.buffer = noiseBuffer;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; this.noiseNode.loop = true;</p>
+<p dir="ltr">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; const filter = this.ctx.createBiquadFilter();<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; filter.type = 'lowpass';<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; filter.frequency.value = 580;</p>
+<p dir="ltr">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; this.noiseNode.connect(filter);<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; filter.connect(this.ambientGain);</p>
+<p dir="ltr">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; // 2. Meditative 432Hz harmonic drone oscillators (tuned low at 108Hz and 162Hz)<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; this.droneOsc1 = this.ctx.createOscillator();<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; this.droneOsc2 = this.ctx.createOscillator();<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; this.droneOsc1.type = 'sine';<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; this.droneOsc2.type = 'sine';<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; this.droneOsc1.frequency.value = 108; // 432 / 4<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; this.droneOsc2.frequency.value = 162; // 432 * 3/8</p>
+<p dir="ltr">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; const droneGain = this.ctx.createGain();<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; droneGain.gain.value = 0.035;</p>
+<p dir="ltr">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; this.droneOsc1.connect(droneGain);<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; this.droneOsc2.connect(droneGain);<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; droneGain.connect(this.ambientGain);</p>
+<p dir="ltr">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; this.noiseNode.start(now);<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; this.droneOsc1.start(now);<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; this.droneOsc2.start(now);</p>
+<p dir="ltr">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; this.isAmbientPlaying = true;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; } catch (e) {<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; console.warn('Ambient start failed', e);<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; }<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; },</p>
+<p dir="ltr">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; stopAmbient() {<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; if (!this.isAmbientPlaying || !this.ambientGain) return;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; const now = this.ctx.currentTime;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; this.ambientGain.gain.linearRampToValueAtTime(0.0001, now + 0.8);<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; setTimeout(() =&gt; {<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; try {<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; if (this.noiseNode) this.noiseNode.stop();<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; if (this.droneOsc1) this.droneOsc1.stop();<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; if (this.droneOsc2) this.droneOsc2.stop();<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; } catch(e){}<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; this.isAmbientPlaying = false;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; }, 850);<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; }<br>
+&nbsp;&nbsp;&nbsp; };</p>
+<p dir="ltr">&nbsp;&nbsp;&nbsp; function toggleAmbientSound() {<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; const active = SoundManager.toggleAmbient();<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; const btn = document.getElementById('btn-sound-toggle');<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; btn.innerText = active ? '&#127925;' : '&#128263;';<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; btn.classList.toggle('active', active);<br>
+&nbsp;&nbsp;&nbsp; }</p>
+<p dir="ltr">&nbsp;&nbsp;&nbsp; // Attach micro-pop to all button clicks globally<br>
+&nbsp;&nbsp;&nbsp; document.addEventListener('pointerdown', (e) =&gt; {<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; if (e.target.closest('button, .grid-cell, .pot-switch-badge, .lang-btn')) {<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; SoundManager.playPop();<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; }<br>
+&nbsp;&nbsp;&nbsp; });</p>
+<p dir="ltr">&nbsp;&nbsp;&nbsp; /* =====================================================================<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 2. REWARDED ADS &amp; CELESTIAL POT UPGRADE LOGIC<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; ===================================================================== */<br>
+&nbsp;&nbsp;&nbsp; function showRewardedAd(placement, onRewardEarned) {<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; const modal = document.getElementById('rewardedAdModal');<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; const fill = document.getElementById('adProgressFill');<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; const title = document.getElementById('ad-title');<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; const sub = document.getElementById('ad-subtitle');<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; const status = document.getElementById('ad-status-text');</p>
+<p dir="ltr">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; title.innerText = currentLang === 'en' ? 'Unlocking Celestial Pot' : 'Membuka Pot Bintang Kosmik';<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; sub.innerText = currentLang === 'en' <br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; ? 'Connecting to aesthetic garden sponsor...' <br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; : 'Menghubungkan ke sponsor taman hening...';<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; status.innerText = currentLang === 'en' <br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; ? 'Watching Meditation Ad (3s)...' <br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; : 'Menonton Iklan Meditasi (3d)...';</p>
+<p dir="ltr">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; fill.style.transition = 'none';<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; fill.style.width = '0%';<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; modal.classList.add('active');</p>
+<p dir="ltr">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; setTimeout(() =&gt; {<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; fill.style.transition = 'width 3s linear';<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; fill.style.width = '100%';<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; }, 50);</p>
+<p dir="ltr">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; setTimeout(() =&gt; {<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; modal.classList.remove('active');<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; if (typeof onRewardEarned === 'function') {<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; onRewardEarned();<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; }<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; }, 3100);<br>
+&nbsp;&nbsp;&nbsp; }</p>
+<p dir="ltr">&nbsp;&nbsp;&nbsp; function handlePotBadgeClick() {<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; if (state.potStyle === 'terracotta') {<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; if (!state.unlockedCelestialPot) {<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; // Trigger Rewarded Ad hook<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; showRewardedAd('unlock_pot', () =&gt; {<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; state.unlockedCelestialPot = true;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; state.potStyle = 'celestial';<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; canvasEngine.potStyle = 'celestial';<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; canvasEngine.triggerSparkleBurst();<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; SoundManager.playChime();<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; saveState();<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; updatePotBadge();<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; });<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; } else {<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; // Already unlocked, toggle freely<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; state.potStyle = 'celestial';<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; canvasEngine.potStyle = 'celestial';<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; canvasEngine.triggerSparkleBurst();<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; saveState();<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; updatePotBadge();<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; }<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; } else {<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; // Toggle back to terracotta<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; state.potStyle = 'terracotta';<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; canvasEngine.potStyle = 'terracotta';<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; saveState();<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; updatePotBadge();<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; }<br>
+&nbsp;&nbsp;&nbsp; }</p>
+<p dir="ltr">&nbsp;&nbsp;&nbsp; function updatePotBadge() {<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; const icon = document.getElementById('pot-badge-icon');<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; const text = document.getElementById('pot-badge-text');</p>
+<p dir="ltr">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; if (state.potStyle === 'celestial') {<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; icon.innerText = '&#10024;';<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; text.innerText = currentLang === 'en' ? 'Celestial' : 'Kosmik';<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; } else {<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; icon.innerText = state.unlockedCelestialPot ? '&#129716;' : '&#128274;';<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; text.innerText = state.unlockedCelestialPot <br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; ? (currentLang === 'en' ? 'Terracotta' : 'Tanah Liat')<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; : (currentLang === 'en' ? 'Unlock Pot (Ad)' : 'Buka Pot (Iklan)');<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; }<br>
+&nbsp;&nbsp;&nbsp; }</p>
+<p dir="ltr">&nbsp;&nbsp;&nbsp; /* =====================================================================<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 3. DATA &amp; I18N LOCALIZATION DICTIONARY<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; ===================================================================== */<br>
+&nbsp;&nbsp;&nbsp; const GAME_DATA = {<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; en: {<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; title: "The Garden of Mind",<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; subtitle: "A 7-day reflective journey. Each day you answer 3 psychometric inquiries, harvest a positive virtue, and nurture your inner flower.",<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; btnStart: "Begin Today's Journey",<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; btnResume: "Resume Journey",<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; dayPrefix: "Day",<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; likertLabels: ["Rarely", "Seldom", "Sometimes", "Often", "Truly Me"],<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; wordSearchHint: "TAP LETTERS IN SEQUENCE TO SPELL:",<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; wordFoundTitle: "Virtue Harvested!",<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; wordFoundDesc: "Your virtue has filled the watering can. Water your garden to help it bloom.",<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; btnWater: "Water Plant &#128167;",<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; dayDoneTitle: "Bloom Extended!",<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; dayDoneDesc: "Your flower absorbed today's sunlight and wisdom. Return tomorrow or proceed.",<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; btnNextDay: "Begin Next Day &#8594;",<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; finalTitle: "Your Soul Flower Has Bloomed",<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; btnShare: "&#128248; Share My Garden Certificate",<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; btnRestart: "&#8634; Begin A New Journey",<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; premiumBadge: "&#11088; PREMIUM ROADMAP",<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; premiumTitle: "Career &amp; Life Alignment Report",<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; premiumDesc: "Unlock your comprehensive 10-page RIASEC Career Architecture Guide, tailored workplace strengths, and 5-year growth blueprint.",<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; premiumBtn: "Download Full 10-Page Career Roadmap PDF &#8594;",<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; words: ["FOCUS", "EMPATHY", "CREATE", "HARMONY", "GROWTH", "WISDOM", "PURPOSE"],<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; archetypes: {<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; R: { <br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; name: "Desert Cactus", <br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; flower: "cactus", <br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; trait: "Realistic &#8226; Practical &amp; Grounded", <br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; desc: "You value authenticity, concrete craftsmanship, and direct hands-on action.",<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; quote: "Rooted in quiet strength, standing resilient in every season."<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; },<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; I: { <br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; name: "Serene Lotus", <br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; flower: "lotus", <br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; trait: "Investigative &#8226; Analytical &amp; Deep", <br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; desc: "You thrive in reflection, scientific curiosity, and uncovering fundamental truths.",<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; quote: "From deep and quiet waters, true clarity and insight rise."<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; },<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; A: { <br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; name: "Wild Orchid", <br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; flower: "orchid", <br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; trait: "Artistic &#8226; Whimsical &amp; Expressive", <br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; desc: "You find magic in aesthetic freedom, poetic metaphors, and unbridled imagination.",<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; quote: "Where imagination breathes freely, authentic wonders unfurl."<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; },<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; S: { <br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; name: "Golden Sunflower", <br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; flower: "sunflower", <br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; trait: "Social &#8226; Warm &amp; Radiant", <br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; desc: "You illuminate communities with genuine compassion, listening, and supportive warmth.",<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; quote: "Turning faithfully toward warmth, nourishing every heart nearby."<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; },<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; E: { <br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; name: "Velvet Rose", <br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; flower: "rose", <br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; trait: "Enterprising &#8226; Bold &amp; Visionary", <br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; desc: "You dare to lead, speak with conviction, and inspire others toward grand horizons.",<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; quote: "Courageous in ambition, inspiring the world to reach higher."<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; },<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; C: { <br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; name: "Porcelain Lily", <br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; flower: "lily", <br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; trait: "Conventional &#8226; Graceful &amp; Orderly", <br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; desc: "You possess the beauty of precision, systemic calm, and steadfast reliability.",<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; quote: "In patient order and devotion, enduring harmony is built."<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; }<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; },<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; questions: [<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; { id: 1, trait: 'R', text: "I find joy in building tangible crafts, working with tools, or fixing things with my hands." },<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; { id: 2, trait: 'I', text: "I am drawn to deconstructing complex mysteries and studying why systems work." },<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; { id: 3, trait: 'A', text: "I naturally express thoughts through visual arts, lyrical words, or creative projects." },<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; { id: 4, trait: 'S', text: "I deeply cherish moments spent listening to someone and supporting their emotional well-being." },<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; { id: 5, trait: 'E', text: "I feel invigorated when pitching bold ideas and rallying people to achieve a goal." },<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; { id: 6, trait: 'C', text: "I find peaceful satisfaction in immaculate organization, neat files, and structured routines." },<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; { id: 7, trait: 'R', text: "I would rather spend an entire afternoon outdoors in nature than sitting in a lecture." },<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; { id: 8, trait: 'I', text: "I enjoy reading philosophical or scientific materials that challenge conventional thought." },<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; { id: 9, trait: 'A', text: "I wither when forced into rigid conformity; I require artistic license to thrive." },<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; { id: 10, trait: 'S', text: "Fostering inclusive spaces where every voice feels respected is central to my ethos." },<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; { id: 11, trait: 'E', text: "I am comfortable taking calculated risks and speaking before an audience to lead change." },<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; { id: 12, trait: 'C', text: "Double-checking details, optimizing plans, and ensuring accuracy brings me genuine ease." },<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; { id: 13, trait: 'R', text: "When equipment breaks down, my natural impulse is to open it and repair it myself." },<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; { id: 14, trait: 'I', text: "I weigh decisions on logic and empirical patterns rather than purely emotional impulses." },<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; { id: 15, trait: 'A', text: "I perceive subtle aesthetic harmonies, colors, and nuances that many others overlook." },<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; { id: 16, trait: 'S', text: "Close friends frequently seek out my counsel because they trust my empathy and presence." },<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; { id: 17, trait: 'E', text: "I thrive in dynamic environments where strategic ambition and drive are rewarded." },<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; { id: 18, trait: 'C', text: "I pride myself on punctuality, steadfast consistency, and honoring established rules." },<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; { id: 19, trait: 'R', text: "Physical craftsmanship and tangible earth stewardship nourish my spirit deeply." },<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; { id: 20, trait: 'I', text: "The pursuit of objective truth and discovery means far more to me than social prestige." },<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; { id: 21, trait: 'A', text: "I view creative authenticity and heartfelt poetry as essential to being fully alive." }<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; ]<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; },<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; id: {<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; title: "Taman Pikiran",<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; subtitle: "Perjalanan reflektif selama 7 hari. Setiap hari Anda menjawab 3 pertanyaan psikometrik, memetik kebajikan, dan merawat bunga jiwa.",<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; btnStart: "Mulai Hari Ini",<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; btnResume: "Lanjutkan Perjalanan",<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; dayPrefix: "Hari",<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; likertLabels: ["Jarang", "Sedikit", "Kadang", "Sering", "Sangat Saya"],<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; wordSearchHint: "KETUK HURUF SESUAI URUTAN UNTUK MENGEJA:",<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; wordFoundTitle: "Kebajikan Terpetik!",<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; wordFoundDesc: "Kebajikan harimu telah mengisi air siraman. Sirami tanamanmu sekarang agar mekar.",<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; btnWater: "Siram Bunga &#128167;",<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; dayDoneTitle: "Mekar Bertambah!",<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; dayDoneDesc: "Bungamu telah menyerap kebijaksanaan hari ini. Kembali besok atau lanjutkan.",<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; btnNextDay: "Lanjut ke Hari Berikutnya &#8594;",<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; finalTitle: "Bunga Jiwamu Telah Mekar Penuh",<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; btnShare: "&#128248; Bagikan Sertifikat Taman Jiwa",<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; btnRestart: "&#8634; Mulai Perjalanan Baru",<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; premiumBadge: "&#11088; PANDUAN PREMIUM",<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; premiumTitle: "Laporan Karir &amp; Arah Hidup Holistik",<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; premiumDesc: "Buka analisis lengkap peta karir RIASEC 10 halaman, rekomendasi industri, keunggulan profesional, dan rencana pengembangan diri.",<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; premiumBtn: "Unduh Panduan Karir PDF Lengkap &#8594;",<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; words: ["FOKUS", "EMPATI", "KREASI", "HARMONI", "TUMBUH", "BIJAK", "MAKNA"],<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; archetypes: {<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; R: { <br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; name: "Kaktus Gurun", <br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; flower: "cactus", <br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; trait: "Realistis &#8226; Praktis &amp; Membumi", <br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; desc: "Anda menghargai keaslian, keterampilan tangan yang nyata, dan tindakan langsung.",<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; quote: "Berakar dalam keteguhan hening, tegar mekar di setiap musim."<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; },<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; I: { <br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; name: "Teratai Hening", <br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; flower: "lotus", <br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; trait: "Investigatif &#8226; Analitis &amp; Mendalam", <br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; desc: "Anda berkembang dalam ketenangan refleksi, keingintahuan ilmiah, dan pencarian hakikat.",<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; quote: "Dari heningnya renungan mendalam, terbitlah kejernihan sejati."<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; },<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; A: { <br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; name: "Anggrek Liar", <br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; flower: "orchid", <br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; trait: "Artistik &#8226; Puitis &amp; Ekspresif", <br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; desc: "Anda menemukan keindahan dalam kebebasan estetika, metafora seni, dan daya imajinasi.",<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; quote: "Di mana imajinasi bernapas bebas, keajaiban unik terbentang."<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; },<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; S: { <br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; name: "Bunga Matahari", <br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; flower: "sunflower", <br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; trait: "Sosial &#8226; Hangat &amp; Mengayomi", <br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; desc: "Anda menerangi sekeliling lewat ketulusan empati, mendengarkan, dan kepedulian sesama.",<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; quote: "Setia menghadap kehangatan, menyinari setiap hati di sekeliling."<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; },<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; E: { <br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; name: "Mawar Merah", <br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; flower: "rose", <br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; trait: "Wirausaha &#8226; Berani &amp; Berjiwa Pemimpin", <br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; desc: "Anda berani mengambil inisiatif, berbicara lugas, dan menggerakkan orang menuju visi besar.",<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; quote: "Berani dalam melangkah, menginspirasi dunia meraih impian besar."<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; },<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; C: { <br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; name: "Bakung Putih", <br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; flower: "lily", <br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; trait: "Konvensional &#8226; Teratur &amp; Anggun", <br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; desc: "Anda memiliki keindahan dalam ketelitian tinggi, keteraturan sistematis, dan keandalan.",<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; quote: "Dalam keteraturan dan ketulusan hati, terwujud harmoni abadi."<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; }<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; },<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; questions: [<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; { id: 1, trait: 'R', text: "Saya merasa puas saat membuat prakarya nyata, memakai perkakas, atau membetulkan barang dengan tangan." },<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; { id: 2, trait: 'I', text: "Saya senang membedah misteri yang rumit dan meneliti mengapa sebuah sistem bekerja." },<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; { id: 3, trait: 'A', text: "Secara alami saya menuangkan isi pikiran lewat karya visual, tulisan puitis, atau kreasi seni." },<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; { id: 4, trait: 'S', text: "Saya sangat menghargai saat-saat mendengarkan keluh kesah orang lain dan merawat kedamaian batin mereka." },<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; { id: 5, trait: 'E', text: "Saya bersemangat ketika menyampaikan gagasan berani dan mengarahkan kelompok mencapai target." },<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; { id: 6, trait: 'C', text: "Saya merasakan ketenangan dalam susunan berkas rapi, arsip teratur, dan jadwal sistematis." },<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; { id: 7, trait: 'R', text: "Saya lebih suka menghabiskan sore di alam terbuka dan beraktivitas fisik dibanding duduk mendengarkan ceramah." },<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; { id: 8, trait: 'I', text: "Saya senang membaca buku sains atau filsafat mendalam yang menguji asumsi lama." },<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; { id: 9, trait: 'A', text: "Saya merasa layu jika dipaksa patuh pada aturan kaku; saya butuh kebebasan berimajinasi." },<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; { id: 10, trait: 'S', text: "Menciptakan ruang kebersamaan yang hangat di mana setiap orang dihargai adalah prinsip penting bagi saya." },<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; { id: 11, trait: 'E', text: "Saya percaya diri mengambil risiko terukur dan berbicara di depan publik demi mewujudkan perubahan." },<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; { id: 12, trait: 'C', text: "Memeriksa ulang detail pekerjaan dan memastikan semuanya akurat memberikan rasa puas mendalam." },<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; { id: 13, trait: 'R', text: "Saat mesin atau peralatan rusak, insting pertama saya adalah membongkar dan memperbaikinya sendiri." },<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; { id: 14, trait: 'I', text: "Saya menimbang keputusan berdasarkan data logis dan bukti nyata daripada dorongan emosi semata." },<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; { id: 15, trait: 'A', text: "Saya peka menangkap harmoni visual, keindahan warna, dan nuansa halus yang sering terlewatkan orang lain." },<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; { id: 16, trait: 'S', text: "Sahabat sering meminta pertimbangan saya karena mereka mempercayai ketulusan dan empati saya." },<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; { id: 17, trait: 'E', text: "Saya menyukai suasana kompetitif di mana ambisi strategis dan inisiatif berani diapresiasi." },<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; { id: 18, trait: 'C', text: "Saya bangga dengan ketepatan waktu, konsistensi kerja, dan kepatuhan pada standar yang telah disepakati." },<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; { id: 19, trait: 'R', text: "Karya fisik nyata dan merawat tanaman dengan tangan sendiri memberi ketenteraman pada jiwa saya." },<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; { id: 20, trait: 'I', text: "Pencarian kebenaran sejati dan pengetahuan baru jauh lebih berharga bagi saya dibanding status sosial semata." },<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; { id: 21, trait: 'A', text: "Bagi saya, keaslian ekspresi jiwa dan estetika sama pentingnya dengan kebutuhan fisik manusia." }<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; ]<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; }<br>
+&nbsp;&nbsp;&nbsp; };</p>
+<p dir="ltr">&nbsp;&nbsp;&nbsp; /* =====================================================================<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 4. PERSISTENT STATE MACHINE<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; ===================================================================== */<br>
+&nbsp;&nbsp;&nbsp; const STORAGE_KEY = 'garden_of_mind_v4_save';<br>
+&nbsp;&nbsp;&nbsp; let currentLang = 'en';</p>
+<p dir="ltr">&nbsp;&nbsp;&nbsp; let state = {<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; day: 1,<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; phase: 'HOME', // HOME, QUIZ, PUZZLE, WATER, DAY_END, FINAL<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; quizStep: 0,<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; scores: { R: 0, I: 0, A: 0, S: 0, E: 0, C: 0 },<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; growthProgress: 0,<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; dominantFlower: 'cactus',<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; completed: false,<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; potStyle: 'terracotta', // 'terracotta' or 'celestial'<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; unlockedCelestialPot: false<br>
+&nbsp;&nbsp;&nbsp; };</p>
+<p dir="ltr">&nbsp;&nbsp;&nbsp; function saveState() {<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; try {<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; localStorage.setItem(STORAGE_KEY, JSON.stringify(state));<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; localStorage.setItem('garden_lang', currentLang);<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; } catch (e) {<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; console.warn('Local storage write restricted', e);<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; }<br>
+&nbsp;&nbsp;&nbsp; }</p>
+<p dir="ltr">&nbsp;&nbsp;&nbsp; function loadState() {<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; try {<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; const savedLang = localStorage.getItem('garden_lang');<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; if (savedLang &amp;&amp; (savedLang === 'en' || savedLang === 'id')) {<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; currentLang = savedLang;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; }<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; const data = localStorage.getItem(STORAGE_KEY);<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; if (data) {<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; state = { ...state, ...JSON.parse(data) };<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; }<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; } catch (e) {<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; console.warn('Local storage read error', e);<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; }<br>
+&nbsp;&nbsp;&nbsp; }</p>
+<p dir="ltr">&nbsp;&nbsp;&nbsp; function confirmReset() {<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; const msg = currentLang === 'en' <br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; ? 'Begin a new 7-day reflective journey from Day 1?' <br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; : 'Mulai ulang perjalanan reflektif dari Hari ke-1?';<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; if (confirm(msg)) {<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; state = {<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; day: 1,<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; phase: 'HOME',<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; quizStep: 0,<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; scores: { R: 0, I: 0, A: 0, S: 0, E: 0, C: 0 },<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; growthProgress: 0,<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; dominantFlower: 'cactus',<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; completed: false,<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; potStyle: state.potStyle,<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; unlockedCelestialPot: state.unlockedCelestialPot<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; };<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; saveState();<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; refreshUI();<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; }<br>
+&nbsp;&nbsp;&nbsp; }</p>
+<p dir="ltr">&nbsp;&nbsp;&nbsp; function setLanguage(lang) {<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; currentLang = lang;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; document.getElementById('btn-en').classList.toggle('active', lang === 'en');<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; document.getElementById('btn-id').classList.toggle('active', lang === 'id');<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; saveState();<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; refreshUI();<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; updatePotBadge();<br>
+&nbsp;&nbsp;&nbsp; }</p>
+<p dir="ltr">&nbsp;&nbsp;&nbsp; function computeDominantTrait() {<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; const entries = Object.entries(state.scores);<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; entries.sort((a, b) =&gt; b[1] - a[1]);<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; const topTrait = entries[0][0];<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; const flower = GAME_DATA.en.archetypes[topTrait].flower;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; state.dominantFlower = flower;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; return topTrait;<br>
+&nbsp;&nbsp;&nbsp; }</p>
+<p dir="ltr">&nbsp;&nbsp;&nbsp; /* =====================================================================<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 5. VIEW DECK RENDERERS<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; ===================================================================== */<br>
+&nbsp;&nbsp;&nbsp; const deckEl = document.getElementById('viewDeck');</p>
+<p dir="ltr">&nbsp;&nbsp;&nbsp; function refreshUI() {<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; const dayTxt = `${GAME_DATA[currentLang].dayPrefix} ${state.day} / 7`;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; document.getElementById('ui-day-indicator').innerText = state.completed <br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; ? (currentLang === 'en' ? 'Full Bloom' : 'Mekar Penuh') <br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; : dayTxt;</p>
+<p dir="ltr">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; const pct = Math.round(state.growthProgress * 100);<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; document.getElementById('growth-progress-fill').style.width = `${pct}%`;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; document.getElementById('growth-val-text').innerText = `${pct}%`;</p>
+<p dir="ltr">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; canvasEngine.targetProgress = state.growthProgress;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; computeDominantTrait();<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; canvasEngine.flowerType = state.dominantFlower;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; canvasEngine.potStyle = state.potStyle;</p>
+<p dir="ltr">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; updatePotBadge();</p>
+<p dir="ltr">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; switch (state.phase) {<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; case 'HOME': renderHomeView(); break;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; case 'QUIZ': renderQuizView(); break;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; case 'PUZZLE': renderPuzzleView(); break;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; case 'WATER': renderWaterView(); break;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; case 'DAY_END': renderDayEndView(); break;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; case 'FINAL': renderFinalView(); break;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; }<br>
+&nbsp;&nbsp;&nbsp; }</p>
+<p dir="ltr">&nbsp;&nbsp;&nbsp; function renderHomeView() {<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; const isProgress = state.day &gt; 1 || state.growthProgress &gt; 0;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; deckEl.innerHTML = `<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &lt;div class="card-panel"&gt;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &lt;div&gt;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &lt;h1 class="card-title"&gt;${GAME_DATA[currentLang].title}&lt;/h1&gt;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &lt;p class="card-desc"&gt;${GAME_DATA[currentLang].subtitle}&lt;/p&gt;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &lt;/div&gt;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &lt;div style="text-align: center; margin: 8px 0;"&gt;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &lt;div style="font-size: 2rem;"&gt;&#127800;&lt;/div&gt;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &lt;div style="font-size: 0.78rem; color: var(--text-muted); margin-top: 2px;"&gt;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; ${GAME_DATA[currentLang].dayPrefix} ${state.day} &#8226; ${Math.round(state.growthProgress * 100)}%<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &lt;/div&gt;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &lt;/div&gt;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &lt;button class="btn-main" onclick="startDay()"&gt;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; ${isProgress ? GAME_DATA[currentLang].btnResume : GAME_DATA[currentLang].btnStart}<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &lt;/button&gt;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &lt;/div&gt;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; `;<br>
+&nbsp;&nbsp;&nbsp; }</p>
+<p dir="ltr">&nbsp;&nbsp;&nbsp; function startDay() {<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; state.phase = 'QUIZ';<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; state.quizStep = 0;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; saveState();<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; refreshUI();<br>
+&nbsp;&nbsp;&nbsp; }</p>
+<p dir="ltr">&nbsp;&nbsp;&nbsp; function renderQuizView() {<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; const dayQStartIndex = (state.day - 1) * 3;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; const qIndex = dayQStartIndex + state.quizStep;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; const qData = GAME_DATA[currentLang].questions[qIndex];<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; const likertLabels = GAME_DATA[currentLang].likertLabels;</p>
+<p dir="ltr">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; deckEl.innerHTML = `<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &lt;div class="card-panel"&gt;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &lt;div&gt;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &lt;div class="quiz-progress-dots"&gt;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &lt;div class="dot ${state.quizStep === 0 ? 'active' : (state.quizStep &gt; 0 ? 'done' : '')}"&gt;&lt;/div&gt;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &lt;div class="dot ${state.quizStep === 1 ? 'active' : (state.quizStep &gt; 1 ? 'done' : '')}"&gt;&lt;/div&gt;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &lt;div class="dot ${state.quizStep === 2 ? 'active' : ''}"&gt;&lt;/div&gt;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &lt;/div&gt;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &lt;div class="question-prompt"&gt;&#8220;${qData.text}&#8221;&lt;/div&gt;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &lt;/div&gt;</p>
+<p dir="ltr">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &lt;div&gt;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &lt;div class="likert-scale"&gt;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; ${[1, 2, 3, 4, 5].map((val, idx) =&gt; `<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &lt;button class="likert-btn" onclick="answerQuestion(${val}, '${qData.trait}')"&gt;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &lt;span&gt;${val}&lt;/span&gt;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &lt;span class="likert-sub"&gt;${likertLabels[idx]}&lt;/span&gt;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &lt;/button&gt;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; `).join('')}<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &lt;/div&gt;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &lt;/div&gt;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &lt;/div&gt;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; `;<br>
+&nbsp;&nbsp;&nbsp; }</p>
+<p dir="ltr">&nbsp;&nbsp;&nbsp; function answerQuestion(score, trait) {<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; state.scores[trait] = (state.scores[trait] || 0) + score;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; if (state.quizStep &lt; 2) {<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; state.quizStep++;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; } else {<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; state.phase = 'PUZZLE';<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; }<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; saveState();<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; refreshUI();<br>
+&nbsp;&nbsp;&nbsp; }</p>
+<p dir="ltr">&nbsp;&nbsp;&nbsp; let activeSelection = [];<br>
+&nbsp;&nbsp;&nbsp; function renderPuzzleView() {<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; const targetWord = GAME_DATA[currentLang].words[state.day - 1];<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; activeSelection = [];<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; const grid = buildWordGrid(targetWord);</p>
+<p dir="ltr">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; deckEl.innerHTML = `<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &lt;div class="card-panel"&gt;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &lt;div&gt;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &lt;div class="word-target-banner"&gt;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &lt;div class="target-word-hint"&gt;${GAME_DATA[currentLang].wordSearchHint}&lt;/div&gt;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &lt;div class="target-word-display" id="targetWordText"&gt;${targetWord}&lt;/div&gt;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &lt;/div&gt;</p>
+<p dir="ltr">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &lt;div class="grid-board" id="wordGridBoard"&gt;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; ${grid.map((letter, i) =&gt; `<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &lt;div class="grid-cell" data-idx="${i}" data-letter="${letter}" onclick="onLetterClick(${i})"&gt;${letter}&lt;/div&gt;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; `).join('')}<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &lt;/div&gt;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &lt;/div&gt;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &lt;p class="puzzle-instructions"&gt;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; ${currentLang === 'en' ? 'Tap each letter in order to spell the virtue.' : 'Ketuk huruf satu per satu sesuai urutan kata kebajikan.'}<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &lt;/p&gt;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &lt;/div&gt;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; `;<br>
+&nbsp;&nbsp;&nbsp; }</p>
+<p dir="ltr">&nbsp;&nbsp;&nbsp; function buildWordGrid(word) {<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; const size = 36;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; const grid = new Array(size).fill(null);<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; const chars = word.split('');<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; const startPos = [0, 1, 6, 7, 12, 13][(state.day * 2) % 6];<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; for (let i = 0; i &lt; chars.length; i++) {<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; grid[startPos + i] = chars[i];<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; }</p>
+<p dir="ltr">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; const filler = currentLang === 'en' ? 'HARMONYSOULSEEDGROWTHLEAF' : 'TANAHBUNGAMEKARDAMAIJIWA';<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; for (let i = 0; i &lt; size; i++) {<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; if (!grid[i]) {<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; grid[i] = filler[(i * 7 + state.day) % filler.length];<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; }<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; }<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; return grid;<br>
+&nbsp;&nbsp;&nbsp; }</p>
+<p dir="ltr">&nbsp;&nbsp;&nbsp; function onLetterClick(index) {<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; const targetWord = GAME_DATA[currentLang].words[state.day - 1];<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; const cells = document.querySelectorAll('.grid-cell');<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; const clickedCell = cells[index];<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; const clickedLetter = clickedCell.dataset.letter;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; const nextExpectedChar = targetWord[activeSelection.length];</p>
+<p dir="ltr">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; if (clickedLetter === nextExpectedChar) {<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; activeSelection.push(index);<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; clickedCell.classList.add('selected');</p>
+<p dir="ltr">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; if (activeSelection.length === targetWord.length) {<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; activeSelection.forEach(idx =&gt; {<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; cells[idx].classList.remove('selected');<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; cells[idx].classList.add('solved');<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; });</p>
+<p dir="ltr">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; setTimeout(() =&gt; {<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; state.phase = 'WATER';<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; saveState();<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; refreshUI();<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; }, 500);<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; }<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; } else {<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; activeSelection.forEach(idx =&gt; cells[idx].classList.remove('selected'));<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; activeSelection = [];<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; }<br>
+&nbsp;&nbsp;&nbsp; }</p>
+<p dir="ltr">&nbsp;&nbsp;&nbsp; function renderWaterView() {<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; deckEl.innerHTML = `<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &lt;div class="card-panel"&gt;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &lt;div class="watering-hero"&gt;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &lt;div class="can-symbol"&gt;&#129716;&lt;/div&gt;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &lt;h2 class="card-title"&gt;${GAME_DATA[currentLang].wordFoundTitle}&lt;/h2&gt;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &lt;p class="card-desc"&gt;${GAME_DATA[currentLang].wordFoundDesc}&lt;/p&gt;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &lt;/div&gt;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &lt;button class="btn-main" onclick="triggerWateringAction()"&gt;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; ${GAME_DATA[currentLang].btnWater}<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &lt;/button&gt;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &lt;/div&gt;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; `;<br>
+&nbsp;&nbsp;&nbsp; }</p>
+<p dir="ltr">&nbsp;&nbsp;&nbsp; function triggerWateringAction() {<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; SoundManager.playWaterSplash();<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; canvasEngine.sprayDroplets();</p>
+<p dir="ltr">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; const newGrowth = Math.min(1.0, (state.day / 7));<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; state.growthProgress = newGrowth;</p>
+<p dir="ltr">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; saveState();<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; refreshUI();</p>
+<p dir="ltr">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; setTimeout(() =&gt; {<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; SoundManager.playChime();<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; if (state.day &gt;= 7) {<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; state.phase = 'FINAL';<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; state.completed = true;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; } else {<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; state.phase = 'DAY_END';<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; }<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; saveState();<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; refreshUI();<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; }, 1300);<br>
+&nbsp;&nbsp;&nbsp; }</p>
+<p dir="ltr">&nbsp;&nbsp;&nbsp; function renderDayEndView() {<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; deckEl.innerHTML = `<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &lt;div class="card-panel"&gt;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &lt;div&gt;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &lt;h2 class="card-title"&gt;${GAME_DATA[currentLang].dayDoneTitle}&lt;/h2&gt;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &lt;p class="card-desc"&gt;${GAME_DATA[currentLang].dayDoneDesc}&lt;/p&gt;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &lt;/div&gt;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &lt;div style="text-align: center; margin: 10px 0;"&gt;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &lt;span style="font-size: 1.8rem;"&gt;&#127807;&lt;/span&gt;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &lt;p style="font-size: 0.78rem; color: var(--accent-deep); font-weight: 600; margin-top: 3px;"&gt;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; ${GAME_DATA[currentLang].dayPrefix} ${state.day} Completed<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &lt;/p&gt;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &lt;/div&gt;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &lt;button class="btn-main" onclick="goToNextDay()"&gt;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; ${GAME_DATA[currentLang].btnNextDay}<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &lt;/button&gt;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &lt;/div&gt;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; `;<br>
+&nbsp;&nbsp;&nbsp; }</p>
+<p dir="ltr">&nbsp;&nbsp;&nbsp; function goToNextDay() {<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; state.day++;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; state.phase = 'QUIZ';<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; state.quizStep = 0;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; saveState();<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; refreshUI();<br>
+&nbsp;&nbsp;&nbsp; }</p>
+<p dir="ltr">&nbsp;&nbsp;&nbsp; function renderFinalView() {<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; const topTrait = computeDominantTrait();<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; const info = GAME_DATA[currentLang].archetypes[topTrait];<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; const maxScore = Math.max(...Object.values(state.scores), 1);</p>
+<p dir="ltr">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; deckEl.innerHTML = `<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &lt;div class="card-panel"&gt;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &lt;div&gt;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &lt;h2 class="card-title"&gt;${info.name}&lt;/h2&gt;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &lt;p style="text-align: center; font-size: 0.76rem; font-weight: 700; color: var(--accent-sage); text-transform: uppercase;"&gt;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; ${info.trait}<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &lt;/p&gt;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &lt;p class="card-desc" style="margin-top: 4px; margin-bottom: 8px;"&gt;${info.desc}&lt;/p&gt;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &lt;/div&gt;</p>
+<p dir="ltr">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &lt;div class="results-chart"&gt;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; ${['R', 'I', 'A', 'S', 'E', 'C'].map(code =&gt; {<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; const sc = state.scores[code] || 0;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; const barPct = Math.round((sc / (maxScore || 1)) * 100);<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; const label = GAME_DATA[currentLang].archetypes[code].name.split(' ')[1] || code;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; return `<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &lt;div class="trait-bar-row"&gt;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &lt;span class="trait-label"&gt;${label} (${code})&lt;/span&gt;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &lt;div class="trait-bar-track"&gt;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &lt;div class="trait-bar-fill" style="width: ${barPct}%;"&gt;&lt;/div&gt;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &lt;/div&gt;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &lt;span class="trait-score"&gt;${sc}&lt;/span&gt;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &lt;/div&gt;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; `;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; }).join('')}<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &lt;/div&gt;</p>
+<p dir="ltr">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &lt;!-- Premium Upgrade Card --&gt;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &lt;div class="premium-card"&gt;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &lt;span class="premium-badge"&gt;${GAME_DATA[currentLang].premiumBadge}&lt;/span&gt;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &lt;div class="premium-title"&gt;${GAME_DATA[currentLang].premiumTitle}&lt;/div&gt;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &lt;p class="premium-desc"&gt;${GAME_DATA[currentLang].premiumDesc}&lt;/p&gt;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &lt;a href="https://lynk.id" target="_blank" rel="noopener noreferrer" class="btn-main btn-premium"&gt;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; ${GAME_DATA[currentLang].premiumBtn}<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &lt;/a&gt;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &lt;/div&gt;</p>
+<p dir="ltr">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &lt;!-- Certificate Download &amp; Sharing --&gt;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &lt;button class="btn-main btn-share" onclick="generateAndDownloadCertificate()"&gt;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; ${GAME_DATA[currentLang].btnShare}<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &lt;/button&gt;</p>
+<p dir="ltr">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &lt;button class="btn-main btn-secondary" onclick="confirmReset()"&gt;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; ${GAME_DATA[currentLang].btnRestart}<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &lt;/button&gt;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &lt;/div&gt;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; `;<br>
+&nbsp;&nbsp;&nbsp; }</p>
+<p dir="ltr">&nbsp;&nbsp;&nbsp; /* =====================================================================<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 6. CANVAS RENDERING ENGINE (POT LOGIC &amp; CELESTIAL PARTICLES)<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; ===================================================================== */<br>
+&nbsp;&nbsp;&nbsp; const canvas = document.getElementById('gardenCanvas');<br>
+&nbsp;&nbsp;&nbsp; const ctx = canvas.getContext('2d');</p>
+<p dir="ltr">&nbsp;&nbsp;&nbsp; const canvasEngine = {<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; flowerType: 'cactus',<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; potStyle: 'terracotta',<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; currentProgress: 0,<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; targetProgress: 0,<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; sway: 0,<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; droplets: [],<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; sparkles: [],</p>
+<p dir="ltr">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; sprayDroplets() {<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; for (let i = 0; i &lt; 28; i++) {<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; this.droplets.push({<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; x: (canvas.width / (window.devicePixelRatio || 1)) * (0.35 + Math.random() * 0.3),<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; y: 10 + Math.random() * 30,<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; vy: 3 + Math.random() * 4,<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; length: 8 + Math.random() * 8<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; });<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; }<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; },</p>
+<p dir="ltr">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; triggerSparkleBurst() {<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; const w = canvas.getBoundingClientRect().width;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; const h = canvas.getBoundingClientRect().height;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; for (let i = 0; i &lt; 40; i++) {<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; this.sparkles.push({<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; x: w / 2 + (Math.random() - 0.5) * 80,<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; y: h * 0.85 + (Math.random() - 0.5) * 40,<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; vx: (Math.random() - 0.5) * 3,<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; vy: -Math.random() * 3.5 - 1.2,<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; size: Math.random() * 3 + 1.5,<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; alpha: 1.0,<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; color: Math.random() &gt; 0.4 ? '#fde68a' : '#ffffff'<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; });<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; }<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; }<br>
+&nbsp;&nbsp;&nbsp; };</p>
+<p dir="ltr">&nbsp;&nbsp;&nbsp; function resizeCanvas() {<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; const rect = canvas.parentElement.getBoundingClientRect();<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; const dpr = window.devicePixelRatio || 1;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; canvas.width = rect.width * dpr;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; canvas.height = rect.height * dpr;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; ctx.resetTransform();<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; ctx.scale(dpr, dpr);<br>
+&nbsp;&nbsp;&nbsp; }<br>
+&nbsp;&nbsp;&nbsp; window.addEventListener('resize', resizeCanvas);</p>
+<p dir="ltr">&nbsp;&nbsp;&nbsp; // Architectural Pot Drawing Routine (Terracotta &amp; Celestial)<br>
+&nbsp;&nbsp;&nbsp; function drawPot(c, potStyle, x, y, width, height) {<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; c.save();<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; const topW = width;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; const botW = width * 0.72;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; const rimH = height * 0.24;</p>
+<p dir="ltr">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; if (potStyle === 'celestial') {<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; // Celestial Soft Glow Aura<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; c.shadowColor = 'rgba(165, 180, 252, 0.45)';<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; c.shadowBlur = 18;</p>
+<p dir="ltr">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; // Pot Body Gradient (Deep Indigo)<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; const pGrad = c.createLinearGradient(x - topW/2, y, x + topW/2, y + height);<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; pGrad.addColorStop(0, '#161938');<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; pGrad.addColorStop(0.5, '#232959');<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; pGrad.addColorStop(1, '#0e1128');</p>
+<p dir="ltr">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; // Draw Trapezoid Body<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; c.fillStyle = pGrad;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; c.beginPath();<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; c.moveTo(x - topW * 0.46, y + rimH);<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; c.lineTo(x + topW * 0.46, y + rimH);<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; c.lineTo(x + botW * 0.5, y + height);<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; c.lineTo(x - botW * 0.5, y + height);<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; c.closePath();<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; c.fill();</p>
+<p dir="ltr">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; // Celestial Gold Constellation Lines &amp; Stars<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; c.strokeStyle = 'rgba(253, 230, 138, 0.55)';<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; c.lineWidth = 1;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; c.beginPath();<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; c.moveTo(x - topW * 0.25, y + rimH + 10);<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; c.lineTo(x - 8, y + height * 0.65);<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; c.lineTo(x + 18, y + height * 0.55);<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; c.lineTo(x + topW * 0.28, y + height * 0.75);<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; c.stroke();</p>
+<p dir="ltr">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; // Star Dots<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; c.fillStyle = '#fef08a';<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; [<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; { dx: -topW * 0.25, dy: rimH + 10 },<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; { dx: -8, dy: height * 0.65 },<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; { dx: 18, dy: height * 0.55 },<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; { dx: topW * 0.28, dy: height * 0.75 },<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; { dx: 0, dy: height * 0.82 }<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; ].forEach(pt =&gt; {<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; c.beginPath();<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; c.arc(x + pt.dx, y + pt.dy, 2, 0, Math.PI * 2);<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; c.fill();<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; });</p>
+<p dir="ltr">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; // Gold Rim<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; c.shadowBlur = 8;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; c.shadowColor = 'rgba(234, 179, 8, 0.4)';<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; const rGrad = c.createLinearGradient(x - topW/2, y, x + topW/2, y);<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; rGrad.addColorStop(0, '#ca8a04');<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; rGrad.addColorStop(0.5, '#fef08a');<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; rGrad.addColorStop(1, '#a16207');<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; c.fillStyle = rGrad;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; c.beginPath();<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; c.roundRect(x - topW * 0.52, y, topW * 1.04, rimH, [4, 4, 3, 3]);<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; c.fill();</p>
+<p dir="ltr">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; // Drainage Saucer<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; c.fillStyle = '#1e1b4b';<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; c.beginPath();<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; c.roundRect(x - botW * 0.6, y + height - 2, botW * 1.2, 6, [2, 2, 4, 4]);<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; c.fill();</p>
+<p dir="ltr">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; } else {<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; // Minimalist Pastel Terracotta Pot<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; c.shadowColor = 'rgba(67, 85, 72, 0.1)';<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; c.shadowBlur = 10;</p>
+<p dir="ltr">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; const pGrad = c.createLinearGradient(x - topW/2, y, x + topW/2, y + height);<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; pGrad.addColorStop(0, '#e5a593');<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; pGrad.addColorStop(0.6, '#d48d79');<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; pGrad.addColorStop(1, '#be7560');</p>
+<p dir="ltr">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; // Trapezoid Body<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; c.fillStyle = pGrad;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; c.beginPath();<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; c.moveTo(x - topW * 0.46, y + rimH);<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; c.lineTo(x + topW * 0.46, y + rimH);<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; c.lineTo(x + botW * 0.5, y + height);<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; c.lineTo(x - botW * 0.5, y + height);<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; c.closePath();<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; c.fill();</p>
+<p dir="ltr">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; // Rim<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; const rGrad = c.createLinearGradient(x - topW/2, y, x + topW/2, y);<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; rGrad.addColorStop(0, '#f0b7a7');<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; rGrad.addColorStop(1, '#c87c68');<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; c.fillStyle = rGrad;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; c.beginPath();<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; c.roundRect(x - topW * 0.5, y, topW, rimH, [4, 4, 2, 2]);<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; c.fill();</p>
+<p dir="ltr">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; // Terracotta Saucer<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; c.fillStyle = '#ba6e5a';<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; c.beginPath();<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; c.roundRect(x - botW * 0.58, y + height - 2, botW * 1.16, 5, [2, 2, 4, 4]);<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; c.fill();<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; }<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; c.restore();<br>
+&nbsp;&nbsp;&nbsp; }</p>
+<p dir="ltr">&nbsp;&nbsp;&nbsp; function drawStemLeaf(c, x, y, len, angle, scale, flip = 1) {<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; c.save();<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; c.translate(x, y);<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; c.rotate(angle);<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; c.scale(scale * flip, scale);<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; c.beginPath();<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; c.moveTo(0, 0);<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; c.quadraticCurveTo(len * 0.45, -len * 0.35, len, 0);<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; c.quadraticCurveTo(len * 0.45, len * 0.35, 0, 0);<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; const g = c.createLinearGradient(0, -len * 0.2, len, 0);<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; g.addColorStop(0, '#759472');<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; g.addColorStop(1, '#97b192');<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; c.fillStyle = g;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; c.fill();<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; c.restore();<br>
+&nbsp;&nbsp;&nbsp; }</p>
+<p dir="ltr">&nbsp;&nbsp;&nbsp; function renderFlowerSpecies(c, type, potStyle, w, h, p, swayOffset) {<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; const potW = Math.min(100, w * 0.26);<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; const potH = 46;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; const baseY = h * 0.84;</p>
+<p dir="ltr">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; // 1. Draw Pot &amp; Saucer<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; drawPot(c, potStyle, w / 2, baseY, potW, potH);</p>
+<p dir="ltr">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; // 2. Soil Surface inside the pot rim<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; const soilGrad = c.createLinearGradient(0, baseY - 4, 0, baseY + 6);<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; soilGrad.addColorStop(0, '#665749');<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; soilGrad.addColorStop(1, '#473b30');<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; c.fillStyle = soilGrad;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; c.beginPath();<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; c.ellipse(w / 2, baseY + 2, potW * 0.44, 6, 0, 0, Math.PI * 2);<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; c.fill();</p>
+<p dir="ltr">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; // Seed sprout<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; if (p &lt; 0.12) {<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; c.fillStyle = '#a9ba9d';<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; c.beginPath();<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; c.ellipse(w / 2, baseY, 4 + p * 12, 3 + p * 6, 0, 0, Math.PI * 2);<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; c.fill();<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; }</p>
+<p dir="ltr">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; // 3. Flower Growth Rendering<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; if (type === 'cactus') {<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; const stemH = (h * 0.44) * Math.min(1, p / 0.7);<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; const topY = baseY - stemH;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; const stemW = 26 * Math.min(1, p / 0.5);<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; if (p &gt; 0.05) {<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; c.fillStyle = '#658869';<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; c.beginPath();<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; c.roundRect((w / 2) - stemW / 2 + swayOffset * 0.4, topY, stemW, stemH, [stemW / 2, stemW / 2, 6, 6]);<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; c.fill();<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; }<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; if (p &gt; 0.62) {<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; const bp = (p - 0.62) / 0.38;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; c.save();<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; c.translate(w / 2 + swayOffset * 0.4, topY + 2);<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; c.scale(bp, bp);<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; for (let i = 0; i &lt; 12; i++) {<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; c.rotate((Math.PI * 2) / 12);<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; c.fillStyle = '#ff8f82';<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; c.beginPath();<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; c.ellipse(0, -14, 5, 12, 0, 0, Math.PI * 2);<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; c.fill();<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; }<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; c.fillStyle = '#ffe066';<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; c.beginPath();<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; c.arc(0, 0, 4, 0, Math.PI * 2);<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; c.fill();<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; c.restore();<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; }<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; } else if (type === 'lotus') {<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; const stemH = (h * 0.46) * Math.min(1, p / 0.7);<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; const headX = (w / 2) + swayOffset;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; const headY = baseY - stemH;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; if (p &gt; 0.05) {<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; c.strokeStyle = '#67896d';<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; c.lineWidth = 3.5;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; c.beginPath();<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; c.moveTo(w / 2, baseY);<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; c.quadraticCurveTo(w / 2 + swayOffset * 0.3, baseY - stemH * 0.5, headX, headY);<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; c.stroke();<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; }<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; if (p &gt; 0.6) {<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; const bp = (p - 0.6) / 0.4;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; c.save();<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; c.translate(headX, headY);<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; c.scale(bp, bp);<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; [18, 14, 10].forEach((rad, rIdx) =&gt; {<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; for (let i = 0; i &lt; 6; i++) {<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; c.rotate((Math.PI * 2) / 6);<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; c.fillStyle = rIdx === 0 ? '#d4c2df' : (rIdx === 1 ? '#e9def2' : '#ffffff');<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; c.beginPath();<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; c.ellipse(0, -rad, 6, rad, 0, 0, Math.PI * 2);<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; c.fill();<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; }<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; });<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; c.fillStyle = '#fce588';<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; c.beginPath();<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; c.arc(0, -4, 4, 0, Math.PI * 2);<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; c.fill();<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; c.restore();<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; }<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; } else if (type === 'orchid') {<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; const stemH = (h * 0.45) * Math.min(1, p / 0.7);<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; const headX = (w / 2) + 20 + swayOffset;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; const headY = baseY - stemH;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; if (p &gt; 0.05) {<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; c.strokeStyle = '#557657';<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; c.lineWidth = 3;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; c.beginPath();<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; c.moveTo(w / 2, baseY);<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; c.bezierCurveTo(w / 2 - 15, baseY - stemH * 0.4, w / 2 + 30, baseY - stemH * 0.7, headX, headY);<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; c.stroke();<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; }<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; if (p &gt; 0.6) {<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; const bp = (p - 0.6) / 0.4;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; c.save();<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; c.translate(headX, headY);<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; c.scale(bp, bp);<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; c.fillStyle = '#f6d9ec';<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; for (let rot of [-0.8, 0.8, -2.4]) {<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; c.save(); c.rotate(rot);<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; c.beginPath(); c.ellipse(0, -16, 6, 16, 0, 0, Math.PI * 2); c.fill();<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; c.restore();<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; }<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; c.fillStyle = '#ea88c1';<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; [-1, 1].forEach(s =&gt; {<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; c.save(); c.scale(s, 1);<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; c.beginPath(); c.ellipse(15, -4, 12, 8, 0.3, 0, Math.PI * 2); c.fill();<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; c.restore();<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; });<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; c.fillStyle = '#c72e7d';<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; c.beginPath();<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; c.ellipse(0, 10, 7, 10, 0, 0, Math.PI * 2);<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; c.fill();<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; c.restore();<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; }<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; } else if (type === 'sunflower') {<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; const stemH = (h * 0.46) * Math.min(1, p / 0.7);<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; const headX = (w / 2) + swayOffset;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; const headY = baseY - stemH;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; if (p &gt; 0.05) {<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; c.strokeStyle = '#5c7b50';<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; c.lineWidth = 4.5;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; c.beginPath();<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; c.moveTo(w / 2, baseY);<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; c.lineTo(headX, headY);<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; c.stroke();<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; if (p &gt; 0.3) {<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; drawStemLeaf(c, w / 2, baseY - stemH * 0.4, 32, -0.6, (p - 0.3) / 0.4, -1);<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; drawStemLeaf(c, w / 2, baseY - stemH * 0.6, 28, 0.5, (p - 0.3) / 0.4, 1);<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; }<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; }<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; if (p &gt; 0.58) {<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; const bp = (p - 0.58) / 0.42;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; c.save();<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; c.translate(headX, headY);<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; c.scale(bp, bp);<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; for (let i = 0; i &lt; 16; i++) {<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; c.rotate((Math.PI * 2) / 16);<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; c.fillStyle = '#fdb833';<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; c.beginPath();<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; c.ellipse(0, -22, 5, 14, 0, 0, Math.PI * 2);<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; c.fill();<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; }<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; c.fillStyle = '#4a2f20';<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; c.beginPath();<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; c.arc(0, 0, 12, 0, Math.PI * 2);<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; c.fill();<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; c.restore();<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; }<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; } else if (type === 'rose') {<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; const stemH = (h * 0.46) * Math.min(1, p / 0.7);<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; const headX = (w / 2) + swayOffset;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; const headY = baseY - stemH;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; if (p &gt; 0.05) {<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; c.strokeStyle = '#47634a';<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; c.lineWidth = 3.5;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; c.beginPath();<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; c.moveTo(w / 2, baseY);<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; c.quadraticCurveTo(w / 2 - 10, baseY - stemH * 0.5, headX, headY);<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; c.stroke();<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; }<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; if (p &gt; 0.6) {<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; const bp = (p - 0.6) / 0.4;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; c.save();<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; c.translate(headX, headY);<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; c.scale(bp, bp);<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; [22, 16, 10, 5].forEach((rad, rIdx) =&gt; {<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; const cols = ['#c9324d', '#de435f', '#f46a84', '#ffa2b4'];<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; for (let i = 0; i &lt; 5; i++) {<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; ctx.rotate((Math.PI * 2) / 5);<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; c.fillStyle = cols[rIdx];<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; c.beginPath();<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; c.ellipse(0, -rad * 0.5, rad * 0.7, rad * 0.5, 0, 0, Math.PI * 2);<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; c.fill();<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; }<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; });<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; c.restore();<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; }<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; } else { // lily<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; const stemH = (h * 0.47) * Math.min(1, p / 0.7);<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; const headX = (w / 2) + swayOffset * 0.5;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; const headY = baseY - stemH;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; if (p &gt; 0.05) {<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; c.strokeStyle = '#5a785c';<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; c.lineWidth = 3.5;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; c.beginPath();<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; c.moveTo(w / 2, baseY);<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; c.lineTo(headX, headY);<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; c.stroke();<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; if (p &gt; 0.25) {<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; drawStemLeaf(c, w / 2, baseY - stemH * 0.35, 34, -0.3, (p - 0.25) / 0.4, -1);<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; drawStemLeaf(c, w / 2, baseY - stemH * 0.55, 34, 0.3, (p - 0.25) / 0.4, 1);<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; }<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; }<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; if (p &gt; 0.6) {<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; const bp = (p - 0.6) / 0.4;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; c.save();<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; c.translate(headX, headY);<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; c.scale(bp, bp);<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; for (let i = 0; i &lt; 6; i++) {<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; c.rotate((Math.PI * 2) / 6);<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; c.fillStyle = '#ffffff';<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; c.beginPath();<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; c.ellipse(0, -26, 6, 20, 0, 0, Math.PI * 2);<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; c.fill();<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; }<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; c.fillStyle = '#b45309';<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; for (let i = 0; i &lt; 6; i++) {<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; c.rotate((Math.PI * 2) / 6);<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; c.beginPath();<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; c.arc(0, -14, 2, 0, Math.PI * 2);<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; c.fill();<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; }<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; c.restore();<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; }<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; }<br>
+&nbsp;&nbsp;&nbsp; }</p>
+<p dir="ltr">&nbsp;&nbsp;&nbsp; function renderGarden() {<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; canvasEngine.sway += 0.025;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; canvasEngine.currentProgress += (canvasEngine.targetProgress - canvasEngine.currentProgress) * 0.06;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; const p = canvasEngine.currentProgress;</p>
+<p dir="ltr">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; const w = canvas.getBoundingClientRect().width;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; const h = canvas.getBoundingClientRect().height;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; ctx.clearRect(0, 0, w, h);</p>
+<p dir="ltr">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; const swayOffset = Math.sin(canvasEngine.sway) * (4 * Math.min(1, p * 1.5));<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; const type = canvasEngine.flowerType;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; const potStyle = canvasEngine.potStyle;</p>
+<p dir="ltr">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; renderFlowerSpecies(ctx, type, potStyle, w, h, p, swayOffset);</p>
+<p dir="ltr">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; // Celestial Sparkle Particle Burst<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; if (canvasEngine.sparkles.length &gt; 0) {<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; for (let i = canvasEngine.sparkles.length - 1; i &gt;= 0; i--) {<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; const s = canvasEngine.sparkles[i];<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; s.x += s.vx;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; s.y += s.vy;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; s.alpha -= 0.02;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; ctx.fillStyle = s.color;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; ctx.globalAlpha = Math.max(0, s.alpha);<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; ctx.beginPath();<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; ctx.arc(s.x, s.y, s.size, 0, Math.PI * 2);<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; ctx.fill();<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; ctx.globalAlpha = 1.0;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; if (s.alpha &lt;= 0) {<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; canvasEngine.sparkles.splice(i, 1);<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; }<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; }<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; }</p>
+<p dir="ltr">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; // Rain Droplets<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; if (canvasEngine.droplets.length &gt; 0) {<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; ctx.strokeStyle = 'rgba(125, 185, 235, 0.75)';<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; ctx.lineWidth = 2;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; const baseY = h * 0.84;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; for (let i = canvasEngine.droplets.length - 1; i &gt;= 0; i--) {<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; const d = canvasEngine.droplets[i];<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; d.y += d.vy;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; ctx.beginPath();<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; ctx.moveTo(d.x, d.y);<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; ctx.lineTo(d.x, d.y + d.length);<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; ctx.stroke();<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; if (d.y &gt; baseY) {<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; canvasEngine.droplets.splice(i, 1);<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; }<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; }<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; }</p>
+<p dir="ltr">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; requestAnimationFrame(renderGarden);<br>
+&nbsp;&nbsp;&nbsp; }</p>
+<p dir="ltr">&nbsp;&nbsp;&nbsp; /* =====================================================================<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 7. HIGH-RESOLUTION SHAREABLE CERTIFICATE EXPORT<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; ===================================================================== */<br>
+&nbsp;&nbsp;&nbsp; function generateAndDownloadCertificate() {<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; const cert = document.getElementById('certCanvas');<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; const cCtx = cert.getContext('2d');<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; const W = cert.width;&nbsp; // 1080<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; const H = cert.height; // 1080</p>
+<p dir="ltr">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; const topTrait = computeDominantTrait();<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; const info = GAME_DATA[currentLang].archetypes[topTrait];</p>
+<p dir="ltr">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; // 1. Background Gradient<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; const bgGrad = cCtx.createLinearGradient(0, 0, 0, H);<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; bgGrad.addColorStop(0, '#faf8f3');<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; bgGrad.addColorStop(1, '#e6ede2');<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; cCtx.fillStyle = bgGrad;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; cCtx.fillRect(0, 0, W, H);</p>
+<p dir="ltr">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; // 2. Soft Ambient Vignette / Glow<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; cCtx.save();<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; cCtx.filter = 'blur(90px)';<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; cCtx.fillStyle = 'rgba(217, 154, 128, 0.22)';<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; cCtx.beginPath();<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; cCtx.arc(200, 200, 220, 0, Math.PI * 2);<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; cCtx.fill();</p>
+<p dir="ltr">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; cCtx.fillStyle = 'rgba(143, 165, 140, 0.28)';<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; cCtx.beginPath();<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; cCtx.arc(W - 200, H - 200, 240, 0, Math.PI * 2);<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; cCtx.fill();<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; cCtx.restore();</p>
+<p dir="ltr">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; // 3. Double Border<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; cCtx.strokeStyle = 'rgba(59, 82, 66, 0.18)';<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; cCtx.lineWidth = 2;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; cCtx.strokeRect(50, 50, W - 100, H - 100);</p>
+<p dir="ltr">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; cCtx.strokeStyle = 'rgba(59, 82, 66, 0.45)';<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; cCtx.lineWidth = 1;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; cCtx.strokeRect(60, 60, W - 120, H - 120);</p>
+<p dir="ltr">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; // 4. Header Titles<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; cCtx.textAlign = 'center';<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; cCtx.fillStyle = '#647568';<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; cCtx.font = '600 24px "Plus Jakarta Sans", sans-serif';<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; cCtx.letterSpacing = '6px';<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; cCtx.fillText(currentLang === 'en' ? 'THE GARDEN OF MIND' : 'TAMAN PIKIRAN', W / 2, 130);</p>
+<p dir="ltr">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; cCtx.font = '400 19px "Plus Jakarta Sans", sans-serif';<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; cCtx.letterSpacing = '3px';<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; cCtx.fillStyle = '#8fa58c';<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; cCtx.fillText(currentLang === 'en' ? '&#8226; BOTANICAL SOUL CERTIFICATE &#8226;' : '&#8226; SERTIFIKAT BUNGA JIWA &#8226;', W / 2, 165);</p>
+<p dir="ltr">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; // 5. Draw the Fully Bloomed Flower &amp; Chosen Pot in Center<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; cCtx.save();<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; cCtx.translate(W / 2 - 250, 160);<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; cCtx.scale(1.25, 1.25);<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; renderFlowerSpecies(cCtx, info.flower, state.potStyle, 400, 440, 1.0, 0);<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; cCtx.restore();</p>
+<p dir="ltr">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; // 6. Flower Archetype Name &amp; Trait<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; cCtx.fillStyle = '#253328';<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; cCtx.font = '600 68px "Cormorant Garamond", Georgia, serif';<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; cCtx.fillText(info.name, W / 2, 790);</p>
+<p dir="ltr">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; cCtx.fillStyle = '#3b5242';<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; cCtx.font = '600 22px "Plus Jakarta Sans", sans-serif';<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; cCtx.letterSpacing = '2px';<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; cCtx.fillText(info.trait.toUpperCase(), W / 2, 835);</p>
+<p dir="ltr">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; // 7. Inspirational Quote<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; cCtx.fillStyle = '#647568';<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; cCtx.font = 'italic 26px "Cormorant Garamond", Georgia, serif';<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; cCtx.fillText(`&#8220;${info.quote}&#8221;`, W / 2, 910);</p>
+<p dir="ltr">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; // 8. Footer Stamp<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; cCtx.fillStyle = '#8fa58c';<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; cCtx.font = '500 18px "Plus Jakarta Sans", sans-serif';<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; cCtx.letterSpacing = '1px';<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; const dateStr = new Date().toLocaleDateString(currentLang === 'en' ? 'en-US' : 'id-ID', { year: 'numeric', month: 'long', day: 'numeric' });<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; cCtx.fillText(`${dateStr} &#8226; Holland RIASEC Verified`, W / 2, 980);</p>
+<p dir="ltr">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; // 9. Trigger Instant Download<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; try {<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; const imageURL = cert.toDataURL('image/png');<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; const link = document.createElement('a');<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; link.download = 'My_Garden_Of_Mind.png';<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; link.href = imageURL;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; document.body.appendChild(link);<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; link.click();<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; document.body.removeChild(link);<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; } catch (err) {<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; console.error('Canvas export error:', err);<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; }<br>
+&nbsp;&nbsp;&nbsp; }</p>
+<p dir="ltr">&nbsp;&nbsp;&nbsp; /* =====================================================================<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 8. INITIALIZATION<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; ===================================================================== */<br>
+&nbsp;&nbsp;&nbsp; window.addEventListener('DOMContentLoaded', () =&gt; {<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; loadState();<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; resizeCanvas();<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; setLanguage(currentLang);<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; requestAnimationFrame(renderGarden);<br>
+&nbsp;&nbsp;&nbsp; });<br>
+&nbsp; &lt;/script&gt;<br>
+&lt;/body&gt;<br>
+&lt;/html&gt;</p>
+</body></html>
