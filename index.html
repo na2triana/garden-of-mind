@@ -1,0 +1,2127 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover" />
+  <title>The Garden of Mind • Taman Pikiran</title>
+  
+  <meta name="description" content="A 7-day reflective RIASEC personality test where your choices grow an aesthetic botanical flower." />
+  <meta name="theme-color" content="#fbf9f4" />
+  
+  <!-- Aesthetic Typography -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,500;0,600;0,700;1,400;1,600&family=Plus+Jakarta+Sans:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+
+  <style>
+    :root {
+      --bg-top: #fbf9f4;
+      --bg-bottom: #e9eee4;
+      --card-bg: rgba(255, 255, 255, 0.88);
+      --card-border: rgba(255, 255, 255, 0.95);
+      --text-main: #253328;
+      --text-muted: #647568;
+      --accent-sage: #8fa58c;
+      --accent-deep: #3b5242;
+      --accent-warm: #d99a80;
+      --accent-gold: #c9933b;
+      --accent-gold-bg: #fdf6e9;
+      --radius-pill: 999px;
+      --radius-card: 22px;
+      --shadow-subtle: 0 12px 35px -8px rgba(45, 65, 49, 0.12);
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+      -webkit-tap-highlight-color: transparent;
+      user-select: none;
+    }
+
+    body {
+      font-family: 'Plus Jakarta Sans', system-ui, -apple-system, sans-serif;
+      background: linear-gradient(175deg, var(--bg-top) 0%, var(--bg-bottom) 100%);
+      color: var(--text-main);
+      min-height: 100vh;
+      min-height: 100dvh;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      overflow: hidden;
+      position: relative;
+    }
+
+    /* Ambient background glows */
+    .ambient-glow {
+      position: absolute;
+      border-radius: 50%;
+      filter: blur(80px);
+      z-index: 0;
+      pointer-events: none;
+      opacity: 0.5;
+    }
+    .glow-1 { width: 340px; height: 340px; background: #ebd5cd; top: -50px; left: -60px; }
+    .glow-2 { width: 380px; height: 380px; background: #cce0c9; bottom: -60px; right: -60px; }
+
+    /* Main Shell */
+    .app-frame {
+      width: 100%;
+      max-width: 440px;
+      height: 100vh;
+      height: 100dvh;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      padding: calc(env(safe-area-inset-top, 12px) + 8px) 16px calc(env(safe-area-inset-bottom, 12px) + 12px);
+      position: relative;
+      z-index: 1;
+    }
+
+    /* Top Navigation Bar */
+    .top-bar {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      width: 100%;
+      z-index: 10;
+    }
+
+    .brand-wrap {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+
+    .badge-day {
+      background: rgba(59, 82, 66, 0.1);
+      color: var(--accent-deep);
+      font-size: 0.72rem;
+      font-weight: 700;
+      padding: 4px 10px;
+      border-radius: var(--radius-pill);
+      letter-spacing: 0.05em;
+      text-transform: uppercase;
+    }
+
+    .controls-cluster {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+
+    .btn-icon-subtle {
+      border: 1px solid var(--card-border);
+      background: rgba(255, 255, 255, 0.75);
+      backdrop-filter: blur(8px);
+      -webkit-backdrop-filter: blur(8px);
+      color: var(--text-muted);
+      font-size: 0.85rem;
+      cursor: pointer;
+      width: 32px;
+      height: 32px;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: all 0.2s ease;
+    }
+    .btn-icon-subtle.active {
+      background: var(--accent-deep);
+      color: #fff;
+      border-color: var(--accent-deep);
+    }
+
+    .lang-switcher {
+      display: flex;
+      background: rgba(255, 255, 255, 0.75);
+      backdrop-filter: blur(8px);
+      -webkit-backdrop-filter: blur(8px);
+      border: 1px solid var(--card-border);
+      padding: 2px;
+      border-radius: var(--radius-pill);
+    }
+
+    .lang-btn {
+      border: none;
+      background: transparent;
+      padding: 4px 10px;
+      font-size: 0.72rem;
+      font-weight: 600;
+      color: var(--text-muted);
+      border-radius: var(--radius-pill);
+      cursor: pointer;
+      transition: all 0.2s ease;
+    }
+
+    .lang-btn.active {
+      background: var(--accent-deep);
+      color: #fff;
+    }
+
+    /* Canvas Stage Container */
+    .canvas-container {
+      position: relative;
+      width: 100%;
+      height: 220px;
+      flex-shrink: 0;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
+
+    canvas#gardenCanvas {
+      width: 100%;
+      height: 100%;
+      display: block;
+    }
+
+    /* Floating Pot Switcher Pill */
+    .pot-switch-badge {
+      position: absolute;
+      top: 6px;
+      right: 8px;
+      background: rgba(255, 255, 255, 0.85);
+      backdrop-filter: blur(8px);
+      -webkit-backdrop-filter: blur(8px);
+      border: 1px solid var(--card-border);
+      border-radius: var(--radius-pill);
+      padding: 4px 10px;
+      font-size: 0.68rem;
+      font-weight: 600;
+      color: var(--accent-deep);
+      cursor: pointer;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.05);
+      display: flex;
+      align-items: center;
+      gap: 4px;
+      transition: transform 0.15s ease;
+    }
+    .pot-switch-badge:active { transform: scale(0.96); }
+
+    .growth-meter {
+      position: absolute;
+      bottom: 0px;
+      left: 12px;
+      right: 12px;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      background: rgba(255, 255, 255, 0.7);
+      backdrop-filter: blur(6px);
+      -webkit-backdrop-filter: blur(6px);
+      padding: 4px 10px;
+      border-radius: var(--radius-pill);
+      border: 1px solid var(--card-border);
+    }
+
+    .growth-track {
+      flex: 1;
+      height: 5px;
+      background: #dbe4d8;
+      border-radius: 3px;
+      overflow: hidden;
+    }
+
+    .growth-fill {
+      height: 100%;
+      width: 0%;
+      background: linear-gradient(90deg, var(--accent-sage), var(--accent-deep));
+      transition: width 0.6s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+
+    .growth-val {
+      font-size: 0.7rem;
+      font-weight: 600;
+      color: var(--accent-deep);
+      min-width: 32px;
+      text-align: right;
+    }
+
+    /* View Deck */
+    .view-deck {
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      position: relative;
+      margin-top: 6px;
+      min-height: 0;
+    }
+
+    .card-panel {
+      background: var(--card-bg);
+      backdrop-filter: blur(20px);
+      -webkit-backdrop-filter: blur(20px);
+      border: 1px solid var(--card-border);
+      border-radius: var(--radius-card);
+      padding: 16px 18px;
+      box-shadow: var(--shadow-subtle);
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      max-height: 100%;
+      overflow-y: auto;
+      scrollbar-width: none;
+      animation: cardFadeIn 0.3s ease-out;
+    }
+    .card-panel::-webkit-scrollbar { display: none; }
+
+    @keyframes cardFadeIn {
+      from { opacity: 0; transform: translateY(8px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    .card-title {
+      font-family: 'Cormorant Garamond', Georgia, serif;
+      font-size: 1.65rem;
+      color: var(--accent-deep);
+      line-height: 1.15;
+      text-align: center;
+      margin-bottom: 4px;
+    }
+
+    .card-desc {
+      font-size: 0.82rem;
+      color: var(--text-muted);
+      line-height: 1.45;
+      text-align: center;
+      margin-bottom: 12px;
+    }
+
+    /* Action Buttons */
+    .btn-main {
+      width: 100%;
+      padding: 13px 20px;
+      background: var(--accent-deep);
+      color: #fff;
+      border: none;
+      border-radius: var(--radius-pill);
+      font-size: 0.88rem;
+      font-weight: 600;
+      font-family: inherit;
+      cursor: pointer;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      gap: 8px;
+      box-shadow: 0 6px 18px -2px rgba(59, 82, 66, 0.25);
+      transition: transform 0.15s ease, background 0.2s;
+      text-decoration: none;
+    }
+    .btn-main:active { transform: scale(0.98); }
+
+    .btn-secondary {
+      background: transparent;
+      border: 1px solid rgba(59, 82, 66, 0.25);
+      color: var(--accent-deep);
+      box-shadow: none;
+    }
+
+    .btn-share {
+      background: linear-gradient(135deg, #4d6d56, #2d3f32);
+      margin-bottom: 8px;
+    }
+
+    /* Premium Upgrade Box */
+    .premium-card {
+      background: var(--accent-gold-bg);
+      border: 1px solid rgba(201, 147, 59, 0.35);
+      border-radius: 16px;
+      padding: 12px 14px;
+      margin: 10px 0 12px;
+      text-align: center;
+    }
+
+    .premium-badge {
+      display: inline-block;
+      font-size: 0.65rem;
+      font-weight: 700;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: #8c5d15;
+      background: rgba(201, 147, 59, 0.18);
+      padding: 2px 8px;
+      border-radius: var(--radius-pill);
+      margin-bottom: 4px;
+    }
+
+    .premium-title {
+      font-family: 'Cormorant Garamond', Georgia, serif;
+      font-size: 1.15rem;
+      font-weight: 700;
+      color: #5c3c0a;
+      line-height: 1.2;
+      margin-bottom: 3px;
+    }
+
+    .premium-desc {
+      font-size: 0.72rem;
+      color: #7d5921;
+      line-height: 1.35;
+      margin-bottom: 8px;
+    }
+
+    .btn-premium {
+      background: linear-gradient(135deg, #d49f43, #b88228);
+      color: #fff;
+      padding: 10px 16px;
+      font-size: 0.8rem;
+      font-weight: 700;
+      box-shadow: 0 4px 12px rgba(184, 130, 40, 0.25);
+    }
+
+    /* Quiz Screen */
+    .quiz-progress-dots {
+      display: flex;
+      justify-content: center;
+      gap: 6px;
+      margin-bottom: 10px;
+    }
+
+    .dot {
+      width: 7px;
+      height: 7px;
+      border-radius: 50%;
+      background: #c8d4c5;
+      transition: all 0.25s ease;
+    }
+    .dot.active {
+      width: 20px;
+      border-radius: 4px;
+      background: var(--accent-deep);
+    }
+    .dot.done { background: var(--accent-sage); }
+
+    .question-prompt {
+      font-family: 'Cormorant Garamond', Georgia, serif;
+      font-size: 1.22rem;
+      font-weight: 600;
+      color: var(--accent-deep);
+      text-align: center;
+      line-height: 1.35;
+      min-height: 54px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin-bottom: 12px;
+    }
+
+    .likert-scale {
+      display: flex;
+      justify-content: space-between;
+      gap: 6px;
+      margin-bottom: 6px;
+    }
+
+    .likert-btn {
+      flex: 1;
+      border: 1px solid rgba(143, 165, 140, 0.35);
+      background: rgba(255, 255, 255, 0.7);
+      padding: 9px 0;
+      border-radius: 12px;
+      font-size: 0.85rem;
+      font-weight: 600;
+      color: var(--accent-deep);
+      cursor: pointer;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 2px;
+      transition: all 0.15s ease;
+    }
+    .likert-btn:active {
+      background: var(--accent-deep);
+      color: #fff;
+      transform: scale(0.95);
+    }
+    .likert-sub {
+      font-size: 0.65rem;
+      font-weight: 400;
+      opacity: 0.75;
+    }
+
+    /* Word Search Grid */
+    .word-target-banner {
+      background: rgba(233, 238, 228, 0.7);
+      border-radius: 12px;
+      padding: 6px 12px;
+      text-align: center;
+      margin-bottom: 8px;
+    }
+    .target-word-hint {
+      font-size: 0.68rem;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      color: var(--text-muted);
+    }
+    .target-word-display {
+      font-family: 'Plus Jakarta Sans', monospace;
+      font-size: 1.1rem;
+      font-weight: 700;
+      letter-spacing: 0.22em;
+      color: var(--accent-deep);
+    }
+
+    .grid-board {
+      display: grid;
+      grid-template-columns: repeat(6, 1fr);
+      gap: 5px;
+      width: 100%;
+      max-width: 280px;
+      margin: 0 auto 10px;
+      touch-action: none;
+    }
+
+    .grid-cell {
+      aspect-ratio: 1;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 0.92rem;
+      font-weight: 700;
+      background: rgba(255, 255, 255, 0.9);
+      border: 1px solid rgba(143, 165, 140, 0.3);
+      border-radius: 8px;
+      color: var(--text-main);
+      cursor: pointer;
+      transition: background 0.15s, transform 0.1s, color 0.15s;
+    }
+    .grid-cell.selected {
+      background: var(--accent-warm);
+      color: #fff;
+      border-color: var(--accent-warm);
+      transform: scale(0.94);
+    }
+    .grid-cell.solved {
+      background: var(--accent-sage);
+      color: #fff;
+      border-color: var(--accent-sage);
+      animation: pulseCell 0.5s ease-out;
+    }
+
+    @keyframes pulseCell {
+      0% { transform: scale(1); }
+      50% { transform: scale(1.15); }
+      100% { transform: scale(1); }
+    }
+
+    .puzzle-instructions {
+      font-size: 0.72rem;
+      color: var(--text-muted);
+      text-align: center;
+    }
+
+    /* Watering Hero */
+    .watering-hero {
+      text-align: center;
+      padding: 6px 0;
+    }
+    .can-symbol {
+      font-size: 2.5rem;
+      display: inline-block;
+      animation: bobble 2s ease-in-out infinite alternate;
+    }
+    @keyframes bobble {
+      0% { transform: rotate(-5deg) translateY(0); }
+      100% { transform: rotate(10deg) translateY(-6px); }
+    }
+
+    /* Results Chart */
+    .results-chart {
+      display: flex;
+      flex-direction: column;
+      gap: 5px;
+      margin: 8px 0 10px;
+      text-align: left;
+    }
+    .trait-bar-row {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      font-size: 0.7rem;
+    }
+    .trait-label {
+      width: 82px;
+      color: var(--text-muted);
+      font-weight: 600;
+    }
+    .trait-bar-track {
+      flex: 1;
+      height: 6px;
+      background: #e2e8df;
+      border-radius: 3px;
+      overflow: hidden;
+    }
+    .trait-bar-fill {
+      height: 100%;
+      background: var(--accent-deep);
+      border-radius: 3px;
+    }
+    .trait-score {
+      width: 22px;
+      text-align: right;
+      font-weight: 700;
+      color: var(--accent-deep);
+    }
+
+    /* Rewarded Ad Modal Overlay */
+    .modal-overlay {
+      position: fixed;
+      inset: 0;
+      background: rgba(25, 35, 28, 0.65);
+      backdrop-filter: blur(12px);
+      -webkit-backdrop-filter: blur(12px);
+      display: none;
+      justify-content: center;
+      align-items: center;
+      z-index: 1000;
+      padding: 20px;
+    }
+    .modal-overlay.active { display: flex; }
+
+    .modal-box {
+      width: 100%;
+      max-width: 340px;
+      background: #ffffff;
+      border-radius: var(--radius-card);
+      padding: 24px 20px;
+      text-align: center;
+      box-shadow: 0 20px 40px rgba(0,0,0,0.2);
+      animation: cardFadeIn 0.25s ease-out;
+    }
+
+    .ad-countdown-bar {
+      width: 100%;
+      height: 6px;
+      background: #e5ede3;
+      border-radius: 3px;
+      overflow: hidden;
+      margin: 16px 0;
+    }
+
+    .ad-countdown-fill {
+      width: 0%;
+      height: 100%;
+      background: var(--accent-gold);
+      transition: width 3s linear;
+    }
+
+    /* Hidden Canvas for Certificate */
+    canvas#certCanvas { display: none; }
+  </style>
+</head>
+<body>
+
+  <div class="ambient-glow glow-1"></div>
+  <div class="ambient-glow glow-2"></div>
+
+  <main class="app-frame">
+    
+    <!-- Top Navigation Header -->
+    <header class="top-bar">
+      <div class="brand-wrap">
+        <span class="badge-day" id="ui-day-indicator">Day 1 / 7</span>
+        <button class="btn-icon-subtle" onclick="confirmReset()" title="Reset Journey">↺</button>
+      </div>
+
+      <div class="controls-cluster">
+        <!-- Ambient Sound Toggle -->
+        <button class="btn-icon-subtle" id="btn-sound-toggle" onclick="toggleAmbientSound()" title="Ambient Audio">🔇</button>
+        
+        <!-- Language Switcher -->
+        <div class="lang-switcher">
+          <button class="lang-btn active" id="btn-en" onclick="setLanguage('en')">EN</button>
+          <button class="lang-btn" id="btn-id" onclick="setLanguage('id')">ID</button>
+        </div>
+      </div>
+    </header>
+
+    <!-- Canvas Stage -->
+    <section class="canvas-container">
+      <canvas id="gardenCanvas"></canvas>
+      
+      <!-- Interactive Pot Upgrade Badge -->
+      <div class="pot-switch-badge" id="potUpgradeBadge" onclick="handlePotBadgeClick()">
+        <span id="pot-badge-icon">🪴</span>
+        <span id="pot-badge-text">Terracotta</span>
+      </div>
+
+      <div class="growth-meter">
+        <span style="font-size: 0.75rem;">🌱</span>
+        <div class="growth-track">
+          <div class="growth-fill" id="growth-progress-fill"></div>
+        </div>
+        <span class="growth-val" id="growth-val-text">0%</span>
+      </div>
+    </section>
+
+    <!-- Dynamic Phase View Deck -->
+    <section class="view-deck" id="viewDeck">
+      <!-- Injected via state machine -->
+    </section>
+
+  </main>
+
+  <!-- Rewarded Ad Modal -->
+  <div class="modal-overlay" id="rewardedAdModal">
+    <div class="modal-box">
+      <div style="font-size: 2.2rem; margin-bottom: 6px;">🌌</div>
+      <h3 style="font-family: 'Cormorant Garamond', Georgia, serif; font-size: 1.4rem; color: var(--accent-deep);" id="ad-title">
+        Unlocking Celestial Pot
+      </h3>
+      <p style="font-size: 0.75rem; color: var(--text-muted); margin-top: 4px;" id="ad-subtitle">
+        Connecting to therapeutic cosmic garden sponsor...
+      </p>
+      <div class="ad-countdown-bar">
+        <div class="ad-countdown-fill" id="adProgressFill"></div>
+      </div>
+      <span style="font-size: 0.72rem; color: var(--accent-gold); font-weight: 700;" id="ad-status-text">
+        Watching Meditation Ad (3s)...
+      </span>
+    </div>
+  </div>
+
+  <!-- Offscreen canvas for generating shareable certificate (1080x1080) -->
+  <canvas id="certCanvas" width="1080" height="1080"></canvas>
+
+  <script>
+    /* =====================================================================
+       1. SYNTHESIZED WEB AUDIO API SOUND MANAGER (ZERO MP3 ASSETS)
+       ===================================================================== */
+    const SoundManager = {
+      ctx: null,
+      isAmbientPlaying: false,
+      ambientGain: null,
+      noiseNode: null,
+      droneOsc1: null,
+      droneOsc2: null,
+
+      initContext() {
+        if (!this.ctx) {
+          const AudioContext = window.AudioContext || window.webkitAudioContext;
+          this.ctx = new AudioContext();
+        }
+        if (this.ctx.state === 'suspended') {
+          this.ctx.resume();
+        }
+      },
+
+      // Subtle, tactile wooden block click/pop
+      playPop() {
+        try {
+          this.initContext();
+          const osc = this.ctx.createOscillator();
+          const gain = this.ctx.createGain();
+
+          osc.type = 'triangle';
+          // Pitch drops fast to simulate resonant wood tap
+          osc.frequency.setValueAtTime(540, this.ctx.currentTime);
+          osc.frequency.exponentialRampToValueAtTime(140, this.ctx.currentTime + 0.05);
+
+          gain.gain.setValueAtTime(0.2, this.ctx.currentTime);
+          gain.gain.exponentialRampToValueAtTime(0.001, this.ctx.currentTime + 0.055);
+
+          osc.connect(gain);
+          gain.connect(this.ctx.destination);
+
+          osc.start();
+          osc.stop(this.ctx.currentTime + 0.06);
+        } catch (e) {
+          console.warn('Audio not allowed yet', e);
+        }
+      },
+
+      // Gentle water splash/fizz on watering
+      playWaterSplash() {
+        try {
+          this.initContext();
+          const now = this.ctx.currentTime;
+          
+          // Noise burst through sweeping bandpass filter
+          const bufferSize = this.ctx.sampleRate * 0.4;
+          const noiseBuffer = this.ctx.createBuffer(1, bufferSize, this.ctx.sampleRate);
+          const data = noiseBuffer.getChannelData(0);
+          for (let i = 0; i < bufferSize; i++) {
+            data[i] = Math.random() * 2 - 1;
+          }
+
+          const noise = this.ctx.createBufferSource();
+          noise.buffer = noiseBuffer;
+
+          const filter = this.ctx.createBiquadFilter();
+          filter.type = 'bandpass';
+          filter.frequency.setValueAtTime(600, now);
+          filter.frequency.exponentialRampToValueAtTime(1800, now + 0.2);
+          filter.frequency.exponentialRampToValueAtTime(300, now + 0.38);
+          filter.Q.value = 3.0;
+
+          const gain = this.ctx.createGain();
+          gain.gain.setValueAtTime(0.25, now);
+          gain.gain.exponentialRampToValueAtTime(0.001, now + 0.38);
+
+          noise.connect(filter);
+          filter.connect(gain);
+          gain.connect(this.ctx.destination);
+
+          // Harmonic bubbling tones
+          [520, 680, 840].forEach((freq, i) => {
+            const osc = this.ctx.createOscillator();
+            const bGain = this.ctx.createGain();
+            osc.type = 'sine';
+            osc.frequency.setValueAtTime(freq, now + i * 0.07);
+            osc.frequency.exponentialRampToValueAtTime(freq * 1.4, now + i * 0.07 + 0.08);
+
+            bGain.gain.setValueAtTime(0.08, now + i * 0.07);
+            bGain.gain.exponentialRampToValueAtTime(0.001, now + i * 0.07 + 0.08);
+
+            osc.connect(bGain);
+            bGain.connect(this.ctx.destination);
+            osc.start(now + i * 0.07);
+            osc.stop(now + i * 0.07 + 0.09);
+          });
+
+          noise.start(now);
+          noise.stop(now + 0.4);
+        } catch (e) {
+          console.warn('Splash audio error', e);
+        }
+      },
+
+      // Calming pentatonic wind chime harmony on Day Completion
+      playChime() {
+        try {
+          this.initContext();
+          const now = this.ctx.currentTime;
+          // Meditative Pentatonic Frequencies (Eb Major pentatonic: Eb, F, G, Bb, C)
+          const notes = [311.13, 392.00, 466.16, 523.25, 622.25];
+          
+          notes.forEach((freq, idx) => {
+            const startT = now + idx * 0.08;
+            const osc = this.ctx.createOscillator();
+            const gain = this.ctx.createGain();
+
+            osc.type = 'sine';
+            osc.frequency.setValueAtTime(freq, startT);
+
+            gain.gain.setValueAtTime(0.0001, startT);
+            gain.gain.linearRampToValueAtTime(0.12, startT + 0.03);
+            gain.gain.exponentialRampToValueAtTime(0.0001, startT + 1.8);
+
+            osc.connect(gain);
+            gain.connect(this.ctx.destination);
+
+            osc.start(startT);
+            osc.stop(startT + 1.9);
+          });
+        } catch (e) {
+          console.warn('Chime audio error', e);
+        }
+      },
+
+      // Continuous therapeutic rain / warm ambient noise loop
+      toggleAmbient() {
+        this.initContext();
+        if (this.isAmbientPlaying) {
+          this.stopAmbient();
+        } else {
+          this.startAmbient();
+        }
+        return this.isAmbientPlaying;
+      },
+
+      startAmbient() {
+        try {
+          const now = this.ctx.currentTime;
+          this.ambientGain = this.ctx.createGain();
+          this.ambientGain.gain.setValueAtTime(0.0001, now);
+          this.ambientGain.linearRampToValueAtTime(0.12, now + 1.2);
+          this.ambientGain.connect(this.ctx.destination);
+
+          // 1. Soft Lowpass Pink/Brown Rain Sound
+          const bufferSize = this.ctx.sampleRate * 3;
+          const noiseBuffer = this.ctx.createBuffer(1, bufferSize, this.ctx.sampleRate);
+          const data = noiseBuffer.getChannelData(0);
+          let lastOut = 0.0;
+          for (let i = 0; i < bufferSize; i++) {
+            const white = Math.random() * 2 - 1;
+            data[i] = (lastOut + (0.02 * white)) / 1.02;
+            lastOut = data[i];
+            data[i] *= 3.5;
+          }
+
+          this.noiseNode = this.ctx.createBufferSource();
+          this.noiseNode.buffer = noiseBuffer;
+          this.noiseNode.loop = true;
+
+          const filter = this.ctx.createBiquadFilter();
+          filter.type = 'lowpass';
+          filter.frequency.value = 580;
+
+          this.noiseNode.connect(filter);
+          filter.connect(this.ambientGain);
+
+          // 2. Meditative 432Hz harmonic drone oscillators (tuned low at 108Hz and 162Hz)
+          this.droneOsc1 = this.ctx.createOscillator();
+          this.droneOsc2 = this.ctx.createOscillator();
+          this.droneOsc1.type = 'sine';
+          this.droneOsc2.type = 'sine';
+          this.droneOsc1.frequency.value = 108; // 432 / 4
+          this.droneOsc2.frequency.value = 162; // 432 * 3/8
+
+          const droneGain = this.ctx.createGain();
+          droneGain.gain.value = 0.035;
+
+          this.droneOsc1.connect(droneGain);
+          this.droneOsc2.connect(droneGain);
+          droneGain.connect(this.ambientGain);
+
+          this.noiseNode.start(now);
+          this.droneOsc1.start(now);
+          this.droneOsc2.start(now);
+
+          this.isAmbientPlaying = true;
+        } catch (e) {
+          console.warn('Ambient start failed', e);
+        }
+      },
+
+      stopAmbient() {
+        if (!this.isAmbientPlaying || !this.ambientGain) return;
+        const now = this.ctx.currentTime;
+        this.ambientGain.gain.linearRampToValueAtTime(0.0001, now + 0.8);
+        setTimeout(() => {
+          try {
+            if (this.noiseNode) this.noiseNode.stop();
+            if (this.droneOsc1) this.droneOsc1.stop();
+            if (this.droneOsc2) this.droneOsc2.stop();
+          } catch(e){}
+          this.isAmbientPlaying = false;
+        }, 850);
+      }
+    };
+
+    function toggleAmbientSound() {
+      const active = SoundManager.toggleAmbient();
+      const btn = document.getElementById('btn-sound-toggle');
+      btn.innerText = active ? '🎵' : '🔇';
+      btn.classList.toggle('active', active);
+    }
+
+    // Attach micro-pop to all button clicks globally
+    document.addEventListener('pointerdown', (e) => {
+      if (e.target.closest('button, .grid-cell, .pot-switch-badge, .lang-btn')) {
+        SoundManager.playPop();
+      }
+    });
+
+    /* =====================================================================
+       2. REWARDED ADS & CELESTIAL POT UPGRADE LOGIC
+       ===================================================================== */
+    function showRewardedAd(placement, onRewardEarned) {
+      const modal = document.getElementById('rewardedAdModal');
+      const fill = document.getElementById('adProgressFill');
+      const title = document.getElementById('ad-title');
+      const sub = document.getElementById('ad-subtitle');
+      const status = document.getElementById('ad-status-text');
+
+      title.innerText = currentLang === 'en' ? 'Unlocking Celestial Pot' : 'Membuka Pot Bintang Kosmik';
+      sub.innerText = currentLang === 'en' 
+        ? 'Connecting to aesthetic garden sponsor...' 
+        : 'Menghubungkan ke sponsor taman hening...';
+      status.innerText = currentLang === 'en' 
+        ? 'Watching Meditation Ad (3s)...' 
+        : 'Menonton Iklan Meditasi (3d)...';
+
+      fill.style.transition = 'none';
+      fill.style.width = '0%';
+      modal.classList.add('active');
+
+      setTimeout(() => {
+        fill.style.transition = 'width 3s linear';
+        fill.style.width = '100%';
+      }, 50);
+
+      setTimeout(() => {
+        modal.classList.remove('active');
+        if (typeof onRewardEarned === 'function') {
+          onRewardEarned();
+        }
+      }, 3100);
+    }
+
+    function handlePotBadgeClick() {
+      if (state.potStyle === 'terracotta') {
+        if (!state.unlockedCelestialPot) {
+          // Trigger Rewarded Ad hook
+          showRewardedAd('unlock_pot', () => {
+            state.unlockedCelestialPot = true;
+            state.potStyle = 'celestial';
+            canvasEngine.potStyle = 'celestial';
+            canvasEngine.triggerSparkleBurst();
+            SoundManager.playChime();
+            saveState();
+            updatePotBadge();
+          });
+        } else {
+          // Already unlocked, toggle freely
+          state.potStyle = 'celestial';
+          canvasEngine.potStyle = 'celestial';
+          canvasEngine.triggerSparkleBurst();
+          saveState();
+          updatePotBadge();
+        }
+      } else {
+        // Toggle back to terracotta
+        state.potStyle = 'terracotta';
+        canvasEngine.potStyle = 'terracotta';
+        saveState();
+        updatePotBadge();
+      }
+    }
+
+    function updatePotBadge() {
+      const icon = document.getElementById('pot-badge-icon');
+      const text = document.getElementById('pot-badge-text');
+
+      if (state.potStyle === 'celestial') {
+        icon.innerText = '✨';
+        text.innerText = currentLang === 'en' ? 'Celestial' : 'Kosmik';
+      } else {
+        icon.innerText = state.unlockedCelestialPot ? '🪴' : '🔒';
+        text.innerText = state.unlockedCelestialPot 
+          ? (currentLang === 'en' ? 'Terracotta' : 'Tanah Liat')
+          : (currentLang === 'en' ? 'Unlock Pot (Ad)' : 'Buka Pot (Iklan)');
+      }
+    }
+
+    /* =====================================================================
+       3. DATA & I18N LOCALIZATION DICTIONARY
+       ===================================================================== */
+    const GAME_DATA = {
+      en: {
+        title: "The Garden of Mind",
+        subtitle: "A 7-day reflective journey. Each day you answer 3 psychometric inquiries, harvest a positive virtue, and nurture your inner flower.",
+        btnStart: "Begin Today's Journey",
+        btnResume: "Resume Journey",
+        dayPrefix: "Day",
+        likertLabels: ["Rarely", "Seldom", "Sometimes", "Often", "Truly Me"],
+        wordSearchHint: "TAP LETTERS IN SEQUENCE TO SPELL:",
+        wordFoundTitle: "Virtue Harvested!",
+        wordFoundDesc: "Your virtue has filled the watering can. Water your garden to help it bloom.",
+        btnWater: "Water Plant 💧",
+        dayDoneTitle: "Bloom Extended!",
+        dayDoneDesc: "Your flower absorbed today's sunlight and wisdom. Return tomorrow or proceed.",
+        btnNextDay: "Begin Next Day →",
+        finalTitle: "Your Soul Flower Has Bloomed",
+        btnShare: "📸 Share My Garden Certificate",
+        btnRestart: "↺ Begin A New Journey",
+        premiumBadge: "⭐ PREMIUM ROADMAP",
+        premiumTitle: "Career & Life Alignment Report",
+        premiumDesc: "Unlock your comprehensive 10-page RIASEC Career Architecture Guide, tailored workplace strengths, and 5-year growth blueprint.",
+        premiumBtn: "Download Full 10-Page Career Roadmap PDF →",
+        words: ["FOCUS", "EMPATHY", "CREATE", "HARMONY", "GROWTH", "WISDOM", "PURPOSE"],
+        archetypes: {
+          R: { 
+            name: "Desert Cactus", 
+            flower: "cactus", 
+            trait: "Realistic • Practical & Grounded", 
+            desc: "You value authenticity, concrete craftsmanship, and direct hands-on action.",
+            quote: "Rooted in quiet strength, standing resilient in every season."
+          },
+          I: { 
+            name: "Serene Lotus", 
+            flower: "lotus", 
+            trait: "Investigative • Analytical & Deep", 
+            desc: "You thrive in reflection, scientific curiosity, and uncovering fundamental truths.",
+            quote: "From deep and quiet waters, true clarity and insight rise."
+          },
+          A: { 
+            name: "Wild Orchid", 
+            flower: "orchid", 
+            trait: "Artistic • Whimsical & Expressive", 
+            desc: "You find magic in aesthetic freedom, poetic metaphors, and unbridled imagination.",
+            quote: "Where imagination breathes freely, authentic wonders unfurl."
+          },
+          S: { 
+            name: "Golden Sunflower", 
+            flower: "sunflower", 
+            trait: "Social • Warm & Radiant", 
+            desc: "You illuminate communities with genuine compassion, listening, and supportive warmth.",
+            quote: "Turning faithfully toward warmth, nourishing every heart nearby."
+          },
+          E: { 
+            name: "Velvet Rose", 
+            flower: "rose", 
+            trait: "Enterprising • Bold & Visionary", 
+            desc: "You dare to lead, speak with conviction, and inspire others toward grand horizons.",
+            quote: "Courageous in ambition, inspiring the world to reach higher."
+          },
+          C: { 
+            name: "Porcelain Lily", 
+            flower: "lily", 
+            trait: "Conventional • Graceful & Orderly", 
+            desc: "You possess the beauty of precision, systemic calm, and steadfast reliability.",
+            quote: "In patient order and devotion, enduring harmony is built."
+          }
+        },
+        questions: [
+          { id: 1, trait: 'R', text: "I find joy in building tangible crafts, working with tools, or fixing things with my hands." },
+          { id: 2, trait: 'I', text: "I am drawn to deconstructing complex mysteries and studying why systems work." },
+          { id: 3, trait: 'A', text: "I naturally express thoughts through visual arts, lyrical words, or creative projects." },
+          { id: 4, trait: 'S', text: "I deeply cherish moments spent listening to someone and supporting their emotional well-being." },
+          { id: 5, trait: 'E', text: "I feel invigorated when pitching bold ideas and rallying people to achieve a goal." },
+          { id: 6, trait: 'C', text: "I find peaceful satisfaction in immaculate organization, neat files, and structured routines." },
+          { id: 7, trait: 'R', text: "I would rather spend an entire afternoon outdoors in nature than sitting in a lecture." },
+          { id: 8, trait: 'I', text: "I enjoy reading philosophical or scientific materials that challenge conventional thought." },
+          { id: 9, trait: 'A', text: "I wither when forced into rigid conformity; I require artistic license to thrive." },
+          { id: 10, trait: 'S', text: "Fostering inclusive spaces where every voice feels respected is central to my ethos." },
+          { id: 11, trait: 'E', text: "I am comfortable taking calculated risks and speaking before an audience to lead change." },
+          { id: 12, trait: 'C', text: "Double-checking details, optimizing plans, and ensuring accuracy brings me genuine ease." },
+          { id: 13, trait: 'R', text: "When equipment breaks down, my natural impulse is to open it and repair it myself." },
+          { id: 14, trait: 'I', text: "I weigh decisions on logic and empirical patterns rather than purely emotional impulses." },
+          { id: 15, trait: 'A', text: "I perceive subtle aesthetic harmonies, colors, and nuances that many others overlook." },
+          { id: 16, trait: 'S', text: "Close friends frequently seek out my counsel because they trust my empathy and presence." },
+          { id: 17, trait: 'E', text: "I thrive in dynamic environments where strategic ambition and drive are rewarded." },
+          { id: 18, trait: 'C', text: "I pride myself on punctuality, steadfast consistency, and honoring established rules." },
+          { id: 19, trait: 'R', text: "Physical craftsmanship and tangible earth stewardship nourish my spirit deeply." },
+          { id: 20, trait: 'I', text: "The pursuit of objective truth and discovery means far more to me than social prestige." },
+          { id: 21, trait: 'A', text: "I view creative authenticity and heartfelt poetry as essential to being fully alive." }
+        ]
+      },
+      id: {
+        title: "Taman Pikiran",
+        subtitle: "Perjalanan reflektif selama 7 hari. Setiap hari Anda menjawab 3 pertanyaan psikometrik, memetik kebajikan, dan merawat bunga jiwa.",
+        btnStart: "Mulai Hari Ini",
+        btnResume: "Lanjutkan Perjalanan",
+        dayPrefix: "Hari",
+        likertLabels: ["Jarang", "Sedikit", "Kadang", "Sering", "Sangat Saya"],
+        wordSearchHint: "KETUK HURUF SESUAI URUTAN UNTUK MENGEJA:",
+        wordFoundTitle: "Kebajikan Terpetik!",
+        wordFoundDesc: "Kebajikan harimu telah mengisi air siraman. Sirami tanamanmu sekarang agar mekar.",
+        btnWater: "Siram Bunga 💧",
+        dayDoneTitle: "Mekar Bertambah!",
+        dayDoneDesc: "Bungamu telah menyerap kebijaksanaan hari ini. Kembali besok atau lanjutkan.",
+        btnNextDay: "Lanjut ke Hari Berikutnya →",
+        finalTitle: "Bunga Jiwamu Telah Mekar Penuh",
+        btnShare: "📸 Bagikan Sertifikat Taman Jiwa",
+        btnRestart: "↺ Mulai Perjalanan Baru",
+        premiumBadge: "⭐ PANDUAN PREMIUM",
+        premiumTitle: "Laporan Karir & Arah Hidup Holistik",
+        premiumDesc: "Buka analisis lengkap peta karir RIASEC 10 halaman, rekomendasi industri, keunggulan profesional, dan rencana pengembangan diri.",
+        premiumBtn: "Unduh Panduan Karir PDF Lengkap →",
+        words: ["FOKUS", "EMPATI", "KREASI", "HARMONI", "TUMBUH", "BIJAK", "MAKNA"],
+        archetypes: {
+          R: { 
+            name: "Kaktus Gurun", 
+            flower: "cactus", 
+            trait: "Realistis • Praktis & Membumi", 
+            desc: "Anda menghargai keaslian, keterampilan tangan yang nyata, dan tindakan langsung.",
+            quote: "Berakar dalam keteguhan hening, tegar mekar di setiap musim."
+          },
+          I: { 
+            name: "Teratai Hening", 
+            flower: "lotus", 
+            trait: "Investigatif • Analitis & Mendalam", 
+            desc: "Anda berkembang dalam ketenangan refleksi, keingintahuan ilmiah, dan pencarian hakikat.",
+            quote: "Dari heningnya renungan mendalam, terbitlah kejernihan sejati."
+          },
+          A: { 
+            name: "Anggrek Liar", 
+            flower: "orchid", 
+            trait: "Artistik • Puitis & Ekspresif", 
+            desc: "Anda menemukan keindahan dalam kebebasan estetika, metafora seni, dan daya imajinasi.",
+            quote: "Di mana imajinasi bernapas bebas, keajaiban unik terbentang."
+          },
+          S: { 
+            name: "Bunga Matahari", 
+            flower: "sunflower", 
+            trait: "Sosial • Hangat & Mengayomi", 
+            desc: "Anda menerangi sekeliling lewat ketulusan empati, mendengarkan, dan kepedulian sesama.",
+            quote: "Setia menghadap kehangatan, menyinari setiap hati di sekeliling."
+          },
+          E: { 
+            name: "Mawar Merah", 
+            flower: "rose", 
+            trait: "Wirausaha • Berani & Berjiwa Pemimpin", 
+            desc: "Anda berani mengambil inisiatif, berbicara lugas, dan menggerakkan orang menuju visi besar.",
+            quote: "Berani dalam melangkah, menginspirasi dunia meraih impian besar."
+          },
+          C: { 
+            name: "Bakung Putih", 
+            flower: "lily", 
+            trait: "Konvensional • Teratur & Anggun", 
+            desc: "Anda memiliki keindahan dalam ketelitian tinggi, keteraturan sistematis, dan keandalan.",
+            quote: "Dalam keteraturan dan ketulusan hati, terwujud harmoni abadi."
+          }
+        },
+        questions: [
+          { id: 1, trait: 'R', text: "Saya merasa puas saat membuat prakarya nyata, memakai perkakas, atau membetulkan barang dengan tangan." },
+          { id: 2, trait: 'I', text: "Saya senang membedah misteri yang rumit dan meneliti mengapa sebuah sistem bekerja." },
+          { id: 3, trait: 'A', text: "Secara alami saya menuangkan isi pikiran lewat karya visual, tulisan puitis, atau kreasi seni." },
+          { id: 4, trait: 'S', text: "Saya sangat menghargai saat-saat mendengarkan keluh kesah orang lain dan merawat kedamaian batin mereka." },
+          { id: 5, trait: 'E', text: "Saya bersemangat ketika menyampaikan gagasan berani dan mengarahkan kelompok mencapai target." },
+          { id: 6, trait: 'C', text: "Saya merasakan ketenangan dalam susunan berkas rapi, arsip teratur, dan jadwal sistematis." },
+          { id: 7, trait: 'R', text: "Saya lebih suka menghabiskan sore di alam terbuka dan beraktivitas fisik dibanding duduk mendengarkan ceramah." },
+          { id: 8, trait: 'I', text: "Saya senang membaca buku sains atau filsafat mendalam yang menguji asumsi lama." },
+          { id: 9, trait: 'A', text: "Saya merasa layu jika dipaksa patuh pada aturan kaku; saya butuh kebebasan berimajinasi." },
+          { id: 10, trait: 'S', text: "Menciptakan ruang kebersamaan yang hangat di mana setiap orang dihargai adalah prinsip penting bagi saya." },
+          { id: 11, trait: 'E', text: "Saya percaya diri mengambil risiko terukur dan berbicara di depan publik demi mewujudkan perubahan." },
+          { id: 12, trait: 'C', text: "Memeriksa ulang detail pekerjaan dan memastikan semuanya akurat memberikan rasa puas mendalam." },
+          { id: 13, trait: 'R', text: "Saat mesin atau peralatan rusak, insting pertama saya adalah membongkar dan memperbaikinya sendiri." },
+          { id: 14, trait: 'I', text: "Saya menimbang keputusan berdasarkan data logis dan bukti nyata daripada dorongan emosi semata." },
+          { id: 15, trait: 'A', text: "Saya peka menangkap harmoni visual, keindahan warna, dan nuansa halus yang sering terlewatkan orang lain." },
+          { id: 16, trait: 'S', text: "Sahabat sering meminta pertimbangan saya karena mereka mempercayai ketulusan dan empati saya." },
+          { id: 17, trait: 'E', text: "Saya menyukai suasana kompetitif di mana ambisi strategis dan inisiatif berani diapresiasi." },
+          { id: 18, trait: 'C', text: "Saya bangga dengan ketepatan waktu, konsistensi kerja, dan kepatuhan pada standar yang telah disepakati." },
+          { id: 19, trait: 'R', text: "Karya fisik nyata dan merawat tanaman dengan tangan sendiri memberi ketenteraman pada jiwa saya." },
+          { id: 20, trait: 'I', text: "Pencarian kebenaran sejati dan pengetahuan baru jauh lebih berharga bagi saya dibanding status sosial semata." },
+          { id: 21, trait: 'A', text: "Bagi saya, keaslian ekspresi jiwa dan estetika sama pentingnya dengan kebutuhan fisik manusia." }
+        ]
+      }
+    };
+
+    /* =====================================================================
+       4. PERSISTENT STATE MACHINE
+       ===================================================================== */
+    const STORAGE_KEY = 'garden_of_mind_v4_save';
+    let currentLang = 'en';
+
+    let state = {
+      day: 1,
+      phase: 'HOME', // HOME, QUIZ, PUZZLE, WATER, DAY_END, FINAL
+      quizStep: 0,
+      scores: { R: 0, I: 0, A: 0, S: 0, E: 0, C: 0 },
+      growthProgress: 0,
+      dominantFlower: 'cactus',
+      completed: false,
+      potStyle: 'terracotta', // 'terracotta' or 'celestial'
+      unlockedCelestialPot: false
+    };
+
+    function saveState() {
+      try {
+        localStorage.setItem(STORAGE_KEY, JSON.stringify(state));
+        localStorage.setItem('garden_lang', currentLang);
+      } catch (e) {
+        console.warn('Local storage write restricted', e);
+      }
+    }
+
+    function loadState() {
+      try {
+        const savedLang = localStorage.getItem('garden_lang');
+        if (savedLang && (savedLang === 'en' || savedLang === 'id')) {
+          currentLang = savedLang;
+        }
+        const data = localStorage.getItem(STORAGE_KEY);
+        if (data) {
+          state = { ...state, ...JSON.parse(data) };
+        }
+      } catch (e) {
+        console.warn('Local storage read error', e);
+      }
+    }
+
+    function confirmReset() {
+      const msg = currentLang === 'en' 
+        ? 'Begin a new 7-day reflective journey from Day 1?' 
+        : 'Mulai ulang perjalanan reflektif dari Hari ke-1?';
+      if (confirm(msg)) {
+        state = {
+          day: 1,
+          phase: 'HOME',
+          quizStep: 0,
+          scores: { R: 0, I: 0, A: 0, S: 0, E: 0, C: 0 },
+          growthProgress: 0,
+          dominantFlower: 'cactus',
+          completed: false,
+          potStyle: state.potStyle,
+          unlockedCelestialPot: state.unlockedCelestialPot
+        };
+        saveState();
+        refreshUI();
+      }
+    }
+
+    function setLanguage(lang) {
+      currentLang = lang;
+      document.getElementById('btn-en').classList.toggle('active', lang === 'en');
+      document.getElementById('btn-id').classList.toggle('active', lang === 'id');
+      saveState();
+      refreshUI();
+      updatePotBadge();
+    }
+
+    function computeDominantTrait() {
+      const entries = Object.entries(state.scores);
+      entries.sort((a, b) => b[1] - a[1]);
+      const topTrait = entries[0][0];
+      const flower = GAME_DATA.en.archetypes[topTrait].flower;
+      state.dominantFlower = flower;
+      return topTrait;
+    }
+
+    /* =====================================================================
+       5. VIEW DECK RENDERERS
+       ===================================================================== */
+    const deckEl = document.getElementById('viewDeck');
+
+    function refreshUI() {
+      const dayTxt = `${GAME_DATA[currentLang].dayPrefix} ${state.day} / 7`;
+      document.getElementById('ui-day-indicator').innerText = state.completed 
+        ? (currentLang === 'en' ? 'Full Bloom' : 'Mekar Penuh') 
+        : dayTxt;
+
+      const pct = Math.round(state.growthProgress * 100);
+      document.getElementById('growth-progress-fill').style.width = `${pct}%`;
+      document.getElementById('growth-val-text').innerText = `${pct}%`;
+
+      canvasEngine.targetProgress = state.growthProgress;
+      computeDominantTrait();
+      canvasEngine.flowerType = state.dominantFlower;
+      canvasEngine.potStyle = state.potStyle;
+
+      updatePotBadge();
+
+      switch (state.phase) {
+        case 'HOME': renderHomeView(); break;
+        case 'QUIZ': renderQuizView(); break;
+        case 'PUZZLE': renderPuzzleView(); break;
+        case 'WATER': renderWaterView(); break;
+        case 'DAY_END': renderDayEndView(); break;
+        case 'FINAL': renderFinalView(); break;
+      }
+    }
+
+    function renderHomeView() {
+      const isProgress = state.day > 1 || state.growthProgress > 0;
+      deckEl.innerHTML = `
+        <div class="card-panel">
+          <div>
+            <h1 class="card-title">${GAME_DATA[currentLang].title}</h1>
+            <p class="card-desc">${GAME_DATA[currentLang].subtitle}</p>
+          </div>
+          <div style="text-align: center; margin: 8px 0;">
+            <div style="font-size: 2rem;">🌸</div>
+            <div style="font-size: 0.78rem; color: var(--text-muted); margin-top: 2px;">
+              ${GAME_DATA[currentLang].dayPrefix} ${state.day} • ${Math.round(state.growthProgress * 100)}%
+            </div>
+          </div>
+          <button class="btn-main" onclick="startDay()">
+            ${isProgress ? GAME_DATA[currentLang].btnResume : GAME_DATA[currentLang].btnStart}
+          </button>
+        </div>
+      `;
+    }
+
+    function startDay() {
+      state.phase = 'QUIZ';
+      state.quizStep = 0;
+      saveState();
+      refreshUI();
+    }
+
+    function renderQuizView() {
+      const dayQStartIndex = (state.day - 1) * 3;
+      const qIndex = dayQStartIndex + state.quizStep;
+      const qData = GAME_DATA[currentLang].questions[qIndex];
+      const likertLabels = GAME_DATA[currentLang].likertLabels;
+
+      deckEl.innerHTML = `
+        <div class="card-panel">
+          <div>
+            <div class="quiz-progress-dots">
+              <div class="dot ${state.quizStep === 0 ? 'active' : (state.quizStep > 0 ? 'done' : '')}"></div>
+              <div class="dot ${state.quizStep === 1 ? 'active' : (state.quizStep > 1 ? 'done' : '')}"></div>
+              <div class="dot ${state.quizStep === 2 ? 'active' : ''}"></div>
+            </div>
+            <div class="question-prompt">“${qData.text}”</div>
+          </div>
+
+          <div>
+            <div class="likert-scale">
+              ${[1, 2, 3, 4, 5].map((val, idx) => `
+                <button class="likert-btn" onclick="answerQuestion(${val}, '${qData.trait}')">
+                  <span>${val}</span>
+                  <span class="likert-sub">${likertLabels[idx]}</span>
+                </button>
+              `).join('')}
+            </div>
+          </div>
+        </div>
+      `;
+    }
+
+    function answerQuestion(score, trait) {
+      state.scores[trait] = (state.scores[trait] || 0) + score;
+      if (state.quizStep < 2) {
+        state.quizStep++;
+      } else {
+        state.phase = 'PUZZLE';
+      }
+      saveState();
+      refreshUI();
+    }
+
+    let activeSelection = [];
+    function renderPuzzleView() {
+      const targetWord = GAME_DATA[currentLang].words[state.day - 1];
+      activeSelection = [];
+      const grid = buildWordGrid(targetWord);
+
+      deckEl.innerHTML = `
+        <div class="card-panel">
+          <div>
+            <div class="word-target-banner">
+              <div class="target-word-hint">${GAME_DATA[currentLang].wordSearchHint}</div>
+              <div class="target-word-display" id="targetWordText">${targetWord}</div>
+            </div>
+
+            <div class="grid-board" id="wordGridBoard">
+              ${grid.map((letter, i) => `
+                <div class="grid-cell" data-idx="${i}" data-letter="${letter}" onclick="onLetterClick(${i})">${letter}</div>
+              `).join('')}
+            </div>
+          </div>
+          <p class="puzzle-instructions">
+            ${currentLang === 'en' ? 'Tap each letter in order to spell the virtue.' : 'Ketuk huruf satu per satu sesuai urutan kata kebajikan.'}
+          </p>
+        </div>
+      `;
+    }
+
+    function buildWordGrid(word) {
+      const size = 36;
+      const grid = new Array(size).fill(null);
+      const chars = word.split('');
+      const startPos = [0, 1, 6, 7, 12, 13][(state.day * 2) % 6];
+      
+      for (let i = 0; i < chars.length; i++) {
+        grid[startPos + i] = chars[i];
+      }
+
+      const filler = currentLang === 'en' ? 'HARMONYSOULSEEDGROWTHLEAF' : 'TANAHBUNGAMEKARDAMAIJIWA';
+      for (let i = 0; i < size; i++) {
+        if (!grid[i]) {
+          grid[i] = filler[(i * 7 + state.day) % filler.length];
+        }
+      }
+      return grid;
+    }
+
+    function onLetterClick(index) {
+      const targetWord = GAME_DATA[currentLang].words[state.day - 1];
+      const cells = document.querySelectorAll('.grid-cell');
+      const clickedCell = cells[index];
+      const clickedLetter = clickedCell.dataset.letter;
+      const nextExpectedChar = targetWord[activeSelection.length];
+
+      if (clickedLetter === nextExpectedChar) {
+        activeSelection.push(index);
+        clickedCell.classList.add('selected');
+
+        if (activeSelection.length === targetWord.length) {
+          activeSelection.forEach(idx => {
+            cells[idx].classList.remove('selected');
+            cells[idx].classList.add('solved');
+          });
+
+          setTimeout(() => {
+            state.phase = 'WATER';
+            saveState();
+            refreshUI();
+          }, 500);
+        }
+      } else {
+        activeSelection.forEach(idx => cells[idx].classList.remove('selected'));
+        activeSelection = [];
+      }
+    }
+
+    function renderWaterView() {
+      deckEl.innerHTML = `
+        <div class="card-panel">
+          <div class="watering-hero">
+            <div class="can-symbol">🪴</div>
+            <h2 class="card-title">${GAME_DATA[currentLang].wordFoundTitle}</h2>
+            <p class="card-desc">${GAME_DATA[currentLang].wordFoundDesc}</p>
+          </div>
+          <button class="btn-main" onclick="triggerWateringAction()">
+            ${GAME_DATA[currentLang].btnWater}
+          </button>
+        </div>
+      `;
+    }
+
+    function triggerWateringAction() {
+      SoundManager.playWaterSplash();
+      canvasEngine.sprayDroplets();
+
+      const newGrowth = Math.min(1.0, (state.day / 7));
+      state.growthProgress = newGrowth;
+
+      saveState();
+      refreshUI();
+
+      setTimeout(() => {
+        SoundManager.playChime();
+        if (state.day >= 7) {
+          state.phase = 'FINAL';
+          state.completed = true;
+        } else {
+          state.phase = 'DAY_END';
+        }
+        saveState();
+        refreshUI();
+      }, 1300);
+    }
+
+    function renderDayEndView() {
+      deckEl.innerHTML = `
+        <div class="card-panel">
+          <div>
+            <h2 class="card-title">${GAME_DATA[currentLang].dayDoneTitle}</h2>
+            <p class="card-desc">${GAME_DATA[currentLang].dayDoneDesc}</p>
+          </div>
+          <div style="text-align: center; margin: 10px 0;">
+            <span style="font-size: 1.8rem;">🌿</span>
+            <p style="font-size: 0.78rem; color: var(--accent-deep); font-weight: 600; margin-top: 3px;">
+              ${GAME_DATA[currentLang].dayPrefix} ${state.day} Completed
+            </p>
+          </div>
+          <button class="btn-main" onclick="goToNextDay()">
+            ${GAME_DATA[currentLang].btnNextDay}
+          </button>
+        </div>
+      `;
+    }
+
+    function goToNextDay() {
+      state.day++;
+      state.phase = 'QUIZ';
+      state.quizStep = 0;
+      saveState();
+      refreshUI();
+    }
+
+    function renderFinalView() {
+      const topTrait = computeDominantTrait();
+      const info = GAME_DATA[currentLang].archetypes[topTrait];
+      const maxScore = Math.max(...Object.values(state.scores), 1);
+
+      deckEl.innerHTML = `
+        <div class="card-panel">
+          <div>
+            <h2 class="card-title">${info.name}</h2>
+            <p style="text-align: center; font-size: 0.76rem; font-weight: 700; color: var(--accent-sage); text-transform: uppercase;">
+              ${info.trait}
+            </p>
+            <p class="card-desc" style="margin-top: 4px; margin-bottom: 8px;">${info.desc}</p>
+          </div>
+
+          <div class="results-chart">
+            ${['R', 'I', 'A', 'S', 'E', 'C'].map(code => {
+              const sc = state.scores[code] || 0;
+              const barPct = Math.round((sc / (maxScore || 1)) * 100);
+              const label = GAME_DATA[currentLang].archetypes[code].name.split(' ')[1] || code;
+              return `
+                <div class="trait-bar-row">
+                  <span class="trait-label">${label} (${code})</span>
+                  <div class="trait-bar-track">
+                    <div class="trait-bar-fill" style="width: ${barPct}%;"></div>
+                  </div>
+                  <span class="trait-score">${sc}</span>
+                </div>
+              `;
+            }).join('')}
+          </div>
+
+          <!-- Premium Upgrade Card -->
+          <div class="premium-card">
+            <span class="premium-badge">${GAME_DATA[currentLang].premiumBadge}</span>
+            <div class="premium-title">${GAME_DATA[currentLang].premiumTitle}</div>
+            <p class="premium-desc">${GAME_DATA[currentLang].premiumDesc}</p>
+            <a href="https://lynk.id" target="_blank" rel="noopener noreferrer" class="btn-main btn-premium">
+              ${GAME_DATA[currentLang].premiumBtn}
+            </a>
+          </div>
+
+          <!-- Certificate Download & Sharing -->
+          <button class="btn-main btn-share" onclick="generateAndDownloadCertificate()">
+            ${GAME_DATA[currentLang].btnShare}
+          </button>
+
+          <button class="btn-main btn-secondary" onclick="confirmReset()">
+            ${GAME_DATA[currentLang].btnRestart}
+          </button>
+        </div>
+      `;
+    }
+
+    /* =====================================================================
+       6. CANVAS RENDERING ENGINE (POT LOGIC & CELESTIAL PARTICLES)
+       ===================================================================== */
+    const canvas = document.getElementById('gardenCanvas');
+    const ctx = canvas.getContext('2d');
+
+    const canvasEngine = {
+      flowerType: 'cactus',
+      potStyle: 'terracotta',
+      currentProgress: 0,
+      targetProgress: 0,
+      sway: 0,
+      droplets: [],
+      sparkles: [],
+
+      sprayDroplets() {
+        for (let i = 0; i < 28; i++) {
+          this.droplets.push({
+            x: (canvas.width / (window.devicePixelRatio || 1)) * (0.35 + Math.random() * 0.3),
+            y: 10 + Math.random() * 30,
+            vy: 3 + Math.random() * 4,
+            length: 8 + Math.random() * 8
+          });
+        }
+      },
+
+      triggerSparkleBurst() {
+        const w = canvas.getBoundingClientRect().width;
+        const h = canvas.getBoundingClientRect().height;
+        for (let i = 0; i < 40; i++) {
+          this.sparkles.push({
+            x: w / 2 + (Math.random() - 0.5) * 80,
+            y: h * 0.85 + (Math.random() - 0.5) * 40,
+            vx: (Math.random() - 0.5) * 3,
+            vy: -Math.random() * 3.5 - 1.2,
+            size: Math.random() * 3 + 1.5,
+            alpha: 1.0,
+            color: Math.random() > 0.4 ? '#fde68a' : '#ffffff'
+          });
+        }
+      }
+    };
+
+    function resizeCanvas() {
+      const rect = canvas.parentElement.getBoundingClientRect();
+      const dpr = window.devicePixelRatio || 1;
+      canvas.width = rect.width * dpr;
+      canvas.height = rect.height * dpr;
+      ctx.resetTransform();
+      ctx.scale(dpr, dpr);
+    }
+    window.addEventListener('resize', resizeCanvas);
+
+    // Architectural Pot Drawing Routine (Terracotta & Celestial)
+    function drawPot(c, potStyle, x, y, width, height) {
+      c.save();
+      const topW = width;
+      const botW = width * 0.72;
+      const rimH = height * 0.24;
+
+      if (potStyle === 'celestial') {
+        // Celestial Soft Glow Aura
+        c.shadowColor = 'rgba(165, 180, 252, 0.45)';
+        c.shadowBlur = 18;
+
+        // Pot Body Gradient (Deep Indigo)
+        const pGrad = c.createLinearGradient(x - topW/2, y, x + topW/2, y + height);
+        pGrad.addColorStop(0, '#161938');
+        pGrad.addColorStop(0.5, '#232959');
+        pGrad.addColorStop(1, '#0e1128');
+
+        // Draw Trapezoid Body
+        c.fillStyle = pGrad;
+        c.beginPath();
+        c.moveTo(x - topW * 0.46, y + rimH);
+        c.lineTo(x + topW * 0.46, y + rimH);
+        c.lineTo(x + botW * 0.5, y + height);
+        c.lineTo(x - botW * 0.5, y + height);
+        c.closePath();
+        c.fill();
+
+        // Celestial Gold Constellation Lines & Stars
+        c.strokeStyle = 'rgba(253, 230, 138, 0.55)';
+        c.lineWidth = 1;
+        c.beginPath();
+        c.moveTo(x - topW * 0.25, y + rimH + 10);
+        c.lineTo(x - 8, y + height * 0.65);
+        c.lineTo(x + 18, y + height * 0.55);
+        c.lineTo(x + topW * 0.28, y + height * 0.75);
+        c.stroke();
+
+        // Star Dots
+        c.fillStyle = '#fef08a';
+        [
+          { dx: -topW * 0.25, dy: rimH + 10 },
+          { dx: -8, dy: height * 0.65 },
+          { dx: 18, dy: height * 0.55 },
+          { dx: topW * 0.28, dy: height * 0.75 },
+          { dx: 0, dy: height * 0.82 }
+        ].forEach(pt => {
+          c.beginPath();
+          c.arc(x + pt.dx, y + pt.dy, 2, 0, Math.PI * 2);
+          c.fill();
+        });
+
+        // Gold Rim
+        c.shadowBlur = 8;
+        c.shadowColor = 'rgba(234, 179, 8, 0.4)';
+        const rGrad = c.createLinearGradient(x - topW/2, y, x + topW/2, y);
+        rGrad.addColorStop(0, '#ca8a04');
+        rGrad.addColorStop(0.5, '#fef08a');
+        rGrad.addColorStop(1, '#a16207');
+        c.fillStyle = rGrad;
+        c.beginPath();
+        c.roundRect(x - topW * 0.52, y, topW * 1.04, rimH, [4, 4, 3, 3]);
+        c.fill();
+
+        // Drainage Saucer
+        c.fillStyle = '#1e1b4b';
+        c.beginPath();
+        c.roundRect(x - botW * 0.6, y + height - 2, botW * 1.2, 6, [2, 2, 4, 4]);
+        c.fill();
+
+      } else {
+        // Minimalist Pastel Terracotta Pot
+        c.shadowColor = 'rgba(67, 85, 72, 0.1)';
+        c.shadowBlur = 10;
+
+        const pGrad = c.createLinearGradient(x - topW/2, y, x + topW/2, y + height);
+        pGrad.addColorStop(0, '#e5a593');
+        pGrad.addColorStop(0.6, '#d48d79');
+        pGrad.addColorStop(1, '#be7560');
+
+        // Trapezoid Body
+        c.fillStyle = pGrad;
+        c.beginPath();
+        c.moveTo(x - topW * 0.46, y + rimH);
+        c.lineTo(x + topW * 0.46, y + rimH);
+        c.lineTo(x + botW * 0.5, y + height);
+        c.lineTo(x - botW * 0.5, y + height);
+        c.closePath();
+        c.fill();
+
+        // Rim
+        const rGrad = c.createLinearGradient(x - topW/2, y, x + topW/2, y);
+        rGrad.addColorStop(0, '#f0b7a7');
+        rGrad.addColorStop(1, '#c87c68');
+        c.fillStyle = rGrad;
+        c.beginPath();
+        c.roundRect(x - topW * 0.5, y, topW, rimH, [4, 4, 2, 2]);
+        c.fill();
+
+        // Terracotta Saucer
+        c.fillStyle = '#ba6e5a';
+        c.beginPath();
+        c.roundRect(x - botW * 0.58, y + height - 2, botW * 1.16, 5, [2, 2, 4, 4]);
+        c.fill();
+      }
+      c.restore();
+    }
+
+    function drawStemLeaf(c, x, y, len, angle, scale, flip = 1) {
+      c.save();
+      c.translate(x, y);
+      c.rotate(angle);
+      c.scale(scale * flip, scale);
+      c.beginPath();
+      c.moveTo(0, 0);
+      c.quadraticCurveTo(len * 0.45, -len * 0.35, len, 0);
+      c.quadraticCurveTo(len * 0.45, len * 0.35, 0, 0);
+      const g = c.createLinearGradient(0, -len * 0.2, len, 0);
+      g.addColorStop(0, '#759472');
+      g.addColorStop(1, '#97b192');
+      c.fillStyle = g;
+      c.fill();
+      c.restore();
+    }
+
+    function renderFlowerSpecies(c, type, potStyle, w, h, p, swayOffset) {
+      const potW = Math.min(100, w * 0.26);
+      const potH = 46;
+      const baseY = h * 0.84;
+
+      // 1. Draw Pot & Saucer
+      drawPot(c, potStyle, w / 2, baseY, potW, potH);
+
+      // 2. Soil Surface inside the pot rim
+      const soilGrad = c.createLinearGradient(0, baseY - 4, 0, baseY + 6);
+      soilGrad.addColorStop(0, '#665749');
+      soilGrad.addColorStop(1, '#473b30');
+      c.fillStyle = soilGrad;
+      c.beginPath();
+      c.ellipse(w / 2, baseY + 2, potW * 0.44, 6, 0, 0, Math.PI * 2);
+      c.fill();
+
+      // Seed sprout
+      if (p < 0.12) {
+        c.fillStyle = '#a9ba9d';
+        c.beginPath();
+        c.ellipse(w / 2, baseY, 4 + p * 12, 3 + p * 6, 0, 0, Math.PI * 2);
+        c.fill();
+      }
+
+      // 3. Flower Growth Rendering
+      if (type === 'cactus') {
+        const stemH = (h * 0.44) * Math.min(1, p / 0.7);
+        const topY = baseY - stemH;
+        const stemW = 26 * Math.min(1, p / 0.5);
+        if (p > 0.05) {
+          c.fillStyle = '#658869';
+          c.beginPath();
+          c.roundRect((w / 2) - stemW / 2 + swayOffset * 0.4, topY, stemW, stemH, [stemW / 2, stemW / 2, 6, 6]);
+          c.fill();
+        }
+        if (p > 0.62) {
+          const bp = (p - 0.62) / 0.38;
+          c.save();
+          c.translate(w / 2 + swayOffset * 0.4, topY + 2);
+          c.scale(bp, bp);
+          for (let i = 0; i < 12; i++) {
+            c.rotate((Math.PI * 2) / 12);
+            c.fillStyle = '#ff8f82';
+            c.beginPath();
+            c.ellipse(0, -14, 5, 12, 0, 0, Math.PI * 2);
+            c.fill();
+          }
+          c.fillStyle = '#ffe066';
+          c.beginPath();
+          c.arc(0, 0, 4, 0, Math.PI * 2);
+          c.fill();
+          c.restore();
+        }
+      } else if (type === 'lotus') {
+        const stemH = (h * 0.46) * Math.min(1, p / 0.7);
+        const headX = (w / 2) + swayOffset;
+        const headY = baseY - stemH;
+        if (p > 0.05) {
+          c.strokeStyle = '#67896d';
+          c.lineWidth = 3.5;
+          c.beginPath();
+          c.moveTo(w / 2, baseY);
+          c.quadraticCurveTo(w / 2 + swayOffset * 0.3, baseY - stemH * 0.5, headX, headY);
+          c.stroke();
+        }
+        if (p > 0.6) {
+          const bp = (p - 0.6) / 0.4;
+          c.save();
+          c.translate(headX, headY);
+          c.scale(bp, bp);
+          [18, 14, 10].forEach((rad, rIdx) => {
+            for (let i = 0; i < 6; i++) {
+              c.rotate((Math.PI * 2) / 6);
+              c.fillStyle = rIdx === 0 ? '#d4c2df' : (rIdx === 1 ? '#e9def2' : '#ffffff');
+              c.beginPath();
+              c.ellipse(0, -rad, 6, rad, 0, 0, Math.PI * 2);
+              c.fill();
+            }
+          });
+          c.fillStyle = '#fce588';
+          c.beginPath();
+          c.arc(0, -4, 4, 0, Math.PI * 2);
+          c.fill();
+          c.restore();
+        }
+      } else if (type === 'orchid') {
+        const stemH = (h * 0.45) * Math.min(1, p / 0.7);
+        const headX = (w / 2) + 20 + swayOffset;
+        const headY = baseY - stemH;
+        if (p > 0.05) {
+          c.strokeStyle = '#557657';
+          c.lineWidth = 3;
+          c.beginPath();
+          c.moveTo(w / 2, baseY);
+          c.bezierCurveTo(w / 2 - 15, baseY - stemH * 0.4, w / 2 + 30, baseY - stemH * 0.7, headX, headY);
+          c.stroke();
+        }
+        if (p > 0.6) {
+          const bp = (p - 0.6) / 0.4;
+          c.save();
+          c.translate(headX, headY);
+          c.scale(bp, bp);
+          c.fillStyle = '#f6d9ec';
+          for (let rot of [-0.8, 0.8, -2.4]) {
+            c.save(); c.rotate(rot);
+            c.beginPath(); c.ellipse(0, -16, 6, 16, 0, 0, Math.PI * 2); c.fill();
+            c.restore();
+          }
+          c.fillStyle = '#ea88c1';
+          [-1, 1].forEach(s => {
+            c.save(); c.scale(s, 1);
+            c.beginPath(); c.ellipse(15, -4, 12, 8, 0.3, 0, Math.PI * 2); c.fill();
+            c.restore();
+          });
+          c.fillStyle = '#c72e7d';
+          c.beginPath();
+          c.ellipse(0, 10, 7, 10, 0, 0, Math.PI * 2);
+          c.fill();
+          c.restore();
+        }
+      } else if (type === 'sunflower') {
+        const stemH = (h * 0.46) * Math.min(1, p / 0.7);
+        const headX = (w / 2) + swayOffset;
+        const headY = baseY - stemH;
+        if (p > 0.05) {
+          c.strokeStyle = '#5c7b50';
+          c.lineWidth = 4.5;
+          c.beginPath();
+          c.moveTo(w / 2, baseY);
+          c.lineTo(headX, headY);
+          c.stroke();
+          if (p > 0.3) {
+            drawStemLeaf(c, w / 2, baseY - stemH * 0.4, 32, -0.6, (p - 0.3) / 0.4, -1);
+            drawStemLeaf(c, w / 2, baseY - stemH * 0.6, 28, 0.5, (p - 0.3) / 0.4, 1);
+          }
+        }
+        if (p > 0.58) {
+          const bp = (p - 0.58) / 0.42;
+          c.save();
+          c.translate(headX, headY);
+          c.scale(bp, bp);
+          for (let i = 0; i < 16; i++) {
+            c.rotate((Math.PI * 2) / 16);
+            c.fillStyle = '#fdb833';
+            c.beginPath();
+            c.ellipse(0, -22, 5, 14, 0, 0, Math.PI * 2);
+            c.fill();
+          }
+          c.fillStyle = '#4a2f20';
+          c.beginPath();
+          c.arc(0, 0, 12, 0, Math.PI * 2);
+          c.fill();
+          c.restore();
+        }
+      } else if (type === 'rose') {
+        const stemH = (h * 0.46) * Math.min(1, p / 0.7);
+        const headX = (w / 2) + swayOffset;
+        const headY = baseY - stemH;
+        if (p > 0.05) {
+          c.strokeStyle = '#47634a';
+          c.lineWidth = 3.5;
+          c.beginPath();
+          c.moveTo(w / 2, baseY);
+          c.quadraticCurveTo(w / 2 - 10, baseY - stemH * 0.5, headX, headY);
+          c.stroke();
+        }
+        if (p > 0.6) {
+          const bp = (p - 0.6) / 0.4;
+          c.save();
+          c.translate(headX, headY);
+          c.scale(bp, bp);
+          [22, 16, 10, 5].forEach((rad, rIdx) => {
+            const cols = ['#c9324d', '#de435f', '#f46a84', '#ffa2b4'];
+            for (let i = 0; i < 5; i++) {
+              ctx.rotate((Math.PI * 2) / 5);
+              c.fillStyle = cols[rIdx];
+              c.beginPath();
+              c.ellipse(0, -rad * 0.5, rad * 0.7, rad * 0.5, 0, 0, Math.PI * 2);
+              c.fill();
+            }
+          });
+          c.restore();
+        }
+      } else { // lily
+        const stemH = (h * 0.47) * Math.min(1, p / 0.7);
+        const headX = (w / 2) + swayOffset * 0.5;
+        const headY = baseY - stemH;
+        if (p > 0.05) {
+          c.strokeStyle = '#5a785c';
+          c.lineWidth = 3.5;
+          c.beginPath();
+          c.moveTo(w / 2, baseY);
+          c.lineTo(headX, headY);
+          c.stroke();
+          if (p > 0.25) {
+            drawStemLeaf(c, w / 2, baseY - stemH * 0.35, 34, -0.3, (p - 0.25) / 0.4, -1);
+            drawStemLeaf(c, w / 2, baseY - stemH * 0.55, 34, 0.3, (p - 0.25) / 0.4, 1);
+          }
+        }
+        if (p > 0.6) {
+          const bp = (p - 0.6) / 0.4;
+          c.save();
+          c.translate(headX, headY);
+          c.scale(bp, bp);
+          for (let i = 0; i < 6; i++) {
+            c.rotate((Math.PI * 2) / 6);
+            c.fillStyle = '#ffffff';
+            c.beginPath();
+            c.ellipse(0, -26, 6, 20, 0, 0, Math.PI * 2);
+            c.fill();
+          }
+          c.fillStyle = '#b45309';
+          for (let i = 0; i < 6; i++) {
+            c.rotate((Math.PI * 2) / 6);
+            c.beginPath();
+            c.arc(0, -14, 2, 0, Math.PI * 2);
+            c.fill();
+          }
+          c.restore();
+        }
+      }
+    }
+
+    function renderGarden() {
+      canvasEngine.sway += 0.025;
+      canvasEngine.currentProgress += (canvasEngine.targetProgress - canvasEngine.currentProgress) * 0.06;
+      const p = canvasEngine.currentProgress;
+
+      const w = canvas.getBoundingClientRect().width;
+      const h = canvas.getBoundingClientRect().height;
+      ctx.clearRect(0, 0, w, h);
+
+      const swayOffset = Math.sin(canvasEngine.sway) * (4 * Math.min(1, p * 1.5));
+      const type = canvasEngine.flowerType;
+      const potStyle = canvasEngine.potStyle;
+
+      renderFlowerSpecies(ctx, type, potStyle, w, h, p, swayOffset);
+
+      // Celestial Sparkle Particle Burst
+      if (canvasEngine.sparkles.length > 0) {
+        for (let i = canvasEngine.sparkles.length - 1; i >= 0; i--) {
+          const s = canvasEngine.sparkles[i];
+          s.x += s.vx;
+          s.y += s.vy;
+          s.alpha -= 0.02;
+          ctx.fillStyle = s.color;
+          ctx.globalAlpha = Math.max(0, s.alpha);
+          ctx.beginPath();
+          ctx.arc(s.x, s.y, s.size, 0, Math.PI * 2);
+          ctx.fill();
+          ctx.globalAlpha = 1.0;
+          if (s.alpha <= 0) {
+            canvasEngine.sparkles.splice(i, 1);
+          }
+        }
+      }
+
+      // Rain Droplets
+      if (canvasEngine.droplets.length > 0) {
+        ctx.strokeStyle = 'rgba(125, 185, 235, 0.75)';
+        ctx.lineWidth = 2;
+        const baseY = h * 0.84;
+        for (let i = canvasEngine.droplets.length - 1; i >= 0; i--) {
+          const d = canvasEngine.droplets[i];
+          d.y += d.vy;
+          ctx.beginPath();
+          ctx.moveTo(d.x, d.y);
+          ctx.lineTo(d.x, d.y + d.length);
+          ctx.stroke();
+          if (d.y > baseY) {
+            canvasEngine.droplets.splice(i, 1);
+          }
+        }
+      }
+
+      requestAnimationFrame(renderGarden);
+    }
+
+    /* =====================================================================
+       7. HIGH-RESOLUTION SHAREABLE CERTIFICATE EXPORT
+       ===================================================================== */
+    function generateAndDownloadCertificate() {
+      const cert = document.getElementById('certCanvas');
+      const cCtx = cert.getContext('2d');
+      const W = cert.width;  // 1080
+      const H = cert.height; // 1080
+
+      const topTrait = computeDominantTrait();
+      const info = GAME_DATA[currentLang].archetypes[topTrait];
+
+      // 1. Background Gradient
+      const bgGrad = cCtx.createLinearGradient(0, 0, 0, H);
+      bgGrad.addColorStop(0, '#faf8f3');
+      bgGrad.addColorStop(1, '#e6ede2');
+      cCtx.fillStyle = bgGrad;
+      cCtx.fillRect(0, 0, W, H);
+
+      // 2. Soft Ambient Vignette / Glow
+      cCtx.save();
+      cCtx.filter = 'blur(90px)';
+      cCtx.fillStyle = 'rgba(217, 154, 128, 0.22)';
+      cCtx.beginPath();
+      cCtx.arc(200, 200, 220, 0, Math.PI * 2);
+      cCtx.fill();
+
+      cCtx.fillStyle = 'rgba(143, 165, 140, 0.28)';
+      cCtx.beginPath();
+      cCtx.arc(W - 200, H - 200, 240, 0, Math.PI * 2);
+      cCtx.fill();
+      cCtx.restore();
+
+      // 3. Double Border
+      cCtx.strokeStyle = 'rgba(59, 82, 66, 0.18)';
+      cCtx.lineWidth = 2;
+      cCtx.strokeRect(50, 50, W - 100, H - 100);
+
+      cCtx.strokeStyle = 'rgba(59, 82, 66, 0.45)';
+      cCtx.lineWidth = 1;
+      cCtx.strokeRect(60, 60, W - 120, H - 120);
+
+      // 4. Header Titles
+      cCtx.textAlign = 'center';
+      cCtx.fillStyle = '#647568';
+      cCtx.font = '600 24px "Plus Jakarta Sans", sans-serif';
+      cCtx.letterSpacing = '6px';
+      cCtx.fillText(currentLang === 'en' ? 'THE GARDEN OF MIND' : 'TAMAN PIKIRAN', W / 2, 130);
+
+      cCtx.font = '400 19px "Plus Jakarta Sans", sans-serif';
+      cCtx.letterSpacing = '3px';
+      cCtx.fillStyle = '#8fa58c';
+      cCtx.fillText(currentLang === 'en' ? '• BOTANICAL SOUL CERTIFICATE •' : '• SERTIFIKAT BUNGA JIWA •', W / 2, 165);
+
+      // 5. Draw the Fully Bloomed Flower & Chosen Pot in Center
+      cCtx.save();
+      cCtx.translate(W / 2 - 250, 160);
+      cCtx.scale(1.25, 1.25);
+      renderFlowerSpecies(cCtx, info.flower, state.potStyle, 400, 440, 1.0, 0);
+      cCtx.restore();
+
+      // 6. Flower Archetype Name & Trait
+      cCtx.fillStyle = '#253328';
+      cCtx.font = '600 68px "Cormorant Garamond", Georgia, serif';
+      cCtx.fillText(info.name, W / 2, 790);
+
+      cCtx.fillStyle = '#3b5242';
+      cCtx.font = '600 22px "Plus Jakarta Sans", sans-serif';
+      cCtx.letterSpacing = '2px';
+      cCtx.fillText(info.trait.toUpperCase(), W / 2, 835);
+
+      // 7. Inspirational Quote
+      cCtx.fillStyle = '#647568';
+      cCtx.font = 'italic 26px "Cormorant Garamond", Georgia, serif';
+      cCtx.fillText(`“${info.quote}”`, W / 2, 910);
+
+      // 8. Footer Stamp
+      cCtx.fillStyle = '#8fa58c';
+      cCtx.font = '500 18px "Plus Jakarta Sans", sans-serif';
+      cCtx.letterSpacing = '1px';
+      const dateStr = new Date().toLocaleDateString(currentLang === 'en' ? 'en-US' : 'id-ID', { year: 'numeric', month: 'long', day: 'numeric' });
+      cCtx.fillText(`${dateStr} • Holland RIASEC Verified`, W / 2, 980);
+
+      // 9. Trigger Instant Download
+      try {
+        const imageURL = cert.toDataURL('image/png');
+        const link = document.createElement('a');
+        link.download = 'My_Garden_Of_Mind.png';
+        link.href = imageURL;
+        document.body.appendChild(link);
+        link.click();
+        document.body.removeChild(link);
+      } catch (err) {
+        console.error('Canvas export error:', err);
+      }
+    }
+
+    /* =====================================================================
+       8. INITIALIZATION
+       ===================================================================== */
+    window.addEventListener('DOMContentLoaded', () => {
+      loadState();
+      resizeCanvas();
+      setLanguage(currentLang);
+      requestAnimationFrame(renderGarden);
+    });
+  </script>
+</body>
+</html>
