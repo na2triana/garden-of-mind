@@ -1,4 +1,5 @@
 
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -211,6 +212,7 @@
       background: radial-gradient(ellipse at 50% 60%, rgba(254, 250, 243, 0.95) 0%, rgba(228, 237, 224, 0.95) 100%);
       box-shadow: inset 0 0 20px rgba(143, 165, 140, 0.12);
       border: 1px solid rgba(255, 255, 255, 0.8);
+      overflow: hidden;
     }
 
     canvas#gardenCanvas {
@@ -219,7 +221,7 @@
       display: block;
     }
 
-    /* Floating Studio / Accessories Button */
+    /* Floating Studio Button */
     .floating-studio-btn {
       position: absolute;
       top: 8px;
@@ -657,7 +659,7 @@
       color: var(--accent-deep);
     }
 
-    /* Modals (Ad & Studio & Dev) */
+    /* Modals (Ad, Studio, Dev) */
     .modal-overlay {
       position: fixed;
       inset: 0;
@@ -741,12 +743,14 @@
     .studio-desc { font-size: 0.64rem; color: var(--text-muted); }
     .studio-btn-toggle {
       border: none;
-      padding: 5px 11px;
-      font-size: 0.68rem;
+      padding: 6px 13px;
+      font-size: 0.7rem;
       font-weight: 600;
       border-radius: var(--radius-pill);
       cursor: pointer;
+      transition: transform 0.15s ease, background-color 0.2s ease;
     }
+    .studio-btn-toggle:active { transform: scale(0.95); }
     .studio-btn-toggle.equipped { background: var(--accent-deep); color: #fff; }
     .studio-btn-toggle.unequipped { background: #e0eae0; color: var(--accent-deep); }
     .studio-btn-toggle.ad-lock { background: var(--accent-gold); color: #fff; }
@@ -841,7 +845,7 @@
       </div>
     </header>
 
-    <!-- Canvas Stage (Soft Pastel Ambient Backdrop & Full Clearance) -->
+    <!-- Canvas Stage (Soft Pastel Ambient Backdrop & Full Responsive Clearance) -->
     <section class="canvas-container">
       <canvas id="gardenCanvas"></canvas>
       
@@ -1318,20 +1322,20 @@
     /* =====================================================================
        3. PERSISTENT STATE & 5-MINUTE WAITING LOCK
        ===================================================================== */
-    const STORAGE_KEY = 'garden_of_mind_v8_save';
+    const STORAGE_KEY = 'garden_of_mind_v9_save';
     let currentLang = 'en';
     let dayTimerInterval = null;
 
     let state = {
       day: 1,
-      phase: 'HOME', // HOME, QUIZ, PUZZLE, WATER, DAY_END, FINAL
+      phase: 'HOME',
       quizStep: 0,
       scores: { R: 0, I: 0, A: 0, S: 0, E: 0, C: 0 },
       growthProgress: 0,
       dominantFlower: 'cactus',
       completed: false,
       audioEnabled: false,
-      nextDayUnlockTime: 0, // Real-time timestamp for 5-minute wait
+      nextDayUnlockTime: 0,
       accessories: {
         celestialPot: false,
         butterflies: false,
@@ -1367,7 +1371,10 @@
         }
         const data = localStorage.getItem(STORAGE_KEY);
         if (data) {
-          state = { ...state, ...JSON.parse(data) };
+          const parsed = JSON.parse(data);
+          state = { ...state, ...parsed };
+          if (parsed.accessories) state.accessories = { ...state.accessories, ...parsed.accessories };
+          if (parsed.equipped) state.equipped = { ...state.equipped, ...parsed.equipped };
         }
       } catch (e) {
         console.warn('Storage error', e);
@@ -1502,7 +1509,7 @@
     }
 
     /* =====================================================================
-       5. REWARDED ADS, STUDIO & SKIP-TIME LOOPS (AUTO-CLOSING)
+       5. REWARDED ADS, STUDIO DRAWER & ACCESSORIES PIPELINE
        ===================================================================== */
     function showRewardedAd(itemName, onRewardEarned) {
       const modal = document.getElementById('rewardedAdModal');
@@ -1556,12 +1563,12 @@
           isEquipped: state.equipped.pot === 'celestial'
         },
         {
-          key: 'butterflies',
-          icon: '🦋',
-          name: isEn ? 'Soul Butterflies' : 'Kupu-kupu Jiwa',
-          desc: isEn ? 'Gentle fluttering butterflies around your flower.' : 'Kupu-kupu anggun yang terbang mengelilingi bunga.',
-          unlocked: state.accessories.butterflies,
-          isEquipped: state.equipped.butterflies
+          key: 'archWindow',
+          icon: '🏛️',
+          name: isEn ? 'Sunlit Arch Window' : 'Jendela Kubah Cahaya',
+          desc: isEn ? 'Glowing gradient cathedral greenhouse window.' : 'Jendela kubah katedral berkilau emas hangat.',
+          unlocked: state.accessories.archWindow,
+          isEquipped: state.equipped.window
         },
         {
           key: 'gardenFence',
@@ -1572,12 +1579,12 @@
           isEquipped: state.equipped.fence
         },
         {
-          key: 'archWindow',
-          icon: '🏛️',
-          name: isEn ? 'Sunlit Arch Window' : 'Jendela Kubah Cahaya',
-          desc: isEn ? 'Glowing gradient cathedral greenhouse window.' : 'Jendela kubah katedral berkilau emas hangat.',
-          unlocked: state.accessories.archWindow,
-          isEquipped: state.equipped.window
+          key: 'butterflies',
+          icon: '🦋',
+          name: isEn ? 'Soul Butterflies' : 'Kupu-kupu Jiwa',
+          desc: isEn ? 'Gentle fluttering butterflies around your flower.' : 'Kupu-kupu anggun yang terbang mengelilingi bunga.',
+          unlocked: state.accessories.butterflies,
+          isEquipped: state.equipped.butterflies
         },
         {
           key: 'fireflies',
@@ -1601,7 +1608,7 @@
         let btnMarkup = '';
         if (item.unlocked) {
           const btnClass = item.isEquipped ? 'equipped' : 'unequipped';
-          const btnLabel = item.isEquipped ? (isEn ? 'Equipped' : 'Dipasang') : (isEn ? 'Equip' : 'Pasang');
+          const btnLabel = item.isEquipped ? (isEn ? 'Equipped' : 'Terpasang') : (isEn ? 'Equip' : 'Pasang');
           btnMarkup = `<button class="studio-btn-toggle ${btnClass}" onclick="handleStudioToggle('${item.key}')">${btnLabel}</button>`;
         } else {
           const adLabel = isEn ? '🎁 Unlock (Ad)' : '🎁 Buka (Iklan)';
@@ -1626,20 +1633,27 @@
     function handleStudioToggle(key) {
       if (key === 'celestialPot') {
         state.equipped.pot = state.equipped.pot === 'celestial' ? 'terracotta' : 'celestial';
+      } else if (key === 'archWindow') {
+        state.equipped.window = !state.equipped.window;
+      } else if (key === 'gardenFence') {
+        state.equipped.fence = !state.equipped.fence;
       } else {
         state.equipped[key] = !state.equipped[key];
       }
-      renderStudioItems();
       saveState();
-      refreshUI();
+      renderStudioItems();
+      canvasEngine.potStyle = state.equipped.pot;
     }
 
-    // Auto-closes studio drawer immediately after rewarded ad finishes
     function handleStudioAdUnlock(key, name) {
       showRewardedAd(name, () => {
         state.accessories[key] = true;
         if (key === 'celestialPot') state.equipped.pot = 'celestial';
+        else if (key === 'archWindow') state.equipped.window = true;
+        else if (key === 'gardenFence') state.equipped.fence = true;
         else state.equipped[key] = true;
+
+        canvasEngine.potStyle = state.equipped.pot;
         canvasEngine.triggerSparkleBurst();
         AudioEngine.playChime();
         saveState();
@@ -1647,7 +1661,6 @@
       });
     }
 
-    // Skip waiting lock via voluntary rewarded ad
     function triggerSkipTimerAd() {
       showRewardedAd(currentLang === 'en' ? 'Skip Waiting Time' : 'Lewati Waktu Tunggu', () => {
         state.nextDayUnlockTime = 0;
@@ -1657,7 +1670,7 @@
     }
 
     /* =====================================================================
-       6. DEVELOPER BACKDOOR CHEATS (INSTANT AUTO-CLOSING)
+       6. DEVELOPER BACKDOOR (AUTO-CLOSING ACTIONS)
        ===================================================================== */
     let devTapCount = 0;
     let lastDevTapTime = 0;
@@ -1734,6 +1747,7 @@
       state.equipped.window = true;
       state.equipped.fireflies = true;
       state.equipped.petalDye = true;
+      canvasEngine.potStyle = 'celestial';
       canvasEngine.triggerSparkleBurst();
       AudioEngine.playChime();
       closeDevModal();
@@ -1748,11 +1762,12 @@
         fireflies: false,
         petalDye: false
       };
+      canvasEngine.potStyle = 'terracotta';
       closeDevModal();
     }
 
     /* =====================================================================
-       7. VIEW DECK RENDERERS & REAL-TIME TIMER LOOP
+       7. VIEW DECK RENDERERS & 5-MINUTE COOLDOWN TIMER LOOP
        ===================================================================== */
     const deckEl = document.getElementById('viewDeck');
 
@@ -1915,8 +1930,7 @@
           state.nextDayUnlockTime = 0;
         } else {
           state.phase = 'DAY_END';
-          // Set real-time 5-minute lock (300,000 ms)
-          state.nextDayUnlockTime = Date.now() + (5 * 60 * 1000);
+          state.nextDayUnlockTime = Date.now() + (5 * 60 * 1000); // 5-minute real-world timer
         }
         saveState();
         refreshUI();
@@ -1977,7 +1991,6 @@
 
     function updateDayEndTimer() {
       const el = document.getElementById('lockTimerCountdown');
-      const btn = document.getElementById('btnNextDayAction');
       const now = Date.now();
       const diffSec = Math.max(0, Math.ceil(((state.nextDayUnlockTime || 0) - now) / 1000));
 
@@ -2060,7 +2073,7 @@
     }
 
     /* =====================================================================
-       8. BOTANICAL CANVAS ENGINE & EXPLICIT VISIBILITY ORDER PIPELINE
+       8. PROPORTIONAL & RESPONSIVE CANVAS RENDERING ENGINE (50% - 300% ZOOM)
        ===================================================================== */
     const canvas = document.getElementById('gardenCanvas');
     const ctx = canvas.getContext('2d');
@@ -2075,10 +2088,11 @@
       sparkles: [],
 
       sprayDroplets() {
+        const rect = canvas.parentElement.getBoundingClientRect();
         for (let i = 0; i < 28; i++) {
           this.droplets.push({
-            x: (canvas.width / (window.devicePixelRatio || 1)) * (0.35 + Math.random() * 0.3),
-            y: 10 + Math.random() * 30,
+            x: rect.width * (0.35 + Math.random() * 0.3),
+            y: rect.height * 0.05 + Math.random() * 30,
             vy: 3 + Math.random() * 4,
             length: 8 + Math.random() * 8
           });
@@ -2086,12 +2100,11 @@
       },
 
       triggerSparkleBurst() {
-        const w = canvas.getBoundingClientRect().width;
-        const h = canvas.getBoundingClientRect().height;
+        const rect = canvas.parentElement.getBoundingClientRect();
         for (let i = 0; i < 40; i++) {
           this.sparkles.push({
-            x: w / 2 + (Math.random() - 0.5) * 80,
-            y: h * 0.78 + (Math.random() - 0.5) * 30,
+            x: rect.width / 2 + (Math.random() - 0.5) * (rect.width * 0.25),
+            y: rect.height * 0.78 + (Math.random() - 0.5) * 30,
             vx: (Math.random() - 0.5) * 3,
             vy: -Math.random() * 3.5 - 1.2,
             size: Math.random() * 3 + 1.5,
@@ -2105,8 +2118,9 @@
     function resizeCanvas() {
       const rect = canvas.parentElement.getBoundingClientRect();
       const dpr = window.devicePixelRatio || 1;
-      canvas.width = rect.width * dpr;
-      canvas.height = rect.height * dpr;
+      if (rect.width === 0 || rect.height === 0) return;
+      canvas.width = Math.round(rect.width * dpr);
+      canvas.height = Math.round(rect.height * dpr);
       ctx.resetTransform();
       ctx.scale(dpr, dpr);
     }
@@ -2137,24 +2151,24 @@
         c.fill();
 
         c.strokeStyle = 'rgba(253, 230, 138, 0.55)';
-        c.lineWidth = 1;
+        c.lineWidth = Math.max(1, height * 0.02);
         c.beginPath();
-        c.moveTo(x - topW * 0.25, y + rimH + 10);
-        c.lineTo(x - 8, y + height * 0.65);
-        c.lineTo(x + 18, y + height * 0.55);
+        c.moveTo(x - topW * 0.25, y + rimH + height * 0.2);
+        c.lineTo(x - topW * 0.08, y + height * 0.65);
+        c.lineTo(x + topW * 0.16, y + height * 0.55);
         c.lineTo(x + topW * 0.28, y + height * 0.75);
         c.stroke();
 
         c.fillStyle = '#fef08a';
         [
-          { dx: -topW * 0.25, dy: rimH + 10 },
-          { dx: -8, dy: height * 0.65 },
-          { dx: 18, dy: height * 0.55 },
+          { dx: -topW * 0.25, dy: rimH + height * 0.2 },
+          { dx: -topW * 0.08, dy: height * 0.65 },
+          { dx: topW * 0.16, dy: height * 0.55 },
           { dx: topW * 0.28, dy: height * 0.75 },
           { dx: 0, dy: height * 0.82 }
         ].forEach(pt => {
           c.beginPath();
-          c.arc(x + pt.dx, y + pt.dy, 2, 0, Math.PI * 2);
+          c.arc(x + pt.dx, y + pt.dy, Math.max(1.5, height * 0.04), 0, Math.PI * 2);
           c.fill();
         });
 
@@ -2171,7 +2185,7 @@
 
         c.fillStyle = '#1e1b4b';
         c.beginPath();
-        c.roundRect(x - botW * 0.6, y + height - 2, botW * 1.2, 6, [2, 2, 4, 4]);
+        c.roundRect(x - botW * 0.6, y + height - 2, botW * 1.2, height * 0.13, [2, 2, 4, 4]);
         c.fill();
 
       } else {
@@ -2202,7 +2216,7 @@
 
         c.fillStyle = '#ba6e5a';
         c.beginPath();
-        c.roundRect(x - botW * 0.58, y + height - 2, botW * 1.16, 5, [2, 2, 4, 4]);
+        c.roundRect(x - botW * 0.58, y + height - 2, botW * 1.16, height * 0.12, [2, 2, 4, 4]);
         c.fill();
       }
       c.restore();
@@ -2225,12 +2239,13 @@
       c.restore();
     }
 
-    function drawArchWindow(c, w, h) {
+    // Upscaled Arch Window: spans wider and taller than the fence for architectural perspective
+    function drawArchWindow(c, w, h, s) {
       c.save();
-      const winW = Math.min(180, w * 0.5);
-      const winH = 150;
-      const winX = w / 2 - winW / 2;
-      const winY = 16;
+      const winW = Math.min(w * 0.74, 280 * s);
+      const winH = h * 0.72;
+      const winX = (w - winW) / 2;
+      const winY = h * 0.05;
 
       const winGrad = c.createLinearGradient(winX, winY, winX, winY + winH);
       winGrad.addColorStop(0, 'rgba(255, 255, 255, 0.95)');
@@ -2239,10 +2254,10 @@
 
       c.strokeStyle = winGrad;
       c.shadowColor = 'rgba(250, 204, 21, 0.5)';
-      c.shadowBlur = 14;
+      c.shadowBlur = Math.max(8, 14 * s);
       c.shadowOffsetX = 0;
       c.shadowOffsetY = 2;
-      c.lineWidth = 3;
+      c.lineWidth = Math.max(2, 3 * s);
 
       c.beginPath();
       c.moveTo(winX, winY + winH);
@@ -2251,8 +2266,8 @@
       c.lineTo(winX + winW, winY + winH);
       c.stroke();
 
-      c.lineWidth = 1.6;
-      c.shadowBlur = 8;
+      c.lineWidth = Math.max(1.2, 1.6 * s);
+      c.shadowBlur = Math.max(4, 8 * s);
       c.beginPath();
       c.moveTo(w / 2, winY);
       c.lineTo(w / 2, winY + winH);
@@ -2271,28 +2286,30 @@
       c.restore();
     }
 
-    function drawGardenFence(c, w, h, baseY) {
+    // Garden Fence: positioned lower than the Arch Window
+    function drawGardenFence(c, w, h, baseY, s) {
       c.save();
       c.fillStyle = '#c7b299';
       c.strokeStyle = '#a8947d';
-      c.lineWidth = 1;
-      const fenceW = Math.min(260, w * 0.72);
-      const startX = w / 2 - fenceW / 2;
-      const fenceTop = baseY - 32;
+      c.lineWidth = Math.max(1, 1 * s);
+      const fenceW = Math.min(w * 0.58, 220 * s);
+      const startX = (w - fenceW) / 2;
+      const fenceTop = baseY - (28 * s);
+      const fenceH = 34 * s;
 
-      c.fillRect(startX, fenceTop + 10, fenceW, 5);
-      c.fillRect(startX, fenceTop + 24, fenceW, 5);
+      c.fillRect(startX, fenceTop + (10 * s), fenceW, Math.max(3, 5 * s));
+      c.fillRect(startX, fenceTop + (24 * s), fenceW, Math.max(3, 5 * s));
 
       const count = 7;
       const step = fenceW / (count - 1);
       for (let i = 0; i < count; i++) {
-        const px = startX + i * step - 5;
+        const px = startX + i * step - (5 * s);
         c.beginPath();
-        c.moveTo(px, fenceTop + 34);
+        c.moveTo(px, fenceTop + fenceH);
         c.lineTo(px, fenceTop);
-        c.lineTo(px + 5, fenceTop - 6);
-        c.lineTo(px + 10, fenceTop);
-        c.lineTo(px + 10, fenceTop + 34);
+        c.lineTo(px + (5 * s), fenceTop - (6 * s));
+        c.lineTo(px + (10 * s), fenceTop);
+        c.lineTo(px + (10 * s), fenceTop + fenceH);
         c.closePath();
         c.fill();
         c.stroke();
@@ -2300,11 +2317,11 @@
       c.restore();
     }
 
-    function drawButterflies(c, w, h, time) {
+    function drawButterflies(c, w, h, time, s) {
       c.save();
       const bFlies = [
-        { x: w / 2 - 62 + Math.sin(time * 0.8) * 16, y: 70 + Math.cos(time * 0.9) * 12, col: '#fca5a5' },
-        { x: w / 2 + 58 + Math.cos(time * 0.7) * 14, y: 92 + Math.sin(time * 0.8) * 14, col: '#fde047' }
+        { x: w / 2 - (65 * s) + Math.sin(time * 0.8) * (16 * s), y: h * 0.28 + Math.cos(time * 0.9) * (12 * s), col: '#fca5a5' },
+        { x: w / 2 + (60 * s) + Math.cos(time * 0.7) * (14 * s), y: h * 0.38 + Math.sin(time * 0.8) * (14 * s), col: '#fde047' }
       ];
 
       bFlies.forEach(b => {
@@ -2314,55 +2331,50 @@
         c.fillStyle = b.col;
 
         c.beginPath();
-        c.ellipse(-4 * wingFlap, -3, 6 * wingFlap, 9, -0.4, 0, Math.PI * 2);
+        c.ellipse(-4 * s * wingFlap, -3 * s, 6 * s * wingFlap, 9 * s, -0.4, 0, Math.PI * 2);
         c.fill();
 
         c.beginPath();
-        c.ellipse(4 * wingFlap, -3, 6 * wingFlap, 9, 0.4, 0, Math.PI * 2);
+        c.ellipse(4 * s * wingFlap, -3 * s, 6 * s * wingFlap, 9 * s, 0.4, 0, Math.PI * 2);
         c.fill();
 
         c.fillStyle = '#444';
         c.beginPath();
-        c.ellipse(0, 0, 1.5, 5, 0, 0, Math.PI * 2);
+        c.ellipse(0, 0, 1.5 * s, 5 * s, 0, 0, Math.PI * 2);
         c.fill();
         c.restore();
       });
       c.restore();
     }
 
-    function drawFireflies(c, w, h, time) {
+    function drawFireflies(c, w, h, time, s) {
       c.save();
       for (let i = 0; i < 9; i++) {
-        const fx = w / 2 + Math.sin(time * 0.5 + i * 1.3) * (50 + i * 8);
-        const fy = (h * 0.55) + Math.cos(time * 0.7 + i * 0.9) * (40 + i * 6);
+        const fx = w / 2 + Math.sin(time * 0.5 + i * 1.3) * (w * 0.22 + i * 8 * s);
+        const fy = (h * 0.52) + Math.cos(time * 0.7 + i * 0.9) * (h * 0.2 + i * 6 * s);
         const pulse = (Math.sin(time * 2.5 + i) + 1) * 0.5;
 
         c.fillStyle = `rgba(234, 245, 130, ${0.3 + pulse * 0.6})`;
         c.shadowColor = '#eab308';
-        c.shadowBlur = 8 * pulse;
+        c.shadowBlur = 8 * pulse * s;
         c.beginPath();
-        c.arc(fx, fy, 2 + pulse, 0, Math.PI * 2);
+        c.arc(fx, fy, (2 + pulse) * s, 0, Math.PI * 2);
         c.fill();
       }
       c.restore();
     }
 
-    /* Rendering Pipeline:
-       1. Background Vignette ->
-       2. Window & Fence (Visible behind pot & stems) ->
-       3. Pot & Drainage Saucer ->
-       4. Interior Soil/Water ->
-       5. Botanical Stems, Leaves & Blooms ->
-       6. Foreground animated elements (Butterflies & Fireflies) */
+    // Relative & Proportional Botanical Drawing Pipeline
     function renderFlowerSpecies(c, type, potStyle, w, h, p, swayOffset, time = 0) {
-      const potW = Math.min(108, w * 0.28);
-      const potH = 46;
-      const baseY = h - 65;
+      const s = Math.min(w / 380, h / 240);
+      const potW = Math.min(w * 0.32, 115 * s);
+      const potH = 46 * s;
+      const baseY = h * 0.82;
 
-      // 1. Background Halo Vignette
+      // 1. Soft Contrast Vignette
       c.save();
-      const haloGrad = c.createRadialGradient(w/2, h*0.5, 20, w/2, h*0.5, w*0.48);
-      haloGrad.addColorStop(0, 'rgba(255, 255, 255, 0.7)');
+      const haloGrad = c.createRadialGradient(w/2, h*0.5, 20 * s, w/2, h*0.5, w*0.48);
+      haloGrad.addColorStop(0, 'rgba(255, 255, 255, 0.75)');
       haloGrad.addColorStop(0.65, 'rgba(235, 242, 230, 0.45)');
       haloGrad.addColorStop(1, 'rgba(215, 226, 210, 0)');
       c.fillStyle = haloGrad;
@@ -2371,73 +2383,72 @@
       c.fill();
       c.restore();
 
-      // 2. Visible Windows & Fences (Immediately after halo, strictly BEFORE pot and stems)
-      if (state.equipped.window) drawArchWindow(c, w, h);
-      if (state.equipped.fence) drawGardenFence(c, w, h, baseY);
+      // 2. Visible Accessories in Correct Depth (Window & Fence behind pot and stems)
+      if (state.equipped.window) drawArchWindow(c, w, h, s);
+      if (state.equipped.fence) drawGardenFence(c, w, h, baseY, s);
 
       // 3. Pot & Drainage Saucer
       drawPot(c, potStyle, w / 2, baseY, potW, potH);
 
-      // 4. Pot Interior (Water surface for Lotus, Soil for others)
+      // 4. Pot Interior (Water for Lotus, Soil for others)
       if (type === 'lotus') {
-        const waterGrad = c.createLinearGradient(0, baseY - 4, 0, baseY + 6);
+        const waterGrad = c.createLinearGradient(0, baseY - 4 * s, 0, baseY + 6 * s);
         waterGrad.addColorStop(0, '#537d8d');
         waterGrad.addColorStop(1, '#35525d');
         c.fillStyle = waterGrad;
         c.beginPath();
-        c.ellipse(w / 2, baseY + 2, potW * 0.44, 7, 0, 0, Math.PI * 2);
+        c.ellipse(w / 2, baseY + 2 * s, potW * 0.44, 7 * s, 0, 0, Math.PI * 2);
         c.fill();
       } else {
-        const soilGrad = c.createLinearGradient(0, baseY - 4, 0, baseY + 6);
+        const soilGrad = c.createLinearGradient(0, baseY - 4 * s, 0, baseY + 6 * s);
         soilGrad.addColorStop(0, '#665749');
         soilGrad.addColorStop(1, '#473b30');
         c.fillStyle = soilGrad;
         c.beginPath();
-        c.ellipse(w / 2, baseY + 2, potW * 0.44, 6, 0, 0, Math.PI * 2);
+        c.ellipse(w / 2, baseY + 2 * s, potW * 0.44, 6 * s, 0, 0, Math.PI * 2);
         c.fill();
       }
 
-      // Seed sprout
       if (p < 0.12) {
         c.fillStyle = '#a9ba9d';
         c.beginPath();
-        c.ellipse(w / 2, baseY, 4 + p * 12, 3 + p * 6, 0, 0, Math.PI * 2);
+        c.ellipse(w / 2, baseY, (4 + p * 12) * s, (3 + p * 6) * s, 0, 0, Math.PI * 2);
         c.fill();
       }
 
-      // 5. Stems, Leaves & Blooms
-      /* 1. CACTUS (REALISTIC) */
+      // 5. Flower Botanical Structures
+      /* CACTUS */
       if (type === 'cactus') {
         const stemH = (h * 0.42) * Math.min(1, p / 0.7);
         const topY = baseY - stemH;
-        const stemW = 26 * Math.min(1, p / 0.5);
+        const stemW = 26 * s * Math.min(1, p / 0.5);
 
         if (p > 0.05) {
           c.fillStyle = '#5c8060';
           c.beginPath();
-          c.roundRect((w / 2) - stemW / 2 + swayOffset * 0.4, topY, stemW, stemH, [stemW / 2, stemW / 2, 6, 6]);
+          c.roundRect((w / 2) - stemW / 2 + swayOffset * 0.4, topY, stemW, stemH, [stemW / 2, stemW / 2, 6 * s, 6 * s]);
           c.fill();
 
           if (p > 0.35) {
             const padScale = Math.min(1, (p - 0.35) / 0.3);
             c.fillStyle = '#6b9270';
             c.beginPath();
-            c.ellipse((w/2) - stemW * 0.75 + swayOffset * 0.3, topY + stemH * 0.45, 12 * padScale, 18 * padScale, -0.4, 0, Math.PI * 2);
+            c.ellipse((w/2) - stemW * 0.75 + swayOffset * 0.3, topY + stemH * 0.45, 12 * s * padScale, 18 * s * padScale, -0.4, 0, Math.PI * 2);
             c.fill();
             c.beginPath();
-            c.ellipse((w/2) + stemW * 0.75 + swayOffset * 0.3, topY + stemH * 0.35, 11 * padScale, 16 * padScale, 0.45, 0, Math.PI * 2);
+            c.ellipse((w/2) + stemW * 0.75 + swayOffset * 0.3, topY + stemH * 0.35, 11 * s * padScale, 16 * s * padScale, 0.45, 0, Math.PI * 2);
             c.fill();
           }
 
           if (p > 0.25) {
             c.strokeStyle = '#e2ebd8';
-            c.lineWidth = 1;
+            c.lineWidth = Math.max(1, 1 * s);
             for (let i = 0.2; i <= 0.85; i += 0.2) {
               const sy = topY + stemH * i;
               const sx = (w / 2) + swayOffset * 0.4;
               c.beginPath();
-              c.moveTo(sx - 4, sy); c.lineTo(sx - 9, sy - 2);
-              c.moveTo(sx + 4, sy); c.lineTo(sx + 9, sy - 2);
+              c.moveTo(sx - 4 * s, sy); c.lineTo(sx - 9 * s, sy - 2 * s);
+              c.moveTo(sx + 4 * s, sy); c.lineTo(sx + 9 * s, sy - 2 * s);
               c.stroke();
             }
           }
@@ -2446,8 +2457,8 @@
         if (p > 0.62) {
           const bp = (p - 0.62) / 0.38;
           c.save();
-          c.translate(w / 2 + swayOffset * 0.4, topY + 2);
-          c.scale(bp, bp);
+          c.translate(w / 2 + swayOffset * 0.4, topY + 2 * s);
+          c.scale(bp * s, bp * s);
           for (let i = 0; i < 14; i++) {
             c.rotate((Math.PI * 2) / 14);
             c.fillStyle = state.equipped.petalDye ? '#f43f5e' : '#ff8272';
@@ -2462,28 +2473,28 @@
           c.restore();
         }
 
-      /* 2. LOTUS (INVESTIGATIVE) - Stemless floating waterlily */
+      /* LOTUS */
       } else if (type === 'lotus') {
-        const floatY = baseY - 2;
+        const floatY = baseY - 2 * s;
 
         if (p > 0.08) {
           const padScale = Math.min(1, p / 0.5);
           c.save();
           c.fillStyle = '#4a7554';
           c.beginPath();
-          c.ellipse(w / 2 - 32, floatY, 34 * padScale, 11 * padScale, -0.12, 0, Math.PI * 1.85);
-          c.lineTo(w / 2 - 32, floatY);
+          c.ellipse(w / 2 - 32 * s, floatY, 34 * s * padScale, 11 * s * padScale, -0.12, 0, Math.PI * 1.85);
+          c.lineTo(w / 2 - 32 * s, floatY);
           c.fill();
 
           c.beginPath();
-          c.ellipse(w / 2 + 30, floatY + 1, 32 * padScale, 10 * padScale, 0.14, 0, Math.PI * 1.85);
-          c.lineTo(w / 2 + 30, floatY + 1);
+          c.ellipse(w / 2 + 30 * s, floatY + 1, 32 * s * padScale, 10 * s * padScale, 0.14, 0, Math.PI * 1.85);
+          c.lineTo(w / 2 + 30 * s, floatY + 1);
           c.fill();
 
           c.fillStyle = '#5c8a66';
           c.beginPath();
-          c.ellipse(w / 2, floatY - 4, 38 * padScale, 12 * padScale, 0, 0, Math.PI * 1.88);
-          c.lineTo(w / 2, floatY - 4);
+          c.ellipse(w / 2, floatY - 4 * s, 38 * s * padScale, 12 * s * padScale, 0, 0, Math.PI * 1.88);
+          c.lineTo(w / 2, floatY - 4 * s);
           c.fill();
           c.restore();
         }
@@ -2491,8 +2502,8 @@
         if (p > 0.35) {
           const bp = Math.min(1, (p - 0.35) / 0.65);
           c.save();
-          c.translate(w / 2 + swayOffset * 0.25, floatY - 6);
-          c.scale(bp * 1.85, bp * 1.85);
+          c.translate(w / 2 + swayOffset * 0.25, floatY - 6 * s);
+          c.scale(bp * 1.85 * s, bp * 1.85 * s);
 
           for (let i = 0; i < 9; i++) {
             c.save();
@@ -2551,49 +2562,49 @@
           c.restore();
         }
 
-      /* 3. ORCHID (ARTISTIC) - 3 organic stalks */
+      /* ORCHID */
       } else if (type === 'orchid') {
         const stemMaxH = (h * 0.46) * Math.min(1, p / 0.7);
 
         if (p > 0.05) {
           if (p > 0.15) {
             const lScale = Math.min(1, (p - 0.15) / 0.35);
-            drawStemLeaf(c, w / 2 - 6, baseY, 52, -0.45, lScale, -1);
-            drawStemLeaf(c, w / 2 + 6, baseY, 56, 0.4, lScale, 1);
-            drawStemLeaf(c, w / 2 - 2, baseY + 2, 44, -0.2, lScale * 0.85, -1);
+            drawStemLeaf(c, w / 2 - 6 * s, baseY, 52 * s, -0.45, lScale, -1);
+            drawStemLeaf(c, w / 2 + 6 * s, baseY, 56 * s, 0.4, lScale, 1);
+            drawStemLeaf(c, w / 2 - 2 * s, baseY + 2, 44 * s, -0.2, lScale * 0.85, -1);
           }
 
           c.strokeStyle = '#557657';
-          c.lineWidth = 2.8;
+          c.lineWidth = Math.max(1.8, 2.8 * s);
           c.beginPath();
-          c.moveTo(w / 2 + 2, baseY);
-          c.bezierCurveTo(w / 2 - 8, baseY - stemMaxH * 0.4, w / 2 + 28, baseY - stemMaxH * 0.7, w / 2 + 22 + swayOffset, baseY - stemMaxH);
+          c.moveTo(w / 2 + 2 * s, baseY);
+          c.bezierCurveTo(w / 2 - 8 * s, baseY - stemMaxH * 0.4, w / 2 + 28 * s, baseY - stemMaxH * 0.7, w / 2 + 22 * s + swayOffset, baseY - stemMaxH);
           c.stroke();
 
           c.strokeStyle = '#c4b58e';
-          c.lineWidth = 2;
+          c.lineWidth = Math.max(1.5, 2 * s);
           c.beginPath();
-          c.moveTo(w / 2 + 6, baseY);
-          c.lineTo(w / 2 + 6, baseY - stemMaxH * 0.7);
+          c.moveTo(w / 2 + 6 * s, baseY);
+          c.lineTo(w / 2 + 6 * s, baseY - stemMaxH * 0.7);
           c.stroke();
 
           if (p > 0.28) {
             const s2H = stemMaxH * 0.82;
             c.strokeStyle = '#5f8261';
-            c.lineWidth = 2.4;
+            c.lineWidth = Math.max(1.6, 2.4 * s);
             c.beginPath();
-            c.moveTo(w / 2 - 4, baseY);
-            c.bezierCurveTo(w / 2 + 8, baseY - s2H * 0.4, w / 2 - 26, baseY - s2H * 0.7, w / 2 - 22 + swayOffset * 0.8, baseY - s2H);
+            c.moveTo(w / 2 - 4 * s, baseY);
+            c.bezierCurveTo(w / 2 + 8 * s, baseY - s2H * 0.4, w / 2 - 26 * s, baseY - s2H * 0.7, w / 2 - 22 * s + swayOffset * 0.8, baseY - s2H);
             c.stroke();
           }
 
           if (p > 0.42) {
             const s3H = stemMaxH * 0.58;
             c.strokeStyle = '#4e6d50';
-            c.lineWidth = 2.2;
+            c.lineWidth = Math.max(1.4, 2.2 * s);
             c.beginPath();
             c.moveTo(w / 2 - 1, baseY);
-            c.bezierCurveTo(w / 2 - 12, baseY - s3H * 0.5, w / 2 + 12, baseY - s3H * 0.8, w / 2 + 8 + swayOffset * 0.6, baseY - s3H);
+            c.bezierCurveTo(w / 2 - 12 * s, baseY - s3H * 0.5, w / 2 + 12 * s, baseY - s3H * 0.8, w / 2 + 8 * s + swayOffset * 0.6, baseY - s3H);
             c.stroke();
           }
         }
@@ -2602,7 +2613,7 @@
           c.save();
           c.translate(ox, oy);
           c.rotate(rotAngle);
-          c.scale(scale, scale);
+          c.scale(scale * s, scale * s);
 
           c.fillStyle = '#fae4f2';
           [-0.8, 0.8, -2.4].forEach(rot => {
@@ -2612,8 +2623,8 @@
           });
 
           c.fillStyle = state.equipped.petalDye ? '#e879f9' : '#ec8ec4';
-          [-1, 1].forEach(s => {
-            c.save(); c.scale(s, 1);
+          [-1, 1].forEach(side => {
+            c.save(); c.scale(side, 1);
             c.beginPath(); c.ellipse(15, -4, 12, 8.5, 0.3, 0, Math.PI * 2); c.fill();
             c.restore();
           });
@@ -2629,20 +2640,20 @@
 
         if (p > 0.58) {
           const bp = (p - 0.58) / 0.42;
-          drawSingleOrchidHead(w / 2 + 22 + swayOffset, baseY - stemMaxH, bp * 1.05, 0.1);
+          drawSingleOrchidHead(w / 2 + 22 * s + swayOffset, baseY - stemMaxH, bp * 1.05, 0.1);
 
           if (p > 0.68) {
             const bp2 = (p - 0.68) / 0.32;
-            drawSingleOrchidHead(w / 2 - 22 + swayOffset * 0.8, baseY - stemMaxH * 0.82, bp2 * 0.88, -0.2);
+            drawSingleOrchidHead(w / 2 - 22 * s + swayOffset * 0.8, baseY - stemMaxH * 0.82, bp2 * 0.88, -0.2);
           }
 
           if (p > 0.78) {
             const bp3 = (p - 0.78) / 0.22;
-            drawSingleOrchidHead(w / 2 + 8 + swayOffset * 0.6, baseY - stemMaxH * 0.58, bp3 * 0.75, 0.15);
+            drawSingleOrchidHead(w / 2 + 8 * s + swayOffset * 0.6, baseY - stemMaxH * 0.58, bp3 * 0.75, 0.15);
           }
         }
 
-      /* 4. SUNFLOWER (SOCIAL) */
+      /* SUNFLOWER */
       } else if (type === 'sunflower') {
         const stemH = (h * 0.46) * Math.min(1, p / 0.7);
         const headX = (w / 2) + swayOffset;
@@ -2650,7 +2661,7 @@
 
         if (p > 0.05) {
           c.strokeStyle = '#5c7b50';
-          c.lineWidth = 5;
+          c.lineWidth = Math.max(3, 5 * s);
           c.beginPath();
           c.moveTo(w / 2, baseY);
           c.lineTo(headX, headY);
@@ -2658,10 +2669,10 @@
 
           if (p > 0.25) {
             const lScale = Math.min(1, (p - 0.25) / 0.35);
-            drawStemLeaf(c, w / 2, baseY - stemH * 0.3, 38, -0.6, lScale, -1);
-            drawStemLeaf(c, w / 2, baseY - stemH * 0.5, 36, 0.55, lScale, 1);
+            drawStemLeaf(c, w / 2, baseY - stemH * 0.3, 38 * s, -0.6, lScale, -1);
+            drawStemLeaf(c, w / 2, baseY - stemH * 0.5, 36 * s, 0.55, lScale, 1);
             if (p > 0.45) {
-              drawStemLeaf(c, w / 2, baseY - stemH * 0.7, 30, -0.5, lScale * 0.85, -1);
+              drawStemLeaf(c, w / 2, baseY - stemH * 0.7, 30 * s, -0.5, lScale * 0.85, -1);
             }
           }
         }
@@ -2670,7 +2681,7 @@
           const bp = (p - 0.58) / 0.42;
           c.save();
           c.translate(headX, headY);
-          c.scale(bp, bp);
+          c.scale(bp * s, bp * s);
           for (let ring = 0; ring < 2; ring++) {
             const rOffset = ring * (Math.PI / 18);
             for (let i = 0; i < 18; i++) {
@@ -2686,14 +2697,14 @@
           c.arc(0, 0, 13, 0, Math.PI * 2);
           c.fill();
           c.fillStyle = '#d97706';
-          for (let s = 0; s < 10; s++) {
-            const a = (s / 10) * Math.PI * 2;
+          for (let sp = 0; sp < 10; sp++) {
+            const a = (sp / 10) * Math.PI * 2;
             c.beginPath(); c.arc(Math.cos(a) * 7, Math.sin(a) * 7, 1.2, 0, Math.PI * 2); c.fill();
           }
           c.restore();
         }
 
-      /* 5. ROSE (ENTERPRISING) */
+      /* ROSE */
       } else if (type === 'rose') {
         const stemH = (h * 0.45) * Math.min(1, p / 0.7);
         const headX = (w / 2) + swayOffset;
@@ -2701,10 +2712,10 @@
 
         if (p > 0.05) {
           c.strokeStyle = '#47634a';
-          c.lineWidth = 3.5;
+          c.lineWidth = Math.max(2, 3.5 * s);
           c.beginPath();
           c.moveTo(w / 2, baseY);
-          c.quadraticCurveTo(w / 2 - 10, baseY - stemH * 0.5, headX, headY);
+          c.quadraticCurveTo(w / 2 - 10 * s, baseY - stemH * 0.5, headX, headY);
           c.stroke();
 
           if (p > 0.25) {
@@ -2712,9 +2723,9 @@
             [0.35, 0.55, 0.75].forEach(step => {
               const ty = baseY - stemH * step;
               c.beginPath();
-              c.moveTo(w / 2 - 2, ty);
-              c.lineTo(w / 2 - 7, ty + 2);
-              c.lineTo(w / 2 - 2, ty + 5);
+              c.moveTo(w / 2 - 2 * s, ty);
+              c.lineTo(w / 2 - 7 * s, ty + 2 * s);
+              c.lineTo(w / 2 - 2 * s, ty + 5 * s);
               c.closePath();
               c.fill();
             });
@@ -2722,8 +2733,8 @@
 
           if (p > 0.3) {
             const lScale = Math.min(1, (p - 0.3) / 0.3);
-            drawStemLeaf(c, w / 2 - 3, baseY - stemH * 0.4, 32, -0.5, lScale, -1);
-            drawStemLeaf(c, w / 2 + 1, baseY - stemH * 0.65, 28, 0.45, lScale, 1);
+            drawStemLeaf(c, w / 2 - 3 * s, baseY - stemH * 0.4, 32 * s, -0.5, lScale, -1);
+            drawStemLeaf(c, w / 2 + 1 * s, baseY - stemH * 0.65, 28 * s, 0.45, lScale, 1);
           }
         }
 
@@ -2731,7 +2742,7 @@
           const bp = (p - 0.6) / 0.4;
           c.save();
           c.translate(headX, headY);
-          c.scale(bp, bp);
+          c.scale(bp * s, bp * s);
           [22, 16, 11, 6].forEach((rad, rIdx) => {
             const cols = state.equipped.petalDye 
               ? ['#9d174d', '#be185d', '#e11d48', '#fb7185']
@@ -2747,7 +2758,7 @@
           c.restore();
         }
 
-      /* 6. LILY (CONVENTIONAL) */
+      /* LILY */
       } else {
         const stemH = (h * 0.46) * Math.min(1, p / 0.7);
         const headX = (w / 2) + swayOffset * 0.5;
@@ -2755,7 +2766,7 @@
 
         if (p > 0.05) {
           c.strokeStyle = '#5a785c';
-          c.lineWidth = 3.5;
+          c.lineWidth = Math.max(2, 3.5 * s);
           c.beginPath();
           c.moveTo(w / 2, baseY);
           c.lineTo(headX, headY);
@@ -2764,8 +2775,8 @@
           if (p > 0.22) {
             const lScale = Math.min(1, (p - 0.22) / 0.35);
             for (let st = 0.3; st <= 0.75; st += 0.22) {
-              drawStemLeaf(c, w / 2, baseY - stemH * st, 36, -0.32, lScale, -1);
-              drawStemLeaf(c, w / 2, baseY - stemH * st, 36, 0.32, lScale, 1);
+              drawStemLeaf(c, w / 2, baseY - stemH * st, 36 * s, -0.32, lScale, -1);
+              drawStemLeaf(c, w / 2, baseY - stemH * st, 36 * s, 0.32, lScale, 1);
             }
           }
         }
@@ -2774,7 +2785,7 @@
           const bp = (p - 0.6) / 0.4;
           c.save();
           c.translate(headX, headY);
-          c.scale(bp, bp);
+          c.scale(bp * s, bp * s);
           for (let i = 0; i < 6; i++) {
             c.rotate((Math.PI * 2) / 6);
             c.fillStyle = state.equipped.petalDye ? '#fdf4ff' : '#ffffff';
@@ -2800,9 +2811,9 @@
         }
       }
 
-      // 6. Foreground Animated Accessories
-      if (state.equipped.butterflies) drawButterflies(c, w, h, time);
-      if (state.equipped.fireflies) drawFireflies(c, w, h, time);
+      // 6. Foreground Accessories
+      if (state.equipped.butterflies) drawButterflies(c, w, h, time, s);
+      if (state.equipped.fireflies) drawFireflies(c, w, h, time, s);
     }
 
     function renderGarden() {
@@ -2810,8 +2821,14 @@
       canvasEngine.currentProgress += (canvasEngine.targetProgress - canvasEngine.currentProgress) * 0.06;
       const p = canvasEngine.currentProgress;
 
-      const w = canvas.getBoundingClientRect().width;
-      const h = canvas.getBoundingClientRect().height;
+      const rect = canvas.parentElement.getBoundingClientRect();
+      const w = rect.width;
+      const h = rect.height;
+      if (w === 0 || h === 0) {
+        requestAnimationFrame(renderGarden);
+        return;
+      }
+
       ctx.clearRect(0, 0, w, h);
 
       const swayOffset = Math.sin(canvasEngine.sway) * (4 * Math.min(1, p * 1.5));
@@ -2823,25 +2840,25 @@
       // Gold Sparkles
       if (canvasEngine.sparkles.length > 0) {
         for (let i = canvasEngine.sparkles.length - 1; i >= 0; i--) {
-          const s = canvasEngine.sparkles[i];
-          s.x += s.vx;
-          s.y += s.vy;
-          s.alpha -= 0.02;
-          ctx.fillStyle = s.color;
-          ctx.globalAlpha = Math.max(0, s.alpha);
+          const spk = canvasEngine.sparkles[i];
+          spk.x += spk.vx;
+          spk.y += spk.vy;
+          spk.alpha -= 0.02;
+          ctx.fillStyle = spk.color;
+          ctx.globalAlpha = Math.max(0, spk.alpha);
           ctx.beginPath();
-          ctx.arc(s.x, s.y, s.size, 0, Math.PI * 2);
+          ctx.arc(spk.x, spk.y, spk.size, 0, Math.PI * 2);
           ctx.fill();
           ctx.globalAlpha = 1.0;
-          if (s.alpha <= 0) canvasEngine.sparkles.splice(i, 1);
+          if (spk.alpha <= 0) canvasEngine.sparkles.splice(i, 1);
         }
       }
 
-      // Rain Droplets
+      // Water Droplets
       if (canvasEngine.droplets.length > 0) {
         ctx.strokeStyle = 'rgba(125, 185, 235, 0.75)';
         ctx.lineWidth = 2;
-        const baseY = h - 65;
+        const baseY = h * 0.82;
         for (let i = canvasEngine.droplets.length - 1; i >= 0; i--) {
           const d = canvasEngine.droplets[i];
           d.y += d.vy;
@@ -2857,7 +2874,7 @@
     }
 
     /* =====================================================================
-       9. PREMIUM CERTIFICATE RE-DESIGN (DESIGN THINKING BLUEPRINT)
+       9. RELATIVELY ANCHORED LUXURY CERTIFICATE EXPORT (1080x1080)
        ===================================================================== */
     function generateAndDownloadCertificate() {
       const cert = document.getElementById('certCanvas');
@@ -2868,108 +2885,113 @@
       const topTrait = computeDominantTrait();
       const info = GAME_DATA[currentLang].archetypes[topTrait];
 
-      // 1. Soft Parchment Background
+      // 1. Outer Watercolor Gradient Background
       const bgGrad = cCtx.createLinearGradient(0, 0, 0, H);
       bgGrad.addColorStop(0, '#faf8f3');
       bgGrad.addColorStop(1, '#e9ece4');
       cCtx.fillStyle = bgGrad;
       cCtx.fillRect(0, 0, W, H);
 
-      // 2. Soft Outer Ambient Vignettes
+      // 2. Soft Ambient Vignettes
       cCtx.save();
       cCtx.filter = 'blur(90px)';
       cCtx.fillStyle = 'rgba(217, 154, 128, 0.18)';
-      cCtx.beginPath(); cCtx.arc(220, 220, 240, 0, Math.PI * 2); cCtx.fill();
+      cCtx.beginPath(); cCtx.arc(W * 0.2, H * 0.2, W * 0.22, 0, Math.PI * 2); cCtx.fill();
       cCtx.fillStyle = 'rgba(143, 165, 140, 0.22)';
-      cCtx.beginPath(); cCtx.arc(W - 220, H - 220, 260, 0, Math.PI * 2); cCtx.fill();
+      cCtx.beginPath(); cCtx.arc(W * 0.8, H * 0.8, W * 0.24, 0, Math.PI * 2); cCtx.fill();
       cCtx.restore();
 
-      // 3. Floating Elevated Card Background with High-Contrast Margins
+      // 3. Floating Elevated Card Background
+      const cardMargin = W * 0.046; // ~50px
       cCtx.save();
-      cCtx.shadowColor = 'rgba(40, 55, 45, 0.12)';
-      cCtx.shadowBlur = 35;
+      cCtx.shadowColor = 'rgba(40, 55, 45, 0.14)';
+      cCtx.shadowBlur = W * 0.035;
       cCtx.shadowOffsetX = 0;
-      cCtx.shadowOffsetY = 14;
+      cCtx.shadowOffsetY = H * 0.014;
       cCtx.fillStyle = '#ffffff';
       cCtx.beginPath();
-      cCtx.roundRect(50, 50, W - 100, H - 100, 24);
+      cCtx.roundRect(cardMargin, cardMargin, W - cardMargin * 2, H - cardMargin * 2, W * 0.022);
       cCtx.fill();
       cCtx.restore();
 
-      // 4. Dual-Line Minimalist Border Frame in Faded Luxury Gold (#dfba73)
+      // 4. Dual-Line Minimalist Border Frame in Faded Gold (#dfba73)
+      const f1 = W * 0.063; // ~68px
       cCtx.strokeStyle = '#dfba73';
-      cCtx.lineWidth = 2.5;
-      cCtx.strokeRect(68, 68, W - 136, H - 136);
+      cCtx.lineWidth = Math.max(2, W * 0.0023);
+      cCtx.strokeRect(f1, f1, W - f1 * 2, H - f1 * 2);
 
+      const f2 = W * 0.072; // ~78px
       cCtx.strokeStyle = 'rgba(223, 186, 115, 0.65)';
-      cCtx.lineWidth = 1;
-      cCtx.strokeRect(78, 78, W - 156, H - 156);
+      cCtx.lineWidth = Math.max(1, W * 0.001);
+      cCtx.strokeRect(f2, f2, W - f2 * 2, H - f2 * 2);
 
       // Corner Accents
       const corners = [
-        [78, 78], [W - 78, 78], [78, H - 78], [W - 78, H - 78]
+        [f2, f2], [W - f2, f2], [f2, H - f2], [W - f2, H - f2]
       ];
       cCtx.fillStyle = '#dfba73';
       corners.forEach(([cx, cy]) => {
         cCtx.beginPath();
-        cCtx.arc(cx, cy, 3.5, 0, Math.PI * 2);
+        cCtx.arc(cx, cy, W * 0.0035, 0, Math.PI * 2);
         cCtx.fill();
       });
 
-      // 5. Typography Hierarchy
-      // Main Title: Georgia, Serif
+      // 5. Typography Hierarchy (Proportionally Anchored)
       cCtx.textAlign = 'center';
       cCtx.fillStyle = '#1c2820';
-      cCtx.font = '700 44px "Georgia", serif';
-      cCtx.letterSpacing = '10px';
-      cCtx.fillText(currentLang === 'en' ? 'THE GARDEN OF MIND' : 'TAMAN PIKIRAN', W / 2, 142);
+      cCtx.font = `700 ${Math.round(W * 0.040)}px "Georgia", serif`;
+      cCtx.letterSpacing = `${Math.round(W * 0.009)}px`;
+      cCtx.fillText(currentLang === 'en' ? 'THE GARDEN OF MIND' : 'TAMAN PIKIRAN', W / 2, H * 0.132);
 
-      // Subtitle Track: Crisp Helvetica
-      cCtx.font = '600 15px "Helvetica", "Arial", sans-serif';
-      cCtx.letterSpacing = '4px';
+      cCtx.font = `600 ${Math.round(W * 0.014)}px "Helvetica", "Arial", sans-serif`;
+      cCtx.letterSpacing = `${Math.round(W * 0.0035)}px`;
       cCtx.fillStyle = '#6b7a6e';
-      cCtx.fillText(currentLang === 'en' ? '• BOTANICAL SOUL CERTIFICATE •' : '• SERTIFIKAT BUNGA JIWA •', W / 2, 178);
+      cCtx.fillText(currentLang === 'en' ? '• BOTANICAL SOUL CERTIFICATE •' : '• SERTIFIKAT BUNGA JIWA •', W / 2, H * 0.165);
 
-      // 6. Draw Chosen Flower & Equipped Accessories in the Center Stage
+      // 6. Center Botanical Stage (Relative Dimensions)
+      const stageW = W * 0.70;
+      const stageH = H * 0.48;
+      const stageX = (W - stageW) / 2;
+      const stageY = H * 0.19;
+
       cCtx.save();
-      cCtx.translate(W / 2 - 250, 180);
-      cCtx.scale(1.25, 1.25);
-      renderFlowerSpecies(cCtx, info.flower, state.equipped.pot, 400, 440, 1.0, 0, 1.5);
+      cCtx.translate(stageX, stageY);
+      renderFlowerSpecies(cCtx, info.flower, state.equipped.pot, stageW, stageH, 1.0, 0, 1.5);
       cCtx.restore();
 
-      // 7. Archetype Name & Trait
+      // 7. Flower Archetype Name & Trait Track
       cCtx.fillStyle = '#202d24';
-      cCtx.font = '700 62px "Georgia", serif';
+      cCtx.font = `700 ${Math.round(W * 0.055)}px "Georgia", serif`;
       cCtx.letterSpacing = '1px';
-      cCtx.fillText(info.name, W / 2, 804);
+      cCtx.fillText(info.name, W / 2, H * 0.77);
 
       cCtx.fillStyle = '#415747';
-      cCtx.font = '600 18px "Helvetica", "Arial", sans-serif';
-      cCtx.letterSpacing = '3px';
-      cCtx.fillText(info.trait.toUpperCase(), W / 2, 846);
+      cCtx.font = `600 ${Math.round(W * 0.016)}px "Helvetica", "Arial", sans-serif`;
+      cCtx.letterSpacing = `${Math.round(W * 0.0028)}px`;
+      cCtx.fillText(info.trait.toUpperCase(), W / 2, H * 0.81);
 
-      // Inspirational Quote: Georgia Italic
+      // Inspirational Quote
       cCtx.fillStyle = '#56695b';
-      cCtx.font = 'italic 23px "Georgia", serif';
+      cCtx.font = `italic ${Math.round(W * 0.021)}px "Georgia", serif`;
       cCtx.letterSpacing = '0.5px';
-      cCtx.fillText(`“${info.quote}”`, W / 2, 915);
+      cCtx.fillText(`“${info.quote}”`, W / 2, H * 0.87);
 
       // Date Stamp
       const dateStr = new Date().toLocaleDateString(currentLang === 'en' ? 'en-US' : 'id-ID', { 
         year: 'numeric', month: 'long', day: 'numeric' 
       });
       cCtx.fillStyle = '#6e8071';
-      cCtx.font = '500 13px "Helvetica", "Arial", sans-serif';
+      cCtx.font = `500 ${Math.round(W * 0.013)}px "Helvetica", "Arial", sans-serif`;
       cCtx.letterSpacing = '1px';
-      cCtx.fillText(`${dateStr}`, W / 2, 988);
+      cCtx.fillText(`${dateStr}`, W / 2, H * 0.935);
 
-      // 8. Rebranded Legal / Version Tracking String (Scaled down, clean 11px font)
-      cCtx.font = '400 11px "Helvetica", "Arial", sans-serif';
+      // Clean 11px Relative Version Tracking String
+      cCtx.font = `400 ${Math.round(W * 0.0105)}px "Helvetica", "Arial", sans-serif`;
       cCtx.letterSpacing = '1px';
       cCtx.fillStyle = '#7a8d7e';
-      cCtx.fillText("Based on Holland RIASEC Model • v1.0.0 • © 2026 The Garden of Mind Project", W / 2, 1018);
+      cCtx.fillText("Based on Holland RIASEC Model • v1.0.0 • © 2026 The Garden of Mind Project", W / 2, H * 0.962);
 
-      // Instant Download
+      // Trigger Instant Download
       try {
         const imageURL = cert.toDataURL('image/png');
         const link = document.createElement('a');
@@ -3005,4 +3027,5 @@
   </script>
 </body>
 </html>
+
 
