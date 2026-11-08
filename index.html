@@ -198,7 +198,7 @@
       color: #fff;
     }
 
-    /* Canvas Stage Container (Soft Pastel Ambient Backdrop) */
+    /* Canvas Stage Container (Soft Pastel Ambient Backdrop & Full Clearance) */
     .canvas-container {
       position: relative;
       width: 100%;
@@ -769,7 +769,7 @@
         </div>
 
         <div class="controls-cluster">
-          <!-- Continuous Ambient Synthesizer BGM Toggle -->
+          <!-- Continuous Ambient BGM Audio Toggle ("bgm.mp3") -->
           <button class="btn-icon-subtle" id="btn-sound-toggle" onclick="toggleAudio()" title="Meditative Ambient BGM">🔇</button>
           
           <!-- Language Switcher (5 rapid clicks unlocks Developer Backdoor) -->
@@ -892,161 +892,123 @@
 
   <script>
     /* =====================================================================
-       1. SYNTHESIZED CONTINUOUS AMBIENT MEDITATION BGM (432Hz/528Hz)
+       1. AUDIO ENGINE: HTML5 "bgm.mp3" BRIDGE & MICRO-SFX
        ===================================================================== */
-    const AudioEngine = {
-      ctx: null,
-      isPlaying: false,
-      masterGain: null,
-      oscillators: [],
-      lfoOsc: null,
-      noiseSource: null,
+    /* ---------------------------------------------------------------------
+       [ARCHIVED WEB AUDIO API FREQUENCY SYNTHESIZER - 432Hz/528Hz]
+       (Preserved below for reference/fallback):
+       const SynthBGM = {
+         ctx: null, isPlaying: false, masterGain: null, oscillators: [],
+         start() { ... Solfeggio 108Hz, 216Hz, 264Hz, 324Hz drones ... },
+         stop() { ... smooth linear ramp down ... }
+       };
+       --------------------------------------------------------------------- */
 
-      init() {
-        if (!this.ctx) {
-          const AudioContext = window.AudioContext || window.webkitAudioContext;
-          this.ctx = new AudioContext();
-        }
-        if (this.ctx.state === 'suspended') {
-          this.ctx.resume();
+    const AudioEngine = {
+      bgm: null,
+      isPlaying: false,
+      sfxCtx: null,
+
+      initBGM() {
+        if (!this.bgm) {
+          this.bgm = new Audio('bgm.mp3');
+          this.bgm.loop = true;
+          this.bgm.volume = 0.45;
+          this.bgm.preload = 'auto';
+
+          this.bgm.addEventListener('play', () => {
+            this.isPlaying = true;
+            updateAudioButtonUI(true);
+          });
+          this.bgm.addEventListener('pause', () => {
+            this.isPlaying = false;
+            updateAudioButtonUI(false);
+          });
+          this.bgm.addEventListener('error', (e) => {
+            console.info('Audio notice: "bgm.mp3" not detected. Place "bgm.mp3" in the same root directory for custom background music.', e);
+          });
         }
       },
 
-      // Continuous ambient meditative synthesizer drone that loops infinitely
       startBGM() {
-        this.init();
-        if (this.isPlaying) return;
-
-        const now = this.ctx.currentTime;
-        this.masterGain = this.ctx.createGain();
-        this.masterGain.gain.setValueAtTime(0.0001, now);
-        this.masterGain.gain.linearRampToValueAtTime(0.12, now + 2.0); // smooth 2s fade-in
-        this.masterGain.connect(this.ctx.destination);
-
-        // Meditative Solfeggio Frequencies (A=432Hz root, 528Hz Love Tone)
-        const frequencies = [108.0, 216.0, 264.0, 324.0];
-        this.oscillators = [];
-
-        const filter = this.ctx.createBiquadFilter();
-        filter.type = 'lowpass';
-        filter.frequency.setValueAtTime(460, now);
-        filter.connect(this.masterGain);
-
-        // Slow LFO to swell filter like breathing ocean waves
-        this.lfoOsc = this.ctx.createOscillator();
-        const lfoGain = this.ctx.createGain();
-        this.lfoOsc.frequency.setValueAtTime(0.07, now); // ~14s gentle cycle
-        lfoGain.gain.setValueAtTime(130, now);
-        this.lfoOsc.connect(lfoGain);
-        lfoGain.connect(filter.frequency);
-        this.lfoOsc.start(now);
-
-        // Spawn soft sine oscillators
-        frequencies.forEach((freq, idx) => {
-          const osc = this.ctx.createOscillator();
-          const oscGain = this.ctx.createGain();
-
-          osc.type = idx % 2 === 0 ? 'sine' : 'triangle';
-          osc.frequency.setValueAtTime(freq, now);
-          osc.detune.setValueAtTime((idx - 1.5) * 4, now);
-
-          oscGain.gain.setValueAtTime(0.06 / (idx + 1), now);
-          osc.connect(oscGain);
-          oscGain.connect(filter);
-          osc.start(now);
-          this.oscillators.push(osc);
-        });
-
-        // Soft pink noise layer for subtle gentle rain/wind atmosphere
-        const bufferSize = this.ctx.sampleRate * 2;
-        const noiseBuffer = this.ctx.createBuffer(1, bufferSize, this.ctx.sampleRate);
-        const output = noiseBuffer.getChannelData(0);
-        let b0 = 0, b1 = 0, b2 = 0;
-        for (let i = 0; i < bufferSize; i++) {
-          const white = Math.random() * 2 - 1;
-          b0 = 0.99765 * b0 + white * 0.05;
-          b1 = 0.96300 * b1 + white * 0.11;
-          b2 = 0.57000 * b2 + white * 0.35;
-          output[i] = (b0 + b1 + b2) * 0.035;
+        this.initBGM();
+        if (this.bgm) {
+          const promise = this.bgm.play();
+          if (promise !== undefined) {
+            promise.then(() => {
+              this.isPlaying = true;
+              updateAudioButtonUI(true);
+            }).catch(err => {
+              console.warn('Autoplay restricted: waiting for player touch gesture.', err);
+              this.isPlaying = false;
+              updateAudioButtonUI(false);
+            });
+          }
         }
-
-        this.noiseSource = this.ctx.createBufferSource();
-        this.noiseSource.buffer = noiseBuffer;
-        this.noiseSource.loop = true;
-
-        const noiseFilter = this.ctx.createBiquadFilter();
-        noiseFilter.type = 'bandpass';
-        noiseFilter.frequency.setValueAtTime(360, now);
-        noiseFilter.Q.setValueAtTime(1.2, now);
-
-        const noiseGain = this.ctx.createGain();
-        noiseGain.gain.setValueAtTime(0.025, now);
-
-        this.noiseSource.connect(noiseFilter);
-        noiseFilter.connect(noiseGain);
-        noiseGain.connect(this.masterGain);
-        this.noiseSource.start(now);
-
-        this.isPlaying = true;
       },
 
       stopBGM() {
-        if (!this.isPlaying || !this.masterGain) return;
-        const now = this.ctx.currentTime;
-        this.masterGain.gain.linearRampToValueAtTime(0.0001, now + 1.0);
-
-        setTimeout(() => {
-          this.oscillators.forEach(osc => { try { osc.stop(); } catch(e){} });
-          if (this.lfoOsc) { try { this.lfoOsc.stop(); } catch(e){} }
-          if (this.noiseSource) { try { this.noiseSource.stop(); } catch(e){} }
-          this.oscillators = [];
+        if (this.bgm) {
+          this.bgm.pause();
           this.isPlaying = false;
-        }, 1100);
+          updateAudioButtonUI(false);
+        }
+      },
+
+      // Micro Sound Effects Engine (Web Audio API)
+      initSFX() {
+        if (!this.sfxCtx) {
+          const AudioContext = window.AudioContext || window.webkitAudioContext;
+          this.sfxCtx = new AudioContext();
+        }
+        if (this.sfxCtx.state === 'suspended') {
+          this.sfxCtx.resume();
+        }
       },
 
       playPop() {
         try {
-          this.init();
-          const osc = this.ctx.createOscillator();
-          const gain = this.ctx.createGain();
+          this.initSFX();
+          const osc = this.sfxCtx.createOscillator();
+          const gain = this.sfxCtx.createGain();
           osc.type = 'triangle';
-          osc.frequency.setValueAtTime(520, this.ctx.currentTime);
-          osc.frequency.exponentialRampToValueAtTime(120, this.ctx.currentTime + 0.05);
+          osc.frequency.setValueAtTime(520, this.sfxCtx.currentTime);
+          osc.frequency.exponentialRampToValueAtTime(120, this.sfxCtx.currentTime + 0.05);
 
-          gain.gain.setValueAtTime(0.18, this.ctx.currentTime);
-          gain.gain.exponentialRampToValueAtTime(0.001, this.ctx.currentTime + 0.055);
+          gain.gain.setValueAtTime(0.18, this.sfxCtx.currentTime);
+          gain.gain.exponentialRampToValueAtTime(0.001, this.sfxCtx.currentTime + 0.055);
 
           osc.connect(gain);
-          gain.connect(this.ctx.destination);
+          gain.connect(this.sfxCtx.destination);
           osc.start();
-          osc.stop(this.ctx.currentTime + 0.06);
+          osc.stop(this.sfxCtx.currentTime + 0.06);
         } catch(e){}
       },
 
       playWaterSplash() {
         try {
-          this.init();
-          const now = this.ctx.currentTime;
-          const bufferSize = this.ctx.sampleRate * 0.35;
-          const noiseBuffer = this.ctx.createBuffer(1, bufferSize, this.ctx.sampleRate);
+          this.initSFX();
+          const now = this.sfxCtx.currentTime;
+          const bufferSize = this.sfxCtx.sampleRate * 0.35;
+          const noiseBuffer = this.sfxCtx.createBuffer(1, bufferSize, this.sfxCtx.sampleRate);
           const data = noiseBuffer.getChannelData(0);
           for (let i = 0; i < bufferSize; i++) data[i] = Math.random() * 2 - 1;
 
-          const noise = this.ctx.createBufferSource();
+          const noise = this.sfxCtx.createBufferSource();
           noise.buffer = noiseBuffer;
-          const filter = this.ctx.createBiquadFilter();
+          const filter = this.sfxCtx.createBiquadFilter();
           filter.type = 'bandpass';
           filter.frequency.setValueAtTime(500, now);
           filter.frequency.exponentialRampToValueAtTime(1700, now + 0.18);
           filter.frequency.exponentialRampToValueAtTime(280, now + 0.35);
 
-          const gain = this.ctx.createGain();
+          const gain = this.sfxCtx.createGain();
           gain.gain.setValueAtTime(0.25, now);
           gain.gain.exponentialRampToValueAtTime(0.001, now + 0.35);
 
           noise.connect(filter);
           filter.connect(gain);
-          gain.connect(this.ctx.destination);
+          gain.connect(this.sfxCtx.destination);
           noise.start(now);
           noise.stop(now + 0.36);
         } catch(e){}
@@ -1054,13 +1016,13 @@
 
       playChime() {
         try {
-          this.init();
-          const now = this.ctx.currentTime;
+          this.initSFX();
+          const now = this.sfxCtx.currentTime;
           const notes = [311.13, 392.00, 466.16, 523.25, 622.25];
           notes.forEach((freq, idx) => {
             const startT = now + idx * 0.07;
-            const osc = this.ctx.createOscillator();
-            const gain = this.ctx.createGain();
+            const osc = this.sfxCtx.createOscillator();
+            const gain = this.sfxCtx.createGain();
             osc.type = 'sine';
             osc.frequency.setValueAtTime(freq, startT);
 
@@ -1069,7 +1031,7 @@
             gain.gain.exponentialRampToValueAtTime(0.0001, startT + 1.8);
 
             osc.connect(gain);
-            gain.connect(this.ctx.destination);
+            gain.connect(this.sfxCtx.destination);
             osc.start(startT);
             osc.stop(startT + 1.85);
           });
@@ -1077,28 +1039,28 @@
       }
     };
 
-    function toggleAudio() {
+    function updateAudioButtonUI(isPlaying) {
       const btn = document.getElementById('btn-sound-toggle');
+      if (btn) {
+        btn.innerText = isPlaying ? '🎵' : '🔇';
+        btn.classList.toggle('active', isPlaying);
+      }
+    }
+
+    function toggleAudio() {
       if (AudioEngine.isPlaying) {
         AudioEngine.stopBGM();
-        btn.innerText = '🔇';
-        btn.classList.remove('active');
         state.audioEnabled = false;
       } else {
         AudioEngine.startBGM();
-        btn.innerText = '🎵';
-        btn.classList.add('active');
         state.audioEnabled = true;
       }
       saveState();
     }
 
-    // Keep sound playing across all page interactions
+    // Uninterrupted Audio Bridge: Resume BGM on any user touch/gesture
     document.addEventListener('pointerdown', (e) => {
-      if (state.audioEnabled && AudioEngine.ctx && AudioEngine.ctx.state === 'suspended') {
-        AudioEngine.ctx.resume();
-      }
-      if (state.audioEnabled && !AudioEngine.isPlaying) {
+      if (state.audioEnabled && (!AudioEngine.bgm || AudioEngine.bgm.paused)) {
         AudioEngine.startBGM();
       }
       if (e.target.closest('button, .grid-cell, .lang-btn, .dev-btn')) {
@@ -1305,7 +1267,7 @@
     /* =====================================================================
        3. PERSISTENT STATE & STUDIO ACCESSORIES
        ===================================================================== */
-    const STORAGE_KEY = 'garden_of_mind_v6_save';
+    const STORAGE_KEY = 'garden_of_mind_v7_save';
     let currentLang = 'en';
 
     let state = {
@@ -1326,7 +1288,7 @@
         petalDye: false
       },
       equipped: {
-        pot: 'terracotta', // 'terracotta' or 'celestial'
+        pot: 'terracotta',
         butterflies: false,
         fence: false,
         window: false,
@@ -1401,7 +1363,6 @@
     let currentPuzzleData = null;
     let activeSelection = [];
 
-    // Direction pattern per day: Day 1=H, Day 2=V, Day 3=DR, Day 4=H, Day 5=DL, Day 6=V, Day 7=DR
     function getDirectionForDay(day) {
       const pattern = ['H', 'V', 'DR', 'H', 'DL', 'V', 'DR'];
       return pattern[(day - 1) % pattern.length];
@@ -1425,11 +1386,11 @@
         dr = 1; dc = 0;
         startRow = Math.floor(Math.random() * (size - L + 1));
         startCol = Math.floor(Math.random() * size);
-      } else if (dir === 'DR') { // Diagonal Right
+      } else if (dir === 'DR') {
         dr = 1; dc = 1;
         startRow = Math.floor(Math.random() * (size - L + 1));
         startCol = Math.floor(Math.random() * (size - L + 1));
-      } else { // 'DL' - Diagonal Left
+      } else { // 'DL'
         dr = 1; dc = -1;
         startRow = Math.floor(Math.random() * (size - L + 1));
         startCol = (L - 1) + Math.floor(Math.random() * (size - L + 1));
@@ -1444,7 +1405,6 @@
         solutionIndices.push(idx);
       }
 
-      // Fill empty cells with aesthetic filler characters
       const fillerChars = currentLang === 'en' ? 'HARMONYSOULSEEDGROWTHLEAF' : 'TANAHBUNGAMEKARDAMAIJIWA';
       for (let i = 0; i < totalCells; i++) {
         if (!grid[i]) {
@@ -1570,7 +1530,7 @@
           key: 'archWindow',
           icon: '🏛️',
           name: isEn ? 'Sunlit Arch Window' : 'Jendela Kubah Cahaya',
-          desc: isEn ? 'Warm sunlit cathedral greenhouse window.' : 'Jendela kubah katedral dengan bias hangat matahari.',
+          desc: isEn ? 'Glowing gradient cathedral greenhouse window.' : 'Jendela kubah katedral berkilau emas hangat.',
           unlocked: state.accessories.archWindow,
           isEquipped: state.equipped.window,
           toggleAction: () => {
@@ -1923,7 +1883,6 @@
       `;
     }
 
-    // Clean, peaceful Next Day transition (Free of forced pop-up ads)
     function goToNextDay() {
       state.day++;
       state.phase = 'QUIZ';
@@ -1987,7 +1946,7 @@
     }
 
     /* =====================================================================
-       8. BOTANICAL CANVAS ENGINE (LOTUS OVERHAUL & MULTI-STEM ORCHID)
+       8. BOTANICAL CANVAS ENGINE & HIGH-CONTRAST GLOWING ARCH WINDOW
        ===================================================================== */
     const canvas = document.getElementById('gardenCanvas');
     const ctx = canvas.getContext('2d');
@@ -2099,7 +2058,7 @@
         c.roundRect(x - topW * 0.52, y, topW * 1.04, rimH, [4, 4, 3, 3]);
         c.fill();
 
-        // Drainage Saucer (Guaranteed fully visible)
+        // Drainage Saucer
         c.fillStyle = '#1e1b4b';
         c.beginPath();
         c.roundRect(x - botW * 0.6, y + height - 2, botW * 1.2, 6, [2, 2, 4, 4]);
@@ -2157,16 +2116,28 @@
       c.restore();
     }
 
-    // Studio Cosmetic Additions
+    // High-Contrast Glowing Arch Window Renderer
     function drawArchWindow(c, w, h) {
       c.save();
-      c.strokeStyle = 'rgba(217, 226, 214, 0.65)';
-      c.lineWidth = 3;
       const winW = Math.min(180, w * 0.5);
       const winH = 150;
       const winX = w / 2 - winW / 2;
       const winY = 16;
 
+      // Glowing Linear Gradient: semi-transparent soft white fading into subtle warm gold glow
+      const winGrad = c.createLinearGradient(winX, winY, winX, winY + winH);
+      winGrad.addColorStop(0, 'rgba(255, 255, 255, 0.95)');
+      winGrad.addColorStop(0.5, 'rgba(254, 243, 199, 0.85)');
+      winGrad.addColorStop(1, 'rgba(245, 190, 80, 0.75)');
+
+      c.strokeStyle = winGrad;
+      c.shadowColor = 'rgba(250, 204, 21, 0.5)';
+      c.shadowBlur = 14;
+      c.shadowOffsetX = 0;
+      c.shadowOffsetY = 2;
+      c.lineWidth = 3;
+
+      // Outer Arch Path
       c.beginPath();
       c.moveTo(winX, winY + winH);
       c.lineTo(winX, winY + winW / 2);
@@ -2174,13 +2145,25 @@
       c.lineTo(winX + winW, winY + winH);
       c.stroke();
 
-      c.lineWidth = 1.5;
+      // Inner Mullions & Transom
+      c.lineWidth = 1.6;
+      c.shadowBlur = 8;
       c.beginPath();
       c.moveTo(w / 2, winY);
       c.lineTo(w / 2, winY + winH);
       c.moveTo(winX, winY + winW / 2);
       c.lineTo(winX + winW, winY + winW / 2);
       c.stroke();
+
+      // Subtle glass glare reflection
+      c.fillStyle = 'rgba(255, 255, 255, 0.08)';
+      c.beginPath();
+      c.moveTo(winX + 4, winY + winW / 2);
+      c.lineTo(winX + winW - 4, winY + winW / 2);
+      c.lineTo(winX + winW - 4, winY + winH - 4);
+      c.lineTo(winX + 4, winY + winH - 4);
+      c.fill();
+
       c.restore();
     }
 
@@ -2264,7 +2247,7 @@
     function renderFlowerSpecies(c, type, potStyle, w, h, p, swayOffset, time = 0) {
       const potW = Math.min(108, w * 0.28);
       const potH = 46;
-      const baseY = h - 65; // Guaranteed clearance from canvas bottom
+      const baseY = h - 65;
 
       // Background Cosmetics
       if (state.equipped.window) drawArchWindow(c, w, h);
@@ -2378,19 +2361,16 @@
           // Overlapping Waterlily Pads on the pot surface
           c.save();
           c.fillStyle = '#4a7554';
-          // Left pad
           c.beginPath();
           c.ellipse(w / 2 - 32, floatY, 34 * padScale, 11 * padScale, -0.12, 0, Math.PI * 1.85);
           c.lineTo(w / 2 - 32, floatY);
           c.fill();
 
-          // Right pad
           c.beginPath();
           c.ellipse(w / 2 + 30, floatY + 1, 32 * padScale, 10 * padScale, 0.14, 0, Math.PI * 1.85);
           c.lineTo(w / 2 + 30, floatY + 1);
           c.fill();
 
-          // Center back pad
           c.fillStyle = '#5c8a66';
           c.beginPath();
           c.ellipse(w / 2, floatY - 4, 38 * padScale, 12 * padScale, 0, 0, Math.PI * 1.88);
@@ -2404,9 +2384,8 @@
           const bp = Math.min(1, (p - 0.35) / 0.65);
           c.save();
           c.translate(w / 2 + swayOffset * 0.25, floatY - 6);
-          c.scale(bp * 1.85, bp * 1.85); // 2x enlarged presence
+          c.scale(bp * 1.85, bp * 1.85);
 
-          // Layer 1: Outward cupping petals
           for (let i = 0; i < 9; i++) {
             c.save();
             c.rotate((i / 9) * Math.PI * 2);
@@ -2422,7 +2401,6 @@
             c.restore();
           }
 
-          // Layer 2: Middle serene petals
           for (let i = 0; i < 7; i++) {
             c.save();
             c.rotate((i / 7) * Math.PI * 2 + 0.3);
@@ -2438,7 +2416,6 @@
             c.restore();
           }
 
-          // Layer 3: Inner upright petals
           for (let i = 0; i < 5; i++) {
             c.save();
             c.rotate((i / 5) * Math.PI * 2);
@@ -2451,13 +2428,11 @@
             c.restore();
           }
 
-          // Golden Seed Pod Carpel
           c.fillStyle = '#fce588';
           c.beginPath();
           c.arc(0, -2, 6, 0, Math.PI * 2);
           c.fill();
 
-          // Seed pits
           c.fillStyle = '#ca8a04';
           for (let sp = 0; sp < 6; sp++) {
             const a = (sp / 6) * Math.PI * 2;
@@ -2473,7 +2448,6 @@
         const stemMaxH = (h * 0.46) * Math.min(1, p / 0.7);
 
         if (p > 0.05) {
-          // Broad glossy strap foliage at base
           if (p > 0.15) {
             const lScale = Math.min(1, (p - 0.15) / 0.35);
             drawStemLeaf(c, w / 2 - 6, baseY, 52, -0.45, lScale, -1);
@@ -2489,7 +2463,7 @@
           c.bezierCurveTo(w / 2 - 8, baseY - stemMaxH * 0.4, w / 2 + 28, baseY - stemMaxH * 0.7, w / 2 + 22 + swayOffset, baseY - stemMaxH);
           c.stroke();
 
-          // Bamboo support stick for Stalk 1
+          // Bamboo support cane
           c.strokeStyle = '#c4b58e';
           c.lineWidth = 2;
           c.beginPath();
@@ -2520,14 +2494,12 @@
           }
         }
 
-        // Bloom rendering helper for orchid flowers
         function drawSingleOrchidHead(ox, oy, scale, rotAngle) {
           c.save();
           c.translate(ox, oy);
           c.rotate(rotAngle);
           c.scale(scale, scale);
 
-          // Sepals
           c.fillStyle = '#fae4f2';
           [-0.8, 0.8, -2.4].forEach(rot => {
             c.save(); c.rotate(rot);
@@ -2535,7 +2507,6 @@
             c.restore();
           });
 
-          // Lateral petals
           c.fillStyle = state.equipped.petalDye ? '#e879f9' : '#ec8ec4';
           [-1, 1].forEach(s => {
             c.save(); c.scale(s, 1);
@@ -2543,7 +2514,6 @@
             c.restore();
           });
 
-          // Ruffled fuchsia lip
           c.fillStyle = '#c72e7d';
           c.beginPath();
           c.ellipse(0, 10, 7.5, 10, 0, 0, Math.PI * 2);
@@ -2555,16 +2525,13 @@
 
         if (p > 0.58) {
           const bp = (p - 0.58) / 0.42;
-          // Flower 1 on tall main stalk
           drawSingleOrchidHead(w / 2 + 22 + swayOffset, baseY - stemMaxH, bp * 1.05, 0.1);
 
-          // Flower 2 on left stalk
           if (p > 0.68) {
             const bp2 = (p - 0.68) / 0.32;
             drawSingleOrchidHead(w / 2 - 22 + swayOffset * 0.8, baseY - stemMaxH * 0.82, bp2 * 0.88, -0.2);
           }
 
-          // Flower 3 / Bud on short stalk
           if (p > 0.78) {
             const bp3 = (p - 0.78) / 0.22;
             drawSingleOrchidHead(w / 2 + 8 + swayOffset * 0.6, baseY - stemMaxH * 0.58, bp3 * 0.75, 0.15);
@@ -2899,5 +2866,4 @@
   </script>
 </body>
 </html>
-
 
