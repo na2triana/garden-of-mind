@@ -460,9 +460,17 @@
       align-items: center;
       gap: 6px;
       box-shadow: 0 3px 10px rgba(202, 138, 4, 0.25);
-      transition: transform 0.15s ease;
+      transition: transform 0.15s ease, opacity 0.2s ease;
     }
     .btn-skip-timer:active { transform: scale(0.96); }
+
+    /* Offline Disabled Style for Rewarded Ad Buttons */
+    .ad-disabled-offline {
+      opacity: 0.5 !important;
+      pointer-events: none !important;
+      filter: grayscale(0.5);
+      cursor: not-allowed !important;
+    }
 
     /* Quiz Screen */
     .quiz-progress-dots {
@@ -750,7 +758,7 @@
       font-weight: 600;
       border-radius: var(--radius-pill);
       cursor: pointer;
-      transition: transform 0.15s ease, background-color 0.2s ease;
+      transition: transform 0.15s ease, background-color 0.2s ease, opacity 0.2s ease;
     }
     .studio-btn-toggle:active { transform: scale(0.95); }
     .studio-btn-toggle.equipped { background: var(--accent-deep); color: #fff; }
@@ -958,7 +966,7 @@
 
   <script>
     /* =====================================================================
-       1. AUTOMATED PLATFORM COMPLIANCE (ANTI-REJECTION SYSTEM)
+       1. AUTOMATED PLATFORM COMPLIANCE & OFFLINE CONNECTIVITY LISTENER
        ===================================================================== */
     function isPlatformRestricted() {
       try {
@@ -974,6 +982,51 @@
         return false;
       }
     }
+
+    function isPlayerOffline() {
+      return typeof navigator.onLine === 'boolean' && !navigator.onLine;
+    }
+
+    // Dynamic UI updater when internet drops or reconnects
+    function updateNetworkStatus() {
+      const offline = isPlayerOffline();
+      const offlineBadge = GAME_DATA[currentLang].offlineBadge || ' 🌐 Online Only';
+
+      // Update Studio Ad Unlock buttons
+      const studioAdButtons = document.querySelectorAll('.studio-btn-toggle.ad-lock');
+      studioAdButtons.forEach(btn => {
+        if (offline) {
+          btn.classList.add('ad-disabled-offline');
+          if (!btn.dataset.baseLabel) btn.dataset.baseLabel = btn.innerText;
+          btn.innerText = btn.dataset.baseLabel + offlineBadge;
+        } else {
+          btn.classList.remove('ad-disabled-offline');
+          if (btn.dataset.baseLabel) {
+            btn.innerText = btn.dataset.baseLabel;
+            delete btn.dataset.baseLabel;
+          }
+        }
+      });
+
+      // Update Skip Timer button
+      const skipBtn = document.querySelector('.btn-skip-timer');
+      if (skipBtn) {
+        if (offline) {
+          skipBtn.classList.add('ad-disabled-offline');
+          if (!skipBtn.dataset.baseLabel) skipBtn.dataset.baseLabel = skipBtn.innerText;
+          skipBtn.innerText = skipBtn.dataset.baseLabel + offlineBadge;
+        } else {
+          skipBtn.classList.remove('ad-disabled-offline');
+          if (skipBtn.dataset.baseLabel) {
+            skipBtn.innerText = skipBtn.dataset.baseLabel;
+            delete skipBtn.dataset.baseLabel;
+          }
+        }
+      }
+    }
+
+    window.addEventListener('online', updateNetworkStatus);
+    window.addEventListener('offline', updateNetworkStatus);
 
     /* =====================================================================
        2. AUDIO ENGINE: HTML5 "bgm.mp3" BRIDGE & MICRO-SFX
@@ -1171,6 +1224,7 @@
         studioBtn: "Studio",
         studioTitle: "Garden Cosmetic Studio",
         studioSubtitle: "Tap an item to unlock or equip it immediately.",
+        offlineBadge: " 🌐 Online Only",
         words: ["FOCUS", "EMPATHY", "CREATE", "HARMONY", "GROWTH", "WISDOM", "PURPOSE"],
         archetypes: {
           R: { 
@@ -1267,6 +1321,7 @@
         studioBtn: "Studio",
         studioTitle: "Studio Aksesoris Taman",
         studioSubtitle: "Ketuk item untuk membuka atau memasangnya langsung.",
+        offlineBadge: " 🌐 Butuh Internet",
         words: ["FOKUS", "EMPATI", "KREASI", "HARMONI", "TUMBUH", "BIJAK", "MAKNA"],
         archetypes: {
           R: { 
@@ -1341,7 +1396,7 @@
     /* =====================================================================
        4. PERSISTENT STATE & 5-MINUTE WAITING LOCK
        ===================================================================== */
-    const STORAGE_KEY = 'garden_of_mind_v10_save';
+    const STORAGE_KEY = 'garden_of_mind_v11_save';
     let currentLang = 'en';
     let dayTimerInterval = null;
 
@@ -1531,6 +1586,8 @@
        6. ZERO-CLICK STUDIO DRAWER (AUTO-CLOSING POP-DOWN FLOW)
        ===================================================================== */
     function showRewardedAd(itemName, onRewardEarned) {
+      if (isPlayerOffline()) return;
+
       const modal = document.getElementById('rewardedAdModal');
       const fill = document.getElementById('adProgressFill');
       const title = document.getElementById('ad-title');
@@ -1568,7 +1625,6 @@
       refreshUI();
     }
 
-    // Backdrop click auto-dismisses drawer
     document.getElementById('studioModal').addEventListener('click', (e) => {
       if (e.target.id === 'studioModal') closeStudioModal();
     });
@@ -1576,6 +1632,8 @@
     function renderStudioItems() {
       const listEl = document.getElementById('studioItemList');
       const isEn = currentLang === 'en';
+      const offline = isPlayerOffline();
+      const offlineBadge = GAME_DATA[currentLang].offlineBadge || ' 🌐 Online Only';
 
       const items = [
         {
@@ -1635,8 +1693,10 @@
           const btnLabel = item.isEquipped ? (isEn ? 'Equipped' : 'Terpasang') : (isEn ? 'Equip' : 'Pasang');
           btnMarkup = `<button class="studio-btn-toggle ${btnClass}" onclick="handleStudioToggle('${item.key}')">${btnLabel}</button>`;
         } else {
-          const adLabel = isEn ? '🎁 Unlock (Ad)' : '🎁 Buka (Iklan)';
-          btnMarkup = `<button class="studio-btn-toggle ad-lock" onclick="handleStudioAdUnlock('${item.key}', '${item.name}')">${adLabel}</button>`;
+          let adLabel = isEn ? '🎁 Unlock (Ad)' : '🎁 Buka (Iklan)';
+          const disabledCls = offline ? ' ad-disabled-offline' : '';
+          const displayLabel = offline ? (adLabel + offlineBadge) : adLabel;
+          btnMarkup = `<button class="studio-btn-toggle ad-lock${disabledCls}" onclick="handleStudioAdUnlock('${item.key}', '${item.name}')">${displayLabel}</button>`;
         }
 
         return `
@@ -1654,7 +1714,6 @@
       }).join('');
     }
 
-    // Zero-Click Pop-down: Equipping or unequipping immediately closes the drawer and renders canvas
     function handleStudioToggle(key) {
       if (key === 'celestialPot') {
         state.equipped.pot = state.equipped.pot === 'celestial' ? 'terracotta' : 'celestial';
@@ -1667,12 +1726,12 @@
       }
       saveState();
       canvasEngine.potStyle = state.equipped.pot;
-      closeStudioModal(); // Closes drawer immediately
+      closeStudioModal();
     }
 
-    // Zero-Click Pop-down: Clicking unlock initiates ad and closes drawer immediately
     function handleStudioAdUnlock(key, name) {
-      closeStudioModal(); // Drawer slides shut instantly
+      if (isPlayerOffline()) return;
+      closeStudioModal();
       showRewardedAd(name, () => {
         state.accessories[key] = true;
         if (key === 'celestialPot') state.equipped.pot = 'celestial';
@@ -1688,6 +1747,7 @@
     }
 
     function triggerSkipTimerAd() {
+      if (isPlayerOffline()) return;
       showRewardedAd(currentLang === 'en' ? 'Skip Waiting Time' : 'Lewati Waktu Tunggu', () => {
         state.nextDayUnlockTime = 0;
         saveState();
@@ -1825,6 +1885,8 @@
         case 'DAY_END': renderDayEndView(); break;
         case 'FINAL': renderFinalView(); break;
       }
+
+      updateNetworkStatus();
     }
 
     function renderHomeView() {
@@ -1967,6 +2029,13 @@
       const now = Date.now();
       const remainingMs = Math.max(0, (state.nextDayUnlockTime || 0) - now);
       const isLocked = remainingMs > 0;
+      const offline = isPlayerOffline();
+      const offlineBadge = GAME_DATA[currentLang].offlineBadge || ' 🌐 Online Only';
+
+      const skipBtnText = offline 
+        ? (GAME_DATA[currentLang].btnSkipTimer + offlineBadge) 
+        : GAME_DATA[currentLang].btnSkipTimer;
+      const skipDisabledCls = offline ? ' ad-disabled-offline' : '';
 
       deckEl.innerHTML = `
         <div class="card-panel">
@@ -1988,8 +2057,8 @@
                 ${GAME_DATA[currentLang].timerLabel}
               </span>
               <div class="lock-timer-text" id="lockTimerCountdown">--:--</div>
-              <button class="btn-skip-timer" onclick="triggerSkipTimerAd()">
-                ${GAME_DATA[currentLang].btnSkipTimer}
+              <button class="btn-skip-timer${skipDisabledCls}" onclick="triggerSkipTimerAd()">
+                ${skipBtnText}
               </button>
             </div>
             <button class="btn-main" id="btnNextDayAction" disabled>
@@ -2976,7 +3045,7 @@
 
       // 6. Center Botanical Stage
       const stageW = W * 0.70;
-      const stageH = H * 0.48;
+      const stageH = H * 0.44;
       const stageX = (W - stageW) / 2;
       const stageY = H * 0.19;
 
@@ -2987,35 +3056,52 @@
 
       // 7. Flower Archetype Name & Trait Track
       cCtx.fillStyle = '#202d24';
-      cCtx.font = `700 ${Math.round(W * 0.055)}px "Georgia", serif`;
+      cCtx.font = `700 ${Math.round(W * 0.052)}px "Georgia", serif`;
       cCtx.letterSpacing = '1px';
-      cCtx.fillText(info.name, W / 2, H * 0.77);
+      cCtx.fillText(info.name, W / 2, H * 0.745);
 
       cCtx.fillStyle = '#415747';
-      cCtx.font = `600 ${Math.round(W * 0.016)}px "Helvetica", "Arial", sans-serif`;
+      cCtx.font = `600 ${Math.round(W * 0.015)}px "Helvetica", "Arial", sans-serif`;
       cCtx.letterSpacing = `${Math.round(W * 0.0028)}px`;
-      cCtx.fillText(info.trait.toUpperCase(), W / 2, H * 0.81);
+      cCtx.fillText(info.trait.toUpperCase(), W / 2, H * 0.785);
 
       // Inspirational Quote
       cCtx.fillStyle = '#56695b';
-      cCtx.font = `italic ${Math.round(W * 0.021)}px "Georgia", serif`;
+      cCtx.font = `italic ${Math.round(W * 0.020)}px "Georgia", serif`;
       cCtx.letterSpacing = '0.5px';
-      cCtx.fillText(`“${info.quote}”`, W / 2, H * 0.87);
+      cCtx.fillText(`“${info.quote}”`, W / 2, H * 0.835);
 
-      // Date Stamp
-      const dateStr = new Date().toLocaleDateString(currentLang === 'en' ? 'en-US' : 'id-ID', { 
-        year: 'numeric', month: 'long', day: 'numeric' 
-      });
-      cCtx.fillStyle = '#6e8071';
-      cCtx.font = `500 ${Math.round(W * 0.013)}px "Helvetica", "Arial", sans-serif`;
-      cCtx.letterSpacing = '1px';
-      cCtx.fillText(`${dateStr}`, W / 2, H * 0.935);
+      // 8. Relocated Metadata Inside Frame & Numerical Date Alignment (DD/MM/YYYY)
+      const now = new Date();
+      const dd = String(now.getDate()).padStart(2, '0');
+      const mm = String(now.getMonth() + 1).padStart(2, '0');
+      const yyyy = now.getFullYear();
+      const dateFormatted = `${dd}/${mm}/${yyyy}`;
 
-      // Clean 11px Relative Version Tracking String
-      cCtx.font = `400 ${Math.round(W * 0.0105)}px "Helvetica", "Arial", sans-serif`;
+      const metadataString = `${dateFormatted} • Based on Holland RIASEC Model • v1.0.0 • © 2026 The Garden of Mind Project`;
+
+      // Bottom Layout Styling Capsule inside the gold frame with high-contrast white typography
+      const barW = W * 0.78;
+      const barH = 34;
+      const barX = (W - barW) / 2;
+      const barY = H * 0.888;
+
+      cCtx.save();
+      cCtx.fillStyle = '#253328';
+      cCtx.beginPath();
+      cCtx.roundRect(barX, barY, barW, barH, barH / 2);
+      cCtx.fill();
+
+      cCtx.strokeStyle = 'rgba(223, 186, 115, 0.55)';
+      cCtx.lineWidth = 1;
+      cCtx.stroke();
+
+      // Clean Solid White Text (High-contrast, 11px font base layout)
+      cCtx.fillStyle = '#ffffff';
+      cCtx.font = `500 ${Math.round(W * 0.0102)}px "Helvetica", "Arial", sans-serif`;
       cCtx.letterSpacing = '1px';
-      cCtx.fillStyle = '#7a8d7e';
-      cCtx.fillText("Based on Holland RIASEC Model • v1.0.0 • © 2026 The Garden of Mind Project", W / 2, H * 0.962);
+      cCtx.fillText(metadataString, W / 2, barY + 22);
+      cCtx.restore();
 
       // Trigger Instant Download
       try {
@@ -3048,6 +3134,7 @@
         sBtn.classList.remove('active');
       }
 
+      updateNetworkStatus();
       requestAnimationFrame(renderGarden);
     });
   </script>
