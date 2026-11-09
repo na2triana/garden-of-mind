@@ -4,7 +4,7 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=3.0, user-scalable=yes, viewport-fit=cover" />
   <title>The Garden of Mind • Taman Pikiran</title>
   
   <meta name="description" content="A 7-day reflective RIASEC personality test where your choices grow an aesthetic botanical flower." />
@@ -38,9 +38,9 @@
       margin: 0;
       padding: 0;
       -webkit-tap-highlight-color: transparent;
-      user-select: none;
     }
 
+    /* Widescreen & Zoom Scrollability Wrapper (Fix Zoom 300%) */
     body {
       font-family: 'Plus Jakarta Sans', system-ui, -apple-system, sans-serif;
       background: linear-gradient(175deg, var(--bg-top) 0%, var(--bg-bottom) 100%);
@@ -49,14 +49,16 @@
       min-height: 100dvh;
       display: flex;
       justify-content: center;
-      align-items: center;
-      overflow: hidden;
+      align-items: flex-start;
+      overflow-x: hidden;
+      overflow-y: auto;
+      -webkit-overflow-scrolling: touch;
       position: relative;
     }
 
     /* Ambient background glows */
     .ambient-glow {
-      position: absolute;
+      position: fixed;
       border-radius: 50%;
       filter: blur(80px);
       z-index: 0;
@@ -66,18 +68,21 @@
     .glow-1 { width: 340px; height: 340px; background: #ebd5cd; top: -50px; left: -60px; }
     .glow-2 { width: 380px; height: 380px; background: #cce0c9; bottom: -60px; right: -60px; }
 
-    /* Main Container (Centered for Mobile & Desktop Widescreens) */
+    /* Main Container (Responsive Vertical Flow Under High Zoom) */
     .app-frame {
       width: 100%;
       max-width: 460px;
-      height: 100vh;
-      height: 100dvh;
+      min-height: 100vh;
+      min-height: 100dvh;
       display: flex;
       flex-direction: column;
-      justify-content: space-between;
-      padding: calc(env(safe-area-inset-top, 8px) + 6px) 16px calc(env(safe-area-inset-bottom, 8px) + 8px);
+      justify-content: flex-start;
+      gap: 8px;
+      padding: calc(env(safe-area-inset-top, 8px) + 6px) 16px calc(env(safe-area-inset-bottom, 8px) + 12px);
       position: relative;
       z-index: 1;
+      overflow-y: visible;
+      -webkit-overflow-scrolling: touch;
     }
 
     /* Persistent Top Header & Title */
@@ -202,7 +207,8 @@
     .canvas-container {
       position: relative;
       width: 100%;
-      height: 245px;
+      height: 235px;
+      min-height: 200px;
       flex-shrink: 0;
       display: flex;
       justify-content: center;
@@ -292,7 +298,7 @@
       justify-content: center;
       position: relative;
       margin-top: 4px;
-      min-height: 0;
+      min-height: 270px;
     }
 
     .card-panel {
@@ -306,12 +312,8 @@
       display: flex;
       flex-direction: column;
       justify-content: space-between;
-      max-height: 100%;
-      overflow-y: auto;
-      scrollbar-width: none;
       animation: cardFadeIn 0.3s ease-out;
     }
-    .card-panel::-webkit-scrollbar { display: none; }
 
     @keyframes cardFadeIn {
       from { opacity: 0; transform: translateY(8px); }
@@ -375,7 +377,7 @@
       margin-bottom: 6px;
     }
 
-    /* Premium Upgrade Box */
+    /* Platform-Compliant Premium Card */
     .premium-card {
       background: var(--accent-gold-bg);
       border: 1px solid rgba(201, 147, 59, 0.35);
@@ -890,10 +892,9 @@
     </div>
   </div>
 
-  <!-- Garden Cosmetic Studio Modal -->
+  <!-- Zero-Click Studio Drawer (No "X" Button - Auto-Closes on Selection) -->
   <div class="modal-overlay" id="studioModal">
     <div class="modal-box">
-      <button class="modal-close-corner" onclick="closeStudioModal()">✕</button>
       <div style="font-size: 1.8rem; margin-bottom: 2px;">🎨</div>
       <h3 style="font-family: 'Cormorant Garamond', Georgia, serif; font-size: 1.35rem; color: var(--accent-deep);" id="studio-title">
         Garden Studio & Accessories
@@ -957,7 +958,25 @@
 
   <script>
     /* =====================================================================
-       1. AUDIO ENGINE: HTML5 "bgm.mp3" BRIDGE & MICRO-SFX
+       1. AUTOMATED PLATFORM COMPLIANCE (ANTI-REJECTION SYSTEM)
+       ===================================================================== */
+    function isPlatformRestricted() {
+      try {
+        const hostname = (window.location.hostname || '').toLowerCase();
+        const referrer = (document.referrer || '').toLowerCase();
+        const restrictedKeywords = ['poki', 'crazygames', 'gamemonetize'];
+
+        const hasRestrictedHost = restrictedKeywords.some(p => hostname.includes(p));
+        const hasRestrictedRef = restrictedKeywords.some(p => referrer.includes(p));
+
+        return hasRestrictedHost || hasRestrictedRef;
+      } catch (e) {
+        return false;
+      }
+    }
+
+    /* =====================================================================
+       2. AUDIO ENGINE: HTML5 "bgm.mp3" BRIDGE & MICRO-SFX
        ===================================================================== */
     const AudioEngine = {
       bgm: null,
@@ -980,7 +999,7 @@
             updateAudioButtonUI(false);
           });
           this.bgm.addEventListener('error', (e) => {
-            console.info('Audio notice: "bgm.mp3" not detected. Place "bgm.mp3" in the same root directory for custom background music.', e);
+            console.info('Audio notice: "bgm.mp3" not detected. Place "bgm.mp3" in root directory for local BGM.', e);
           });
         }
       },
@@ -1122,7 +1141,7 @@
     });
 
     /* =====================================================================
-       2. REVISED RIASEC ARCHETYPES & BILINGUAL DICTIONARY
+       3. REVISED RIASEC ARCHETYPES & BILINGUAL DICTIONARY
        ===================================================================== */
     const GAME_DATA = {
       en: {
@@ -1151,7 +1170,7 @@
         btnSkipTimer: "⏩ Skip Waiting via Ad",
         studioBtn: "Studio",
         studioTitle: "Garden Cosmetic Studio",
-        studioSubtitle: "Beautify your flower canvas and shareable certificate.",
+        studioSubtitle: "Tap an item to unlock or equip it immediately.",
         words: ["FOCUS", "EMPATHY", "CREATE", "HARMONY", "GROWTH", "WISDOM", "PURPOSE"],
         archetypes: {
           R: { 
@@ -1247,7 +1266,7 @@
         btnSkipTimer: "⏩ Lewati Waktu Tunggu (Iklan)",
         studioBtn: "Studio",
         studioTitle: "Studio Aksesoris Taman",
-        studioSubtitle: "Percantik kanvas tanaman dan sertifikat akhir Anda.",
+        studioSubtitle: "Ketuk item untuk membuka atau memasangnya langsung.",
         words: ["FOKUS", "EMPATI", "KREASI", "HARMONI", "TUMBUH", "BIJAK", "MAKNA"],
         archetypes: {
           R: { 
@@ -1320,9 +1339,9 @@
     };
 
     /* =====================================================================
-       3. PERSISTENT STATE & 5-MINUTE WAITING LOCK
+       4. PERSISTENT STATE & 5-MINUTE WAITING LOCK
        ===================================================================== */
-    const STORAGE_KEY = 'garden_of_mind_v9_save';
+    const STORAGE_KEY = 'garden_of_mind_v10_save';
     let currentLang = 'en';
     let dayTimerInterval = null;
 
@@ -1420,7 +1439,7 @@
     }
 
     /* =====================================================================
-       4. WORD SEARCH ENGINE (DAILY ROTATING SEQUENCE)
+       5. WORD SEARCH ENGINE (DAILY ROTATING SEQUENCE)
        ===================================================================== */
     let currentPuzzleData = null;
     let activeSelection = [];
@@ -1509,7 +1528,7 @@
     }
 
     /* =====================================================================
-       5. REWARDED ADS, STUDIO DRAWER & ACCESSORIES PIPELINE
+       6. ZERO-CLICK STUDIO DRAWER (AUTO-CLOSING POP-DOWN FLOW)
        ===================================================================== */
     function showRewardedAd(itemName, onRewardEarned) {
       const modal = document.getElementById('rewardedAdModal');
@@ -1548,6 +1567,11 @@
       saveState();
       refreshUI();
     }
+
+    // Backdrop click auto-dismisses drawer
+    document.getElementById('studioModal').addEventListener('click', (e) => {
+      if (e.target.id === 'studioModal') closeStudioModal();
+    });
 
     function renderStudioItems() {
       const listEl = document.getElementById('studioItemList');
@@ -1630,6 +1654,7 @@
       }).join('');
     }
 
+    // Zero-Click Pop-down: Equipping or unequipping immediately closes the drawer and renders canvas
     function handleStudioToggle(key) {
       if (key === 'celestialPot') {
         state.equipped.pot = state.equipped.pot === 'celestial' ? 'terracotta' : 'celestial';
@@ -1641,11 +1666,13 @@
         state.equipped[key] = !state.equipped[key];
       }
       saveState();
-      renderStudioItems();
       canvasEngine.potStyle = state.equipped.pot;
+      closeStudioModal(); // Closes drawer immediately
     }
 
+    // Zero-Click Pop-down: Clicking unlock initiates ad and closes drawer immediately
     function handleStudioAdUnlock(key, name) {
+      closeStudioModal(); // Drawer slides shut instantly
       showRewardedAd(name, () => {
         state.accessories[key] = true;
         if (key === 'celestialPot') state.equipped.pot = 'celestial';
@@ -1657,7 +1684,6 @@
         canvasEngine.triggerSparkleBurst();
         AudioEngine.playChime();
         saveState();
-        closeStudioModal();
       });
     }
 
@@ -1670,7 +1696,7 @@
     }
 
     /* =====================================================================
-       6. DEVELOPER BACKDOOR (AUTO-CLOSING ACTIONS)
+       7. DEVELOPER BACKDOOR (AUTO-CLOSING ACTIONS)
        ===================================================================== */
     let devTapCount = 0;
     let lastDevTapTime = 0;
@@ -1767,7 +1793,7 @@
     }
 
     /* =====================================================================
-       7. VIEW DECK RENDERERS & 5-MINUTE COOLDOWN TIMER LOOP
+       8. VIEW DECK RENDERERS & 5-MINUTE COOLDOWN TIMER LOOP
        ===================================================================== */
     const deckEl = document.getElementById('viewDeck');
 
@@ -1930,7 +1956,7 @@
           state.nextDayUnlockTime = 0;
         } else {
           state.phase = 'DAY_END';
-          state.nextDayUnlockTime = Date.now() + (5 * 60 * 1000); // 5-minute real-world timer
+          state.nextDayUnlockTime = Date.now() + (5 * 60 * 1000);
         }
         saveState();
         refreshUI();
@@ -2022,6 +2048,7 @@
       const topTrait = computeDominantTrait();
       const info = GAME_DATA[currentLang].archetypes[topTrait];
       const maxScore = Math.max(...Object.values(state.scores), 1);
+      const allowExternalMonetization = !isPlatformRestricted();
 
       deckEl.innerHTML = `
         <div class="card-panel">
@@ -2050,15 +2077,17 @@
             }).join('')}
           </div>
 
-          <!-- Rebranded Legal Premium Upgrade Card -->
-          <div class="premium-card">
-            <span class="premium-badge">${GAME_DATA[currentLang].premiumBadge}</span>
-            <div class="premium-title">${GAME_DATA[currentLang].premiumTitle}</div>
-            <p class="premium-desc">${GAME_DATA[currentLang].premiumDesc}</p>
-            <a href="https://lynk.id" target="_blank" rel="noopener noreferrer" class="btn-main btn-premium">
-              ${GAME_DATA[currentLang].premiumBtn}
-            </a>
-          </div>
+          <!-- Platform-Compliant Link Isolation -->
+          ${allowExternalMonetization ? `
+            <div class="premium-card">
+              <span class="premium-badge">${GAME_DATA[currentLang].premiumBadge}</span>
+              <div class="premium-title">${GAME_DATA[currentLang].premiumTitle}</div>
+              <p class="premium-desc">${GAME_DATA[currentLang].premiumDesc}</p>
+              <a href="https://lynk.id" target="_blank" rel="noopener noreferrer" class="btn-main btn-premium">
+                ${GAME_DATA[currentLang].premiumBtn}
+              </a>
+            </div>
+          ` : ''}
 
           <!-- Certificate Download & Sharing -->
           <button class="btn-main btn-share" onclick="generateAndDownloadCertificate()">
@@ -2073,7 +2102,7 @@
     }
 
     /* =====================================================================
-       8. PROPORTIONAL & RESPONSIVE CANVAS RENDERING ENGINE (50% - 300% ZOOM)
+       9. RESPONSIVE PROPORTIONAL CANVAS RENDERING ENGINE
        ===================================================================== */
     const canvas = document.getElementById('gardenCanvas');
     const ctx = canvas.getContext('2d');
@@ -2117,7 +2146,7 @@
 
     function resizeCanvas() {
       const rect = canvas.parentElement.getBoundingClientRect();
-      const dpr = window.devicePixelRatio || 1;
+      const dpr = Math.min(window.devicePixelRatio || 1, 2.5);
       if (rect.width === 0 || rect.height === 0) return;
       canvas.width = Math.round(rect.width * dpr);
       canvas.height = Math.round(rect.height * dpr);
@@ -2239,7 +2268,6 @@
       c.restore();
     }
 
-    // Upscaled Arch Window: spans wider and taller than the fence for architectural perspective
     function drawArchWindow(c, w, h, s) {
       c.save();
       const winW = Math.min(w * 0.74, 280 * s);
@@ -2286,7 +2314,6 @@
       c.restore();
     }
 
-    // Garden Fence: positioned lower than the Arch Window
     function drawGardenFence(c, w, h, baseY, s) {
       c.save();
       c.fillStyle = '#c7b299';
@@ -2364,7 +2391,6 @@
       c.restore();
     }
 
-    // Relative & Proportional Botanical Drawing Pipeline
     function renderFlowerSpecies(c, type, potStyle, w, h, p, swayOffset, time = 0) {
       const s = Math.min(w / 380, h / 240);
       const potW = Math.min(w * 0.32, 115 * s);
@@ -2383,7 +2409,7 @@
       c.fill();
       c.restore();
 
-      // 2. Visible Accessories in Correct Depth (Window & Fence behind pot and stems)
+      // 2. Visible Windows & Fence (Rendered behind pot and stems)
       if (state.equipped.window) drawArchWindow(c, w, h, s);
       if (state.equipped.fence) drawGardenFence(c, w, h, baseY, s);
 
@@ -2874,7 +2900,7 @@
     }
 
     /* =====================================================================
-       9. RELATIVELY ANCHORED LUXURY CERTIFICATE EXPORT (1080x1080)
+       10. RELATIVELY ANCHORED LUXURY CERTIFICATE EXPORT (1080x1080)
        ===================================================================== */
     function generateAndDownloadCertificate() {
       const cert = document.getElementById('certCanvas');
@@ -2902,7 +2928,7 @@
       cCtx.restore();
 
       // 3. Floating Elevated Card Background
-      const cardMargin = W * 0.046; // ~50px
+      const cardMargin = W * 0.046;
       cCtx.save();
       cCtx.shadowColor = 'rgba(40, 55, 45, 0.14)';
       cCtx.shadowBlur = W * 0.035;
@@ -2915,12 +2941,12 @@
       cCtx.restore();
 
       // 4. Dual-Line Minimalist Border Frame in Faded Gold (#dfba73)
-      const f1 = W * 0.063; // ~68px
+      const f1 = W * 0.063;
       cCtx.strokeStyle = '#dfba73';
       cCtx.lineWidth = Math.max(2, W * 0.0023);
       cCtx.strokeRect(f1, f1, W - f1 * 2, H - f1 * 2);
 
-      const f2 = W * 0.072; // ~78px
+      const f2 = W * 0.072;
       cCtx.strokeStyle = 'rgba(223, 186, 115, 0.65)';
       cCtx.lineWidth = Math.max(1, W * 0.001);
       cCtx.strokeRect(f2, f2, W - f2 * 2, H - f2 * 2);
@@ -2936,7 +2962,7 @@
         cCtx.fill();
       });
 
-      // 5. Typography Hierarchy (Proportionally Anchored)
+      // 5. Typography Hierarchy
       cCtx.textAlign = 'center';
       cCtx.fillStyle = '#1c2820';
       cCtx.font = `700 ${Math.round(W * 0.040)}px "Georgia", serif`;
@@ -2948,7 +2974,7 @@
       cCtx.fillStyle = '#6b7a6e';
       cCtx.fillText(currentLang === 'en' ? '• BOTANICAL SOUL CERTIFICATE •' : '• SERTIFIKAT BUNGA JIWA •', W / 2, H * 0.165);
 
-      // 6. Center Botanical Stage (Relative Dimensions)
+      // 6. Center Botanical Stage
       const stageW = W * 0.70;
       const stageH = H * 0.48;
       const stageX = (W - stageW) / 2;
@@ -3006,7 +3032,7 @@
     }
 
     /* =====================================================================
-       10. BOOTSTRAP INITIALIZATION
+       11. BOOTSTRAP INITIALIZATION
        ===================================================================== */
     window.addEventListener('DOMContentLoaded', () => {
       loadState();
@@ -3027,5 +3053,4 @@
   </script>
 </body>
 </html>
-
 
